@@ -1,0 +1,28 @@
+{
+  "name": "RentMyPool_Server",
+  "version": "0.0.0",
+  "description": "server side implementation for rent my pool",
+  "main": "server.js",
+  "dependencies": {
+    "express": "~4.12.3",
+    "express-partials": "~0.3.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Docile-Triceratoprs/RentMyPool.git"
+  },
+  "keywords": [
+    "Woo!"
+  ],
+  "author": "Docile Triceratops",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Docile-Triceratoprs/RentMyPool/issues"
+  },
+  "homepage": "https://github.com/Docile-Triceratoprs/RentMyPool"
+}

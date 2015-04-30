@@ -1,26 +1,23 @@
 var express = require('express');
-
+var partials = require('express-partials');
 
 
 var app = express();
 
-app.configure(function(){
-  app.use(express.static(__dirname, '/client'));
-});
+
+app.use(express.static(__dirname + '/../client'));
 
 var mockData = {
-  results: [{name: 'Eden', address: 'San Francisco', price: 100}, {name: 'derek', address: 'Woo Town', price : 64 }];
+  results: [{name: 'Eden', address: 'San Francisco', price: 100}, {name: 'derek', address: 'Woo Town', price : 64 }]
 }
 
-// '/rent' json listing of pools
 app.get('/rent', function(req, res){
-  res.send(200, mochData);
+  res.status(200).send(mockData);
 });
-// '/list' object has a name, address, price
 
 app.post('/list', function(req, res){
   console.log(req.body.data);
-  res.redirect('/rent');
+  res.status(201).send({post: 'you posted to the database'});
 });
 
 module.exports = app;

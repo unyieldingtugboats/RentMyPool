@@ -1,4 +1,4 @@
-var app = require('server_config.js');
+var app = require('./server_config.js');
 
 var port = 3000;
 
