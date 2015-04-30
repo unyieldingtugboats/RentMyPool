@@ -29,7 +29,7 @@ This will be an awesome app.
   - __Product Owner__: Eden
   - __Scrum Master__: Derek Boero
   - __Development Team Members__: 
-    John Pizzo
+    John Pizzo,
     Eden 
 >>>>>>> merged with current changes to readme and coppied in greenfield readme. WOOO!
 
