@@ -1,29 +1,7 @@
 # RentMyPool
+
 > Pithy project description
 
-<<<<<<< HEAD
-> Pithy project description
-
-<<<<<<< HEAD
-There is so much more we can do with this project.
-This will be an awesome app.
-
-## Team
-
-  - __Product Owner__: teamMember
-  - __Scrum Master__: teamMember
-  - __Development Team Members__: teamMember, teamMember
-=======
-## Team
-
-
-  - __Product Owner__: Eden
-  - __Scrum Master__: Derek Boero
-  - __Development Team Members__: 
-    John Pizzo,
-    Eden 
->>>>>>> readmeBranch
-=======
 ## Team
 
   - __Product Owner__: Eden
@@ -31,7 +9,6 @@ This will be an awesome app.
   - __Development Team Members__: 
     John Pizzo,
     Eden 
->>>>>>> merged with current changes to readme and coppied in greenfield readme. WOOO!
 
 ## Table of Contents
 
