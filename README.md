@@ -8,7 +8,9 @@
   - __Scrum Master__: Derek Boero
   - __Development Team Members__: 
     John Pizzo,
-    Eden 
+    Eden Mazzola,
+    Derek Boero,
+    David Kiesewetter
 
 ## Table of Contents
 
