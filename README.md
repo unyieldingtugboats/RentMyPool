@@ -1,5 +1,7 @@
 # RentMyPool
+> Pithy project description
 
+<<<<<<< HEAD
 > Pithy project description
 
 <<<<<<< HEAD
@@ -21,6 +23,15 @@ This will be an awesome app.
     John Pizzo,
     Eden 
 >>>>>>> readmeBranch
+=======
+## Team
+
+  - __Product Owner__: Eden
+  - __Scrum Master__: Derek Boero
+  - __Development Team Members__: 
+    John Pizzo
+    Eden 
+>>>>>>> merged with current changes to readme and coppied in greenfield readme. WOOO!
 
 ## Table of Contents
 
