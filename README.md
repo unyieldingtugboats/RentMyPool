@@ -1,7 +1,9 @@
 # RentMyPool
+
 > Pithy project description
 
 ## Team
+
 
   - __Product Owner__: Eden
   - __Scrum Master__: Derek Boero
