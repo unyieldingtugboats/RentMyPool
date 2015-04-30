@@ -8,10 +8,7 @@
   "description": "Rent out other peoples pool",
   "license": "MIT",
   "ignore": [
-    "**/.*",
     "node_modules",
-    "bower_components",
-    "test",
-    "tests"
+    "bower_components"
   ]
 }
