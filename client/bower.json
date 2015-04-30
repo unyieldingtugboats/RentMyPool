@@ -1,0 +1,14 @@
+{
+  "name": "RenyMyPool",
+  "version": "0.0.0",
+  "homepage": "https://github.com/jpiv/RentMyPool",
+  "authors": [
+    "John Pizzo <jjpizzo4@gmail.com>"
+  ],
+  "description": "Rent out other peoples pool",
+  "license": "MIT",
+  "ignore": [
+    "node_modules",
+    "bower_components"
+  ]
+}

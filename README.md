@@ -1,7 +1,5 @@
 # RentMyPool
 
-> Pithy project description
-
 ## Team
 
   - __Product Owner__: Eden Mazzola
