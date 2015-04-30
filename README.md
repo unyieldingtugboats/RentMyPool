@@ -8,7 +8,7 @@
   - __Product Owner__: Eden
   - __Scrum Master__: Derek Boero
   - __Development Team Members__: 
-    John Pizzo
+    John Pizzo,
     Eden 
 
 ## Table of Contents
