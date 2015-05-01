@@ -23,6 +23,7 @@ body{
     display: inline-block;
     background-color:#eee;
     width : 100%;
+    padding-left : 40px;
 }
 
 .nav-link{
@@ -56,5 +57,25 @@ body{
 .introImgDiv img {
   width :500px;
   border-radius : 20px;
+}
+
+
+.listEntry {
+    margin : 0px;
+    width : 500px;
+    background-color: #eee;
+    padding: 10px;
+
+    transition:0.3s;
+}
+
+.listEntry:hover {
+    background-color: #beecea;
+}
+
+#map-canvas {
+  margin-top :50px;
+  width : 520px;
+  height : 300px;
 }
 
