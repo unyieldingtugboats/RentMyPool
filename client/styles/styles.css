@@ -21,6 +21,8 @@ body{
 
     list-style:none;
     display: inline-block;
+    background-color:#eee;
+    width : 100%;
 }
 
 .nav-link{
@@ -37,7 +39,11 @@ body{
     background-color:#beecea;
 }
 
-.nav-link.focused{
+.nav-link-focused{
+    display: inline-block;
+    padding: 10px 20px;
+    cursor:pointer;
+    background-color:#eee;
     color:#fff;
     background-color:#41c7c2;
 }
