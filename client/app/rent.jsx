@@ -1,42 +1,38 @@
-var addListings = function (data) {
-  var $ul = $('#listings');
-
-    for(var i = 0; i < data.length; i++) {
-      var $li = $('<li></li>');
-      $li.html(data[i].name +' - ' + data[i].address + ' - ' + data[i].price);
-      $ul.append($li);
-    }
-}
-
 var testData = [{name : 'John', address : 'San Francisco', price : '1.00'},
   {name : 'David', address : 'Germany', price : '600000000.00'}];
 
-
-$(function () {
-
-  createNav();
+var renderRent = function() {
 
   var RentContent = React.createClass({
+
     render: function () {
       return (
         <div>
           <h1>Rent a Pool</h1>
-          <ul id="listings">
-          </ul>
+          <Listings data={this.props.data} />
+          <div id="map-canvas" style={{width: '500px', height: '300px'}}></div>
         </div>
 
       );
     }
-
   });
 
 
 
-  React.render(<RentContent />, $('.main')[0]);
-  //addListings(testData);
   $.get("/rent", function (data) {
     console.log(data);
-    addListings(data);
+    React.render(<RentContent data={testData} />, $('.main')[0]);
+    initializeMap();
    });
 
-});
+}
+
+function initializeMap() {
+  geocoder = new google.maps.Geocoder();
+  var latlng = new google.maps.LatLng(-34.397, 150.644);
+  var mapOptions = {
+    zoom: 8,
+    center: latlng
+  }
+  map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+}
