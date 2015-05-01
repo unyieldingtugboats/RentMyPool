@@ -1,0 +1,54 @@
+* {
+    padding:0;
+    margin:0;
+}
+
+html{
+    font:14px normal Arial, sans-serif;
+    color:#626771;
+    background-color:#fff;
+}
+
+body{
+
+}
+
+.main {
+    padding :40px;
+}
+
+.nav-menu{
+
+    list-style:none;
+    display: inline-block;
+}
+
+.nav-link{
+    display: inline-block;
+    padding: 10px 20px;
+    cursor:pointer;
+    background-color:#eee;
+    color:#7B8585;
+
+    transition:0.3s;
+}
+
+.nav-link:hover{
+    background-color:#beecea;
+}
+
+.nav-link.focused{
+    color:#fff;
+    background-color:#41c7c2;
+}
+
+.introImgDiv {
+    margin-top : 50px;
+
+}
+
+.introImgDiv img {
+  width :500px;
+  border-radius : 20px;
+}
+
