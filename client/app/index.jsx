@@ -8,31 +8,51 @@ var addListings = function (data) {
     }
 }
 
+var Listings = React.createClass({
+
+  render: function () {
+
+    var listItems = this.props.data.map(function (item, index) {
+      return (
+        <div className="listEntry">
+        {item.name +' - ' + item.address + ' - ' + item.price}
+        </div>
+      );
+    });
+
+    return (
+      <div className="listings">
+        {listItems}
+      </div>
+    );
+  }
+});
+
+
 var testData = [{name : 'John', address : 'San Francisco', price : '1.00'},
   {name : 'David', address : 'Germany', price : '600000000.00'}];
 
 var renderRent = function() {
 
   var RentContent = React.createClass({
+
     render: function () {
       return (
         <div>
           <h1>Rent a Pool</h1>
-          <ul id="listings">
-          </ul>
+          <Listings data={this.props.data} />
         </div>
 
       );
     }
-
   });
 
 
 
-  React.render(<RentContent />, $('.main')[0]);
   $.get("/rent", function (data) {
     console.log(data);
     addListings(data.results);
+    React.render(<RentContent data={testData} />, $('.main')[0]);
    });
 
 }
