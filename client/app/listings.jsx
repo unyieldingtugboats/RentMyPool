@@ -1,23 +1,3 @@
-var Listings = React.createClass({
-
-  render: function () {
-
-    var listItems = this.props.data.map(function (item, index) {
-      return (
-        <div className="listEntry">
-        {item.name +' - ' + item.address + ' - ' + item.price}
-        </div>
-      );
-    });
-
-    return (
-      <div className="listings">
-        {listItems}
-      </div>
-    );
-  }
-});
-
 var renderList = function () {
   var ListContent = React.createClass({
     render: function () {
