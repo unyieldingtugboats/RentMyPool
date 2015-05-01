@@ -57,7 +57,8 @@ var createNav = function () {
           <Navigation items={ [
             {name:'Home',cb:renderHome},
             {name:'Rent',cb:renderRent},
-            {name:'List',cb:renderList}
+            {name:'List',cb:renderList},
+            {name:'Img Upload', cb:renderImgUpload}
           ] } />
           <div className="main">
           </div>
