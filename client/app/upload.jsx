@@ -1,17 +1,21 @@
 var uploadImg = function () {
-  $('#uploadForm').submit(function() {
+  alert('uploading');
+  console.log($('#uploadForm'));
+  $('#uploadForm')[0].submit(function() {
         //status('uploading the file ...');
-
+        alert('working');
+        console.dir($(this).ajaxSubmit);
         $(this).ajaxSubmit({
 
             error: function(xhr) {
-              status('Error: ' + xhr.status);
+              alert('Error: ' + xhr.status);
             },
 
             success: function(response) {
     //TODO: We will fill this in later
             }
         });
+        alert('doing');
 
   // Have to stop the form from submitting and causing
   // a page refresh - don't forget this
