@@ -3,10 +3,12 @@ var express = require('express');
 var partials = require('express-partials');
 var Item = require('./db/dbModels/itemModel.js');
 var bodyParser = require('body-parser');
+var multer  = require('multer')
 
-var app = express();
+var app = express()
+app.use(multer({ dest: './uploads/'}))
 
-app.use(bodyParser.json());
+app.use(bodyParser());
 app.use(express.static(__dirname + '/../client'));
 
 
@@ -32,6 +34,12 @@ app.post('/list', function(req, res){
   console.log('this da price: ', req.price);
 
   res.status(201).send({post: 'you posted to the database'});
+});
+
+app.post('/uploadimg', function(req, res){
+  console.log('Uploading');
+  console.log(JSON.stringify(req.file));
+  res.status(201).send('1');
 });
 
 module.exports = app;
