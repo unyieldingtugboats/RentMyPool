@@ -3,10 +3,12 @@ var express = require('express');
 var partials = require('express-partials');
 var Item = require('./db/dbModels/itemModel.js');
 var bodyParser = require('body-parser');
+var multer  = require('multer')
 
-var app = express();
+var app = express()
+app.use(multer({ dest: './uploads/'}))
 
-app.use(bodyParser.json());
+app.use(bodyParser());
 app.use(express.static(__dirname + '/../client'));
 
 
