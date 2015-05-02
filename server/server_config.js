@@ -18,7 +18,6 @@ app.get('/rent', function(req, res){
   Item.find({}, function(err, docs){
     if(!err){
       res.status(200).send({results: docs});
-      process.exit();
     } else {
       console.log(err)
       res.status(500).send({errorMessage: 'We fucked up. Sorry:( Woo!'});
@@ -27,13 +26,13 @@ app.get('/rent', function(req, res){
 });
 
 app.post('/list', function(req, res){
-  console.log('this data', req.data); // undefined
-  console.log('this body', req.body); // {}
-  console.log('this is the name: ', req.name);
-  console.log('this is the address: ', req.address);
-  console.log('this da price: ', req.price);
-
-  res.status(201).send({post: 'you posted to the database'});
+  var newPool = new Item({name: req.body.name, address: req.body.address, price: req.body.price});
+  newPool.save(function(err) {
+    if(err){
+      console.log(err);
+    }
+    res.status(201).send({post: 'you posted to the database'});
+  });
 });
 
 app.post('/uploadimg', function(req, res){
