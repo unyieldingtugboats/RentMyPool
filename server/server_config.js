@@ -8,7 +8,7 @@ var multer  = require('multer')
 var app = express()
 app.use(multer({ dest: './uploads/'}))
 
-app.use(bodyParser());
+app.use(bodyParser.json());
 app.use(express.static(__dirname + '/../client'));
 
 
@@ -26,6 +26,7 @@ app.get('/rent', function(req, res){
 });
 
 app.post('/list', function(req, res){
+  console.log(req.body)
   var newPool = new Item({name: req.body.name, address: req.body.address, price: req.body.price});
   newPool.save(function(err) {
     if(err){
