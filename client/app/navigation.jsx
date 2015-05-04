@@ -17,7 +17,7 @@ var Navigation = React.createClass({
     return (
       <div className="nav-menu">
         { this.props.items.map(function(m, index){
-            return <Link activeClassName="nav-link-focused" className="nav-link" to={m.name}>{m.name}</Link>;
+            return <Link key={index} activeClassName="nav-link-focused" className="nav-link" to={m.name}>{m.name}</Link>;
           }) }
       </div>
     );
@@ -34,7 +34,8 @@ var Main = React.createClass({
           {name:'Home'},
           {name:'Rent'},
           {name:'List'},
-          {name:'Img Upload'}
+          {name:'Img Upload'},
+          {name: 'Login'}
         ] } />
         <div className="main">
           <RouteHandler />
@@ -51,6 +52,8 @@ var routing = function () {
           <Route name="Rent" handler={RentContent} />
           <Route name="List" handler={ListContent} />
           <Route name="Img Upload" handler={ImgUploadContent} />
+          <Route name="Login" handler={LoginContent} />
+          <Route name="Sign Up" handler={SignUpContent} />
           <DefaultRoute handler={Content} />
         </Route>
       );
