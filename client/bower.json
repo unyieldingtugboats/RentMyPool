@@ -13,6 +13,7 @@
   ],
   "dependencies": {
     "react": "~0.13.2",
-    "jquery": "~2.1.4"
+    "jquery": "~2.1.4",
+    "react-router": "~0.13.3"
   }
 }

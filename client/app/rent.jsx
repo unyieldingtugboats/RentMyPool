@@ -22,31 +22,37 @@ var Listings = React.createClass({
   }
 });
 
-var renderRent = function() {
 
-  var RentContent = React.createClass({
+var RentContent = React.createClass({
 
-    render: function () {
-      return (
-        <div>
-          <h1>Rent a Pool</h1>
-          <Listings data={this.props.data} />
-          <div id="map-canvas"></div>
-        </div>
+  getInitialState: function () {
+    return {
+      data: []
+    };
+  },
 
-      );
-    }
-  });
-
-
-
-  $.get("/rent", function (data) {
-    console.log(data);
-    React.render(<RentContent data={data.results} />, $('.main')[0]);
+  componentDidMount: function () {
     initializeMap();
-   });
+    $.get("/rent", function (data) {
+      console.log("GET Success");
+      this.setState({data:data.results});
+    }.bind(this));
+  },
+  
+  render: function () {
+    
+    return (
+      <div>
+        <h1>Rent a Pool</h1>
+        <Listings data={this.state.data} />
+        <div id="map-canvas"></div>
+      </div>
+    );
+  }
+});
 
-}
+
+
 
 var geocoder;
 var map;

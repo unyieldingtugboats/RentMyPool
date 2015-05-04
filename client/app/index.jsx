@@ -1,9 +1,7 @@
-var renderHome = function() {
-
-  var Content = React.createClass({
+var Content = React.createClass({
     render: function () {
       return (
-        <div>
+        <div className="home">
           <h1>Welcome to the Pool Party</h1>
           <div className="introImgDiv">
             <img src="/res/pool1.jpg"/>
@@ -14,10 +12,7 @@ var renderHome = function() {
 
   });
 
-  React.render(<Content />, $('.main')[0]);
-}
 
 $(function () {
-  createNav();
-  renderHome();
+  routing();
 });
