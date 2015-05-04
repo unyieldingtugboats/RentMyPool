@@ -1,44 +1,36 @@
-# Project Name #
-
-<!-- 
-> This material was originally posted [here](http://www.quora.com/What-is-Amazons-approach-to-product-development-and-product-management). It is reproduced here for posterities sake.
-
-There is an approach called "working backwards" that is widely used at Amazon. They work backwards from the customer, rather than starting with an idea for a product and trying to bolt customers onto it. While working backwards can be applied to any specific product decision, using this approach is especially important when developing new products or features.
-
-For new initiatives a product manager typically starts by writing an internal press release announcing the finished product. The target audience for the press release is the new/updated product's customers, which can be retail customers or internal users of a tool or technology. Internal press releases are centered around the customer problem, how current solutions (internal or external) fail, and how the new product will blow away existing solutions.
-
-If the benefits listed don't sound very interesting or exciting to customers, then perhaps they're not (and shouldn't be built). Instead, the product manager should keep iterating on the press release until they've come up with benefits that actually sound like benefits. Iterating on a press release is a lot less expensive than iterating on the product itself (and quicker!).
-
-If the press release is more than a page and a half, it is probably too long. Keep it simple. 3-4 sentences for most paragraphs. Cut out the fat. Don't make it into a spec. You can accompany the press release with a FAQ that answers all of the other business or execution questions so the press release can stay focused on what the customer gets. My rule of thumb is that if the press release is hard to write, then the product is probably going to suck. Keep working at it until the outline for each paragraph flows. 
-
-Oh, and I also like to write press-releases in what I call "Oprah-speak" for mainstream consumer products. Imagine you're sitting on Oprah's couch and have just explained the product to her, and then you listen as she explains it to her audience. That's "Oprah-speak", not "Geek-speak".
-
-Once the project moves into development, the press release can be used as a touchstone; a guiding light. The product team can ask themselves, "Are we building what is in the press release?" If they find they're spending time building things that aren't in the press release (overbuilding), they need to ask themselves why. This keeps product development focused on achieving the customer benefits and not building extraneous stuff that takes longer to build, takes resources to maintain, and doesn't provide real customer benefit (at least not enough to warrant inclusion in the press release).
- -->
  
 ## Heading ##
-  > Name the product in a way the reader (i.e. your target customers) will understand.
+
+	RentMyPool
 
 ## Sub-Heading ##
-  > Describe who the market for the product is and what benefit they get. One sentence only underneath the title.
+
+	All the benefits of owning a pool without actually having to own a pool.
 
 ## Summary ##
-  > Give a summary of the product and the benefit. Assume the reader will not read anything else so make this paragraph good.
+
+	RentMyPool allows people with unused swimming pools to connect with those wanting to swim but who don't have a pool of thier own. 
 
 ## Problem ##
-  > Describe the problem your product solves.
+
+	Most residential swimming pools sit empty of people for much of the year. Owning and maintaining a pool can be expensive even when it is not in use. Having a pool sit empty is a waste of resources especially when ther are so many people who would love access to a swimming pool but are prohibited from ever owning thier own. 
 
 ## Solution ##
-  > Describe how your product elegantly solves the problem.
+
+	RentMyPool allows pool owners to make extra income by renting out thier swimming pools during the time thier are not being used. This gives a unique opportuniy for those who only want tempory access to a private pool by alowing them to rent someones unused pool by the day. This helps the owner with maintence costs by selling the unused pool time to those wanting to swim. 
 
 ## Quote from You ##
-  > A quote from a spokesperson in your company.
+
+	"Making a splash by tapping into the vast market of empty, backyard pools."
 
 ## How to Get Started ##
-  > Describe how easy it is to get started.
+
+	After downloading the app, go ahead and register yourself as either a user looking to rent a swimming pool or a user looking to list thier unsed swimming pool time. All payments and communication is done through the app.
 
 ## Customer Quote ##
-  > Provide a quote from a hypothetical customer that describes how they experienced the benefit.
+
+	"Cannnnnnnnnnnnon Baaaaaalllllllllllll!!!!"
 
 ## Closing and Call to Action ##
-  > Wrap it up and give pointers where the reader should go next.
+ 
+	Go download our app and take a dip today. 
