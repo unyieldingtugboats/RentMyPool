@@ -15,11 +15,28 @@ var ListContent = React.createClass({
     this.setState(state);
   },
 
+  handleSubmit: function (e) {
+    e.preventDefault();
+
+    $.ajax({
+      url: "/list",
+      method: "POST",
+      contentType: "application/json",
+      data: JSON.stringify(this.state),
+      success: function (){
+        console.log("POST Successful.");
+      },
+      error: function (err) {
+        console.log("Error:", err)
+      }
+    });
+  },
+
   render: function () {
     return (
       <div className="listView">
         <h1>List a Pool</h1>
-        <form method="POST" action="/list">
+        <form onSubmit={this.handleSubmit}>
           <input name="name" value={this.state.name} onChange={this.handleChange}  type="text" />
           <br />
           <br />
