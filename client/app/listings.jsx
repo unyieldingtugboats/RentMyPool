@@ -1,4 +1,3 @@
-
 var ListContent = React.createClass({
 
   getInitialState: function() {
