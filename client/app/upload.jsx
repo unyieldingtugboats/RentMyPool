@@ -24,27 +24,24 @@ var uploadImg = function () {
 
 }
 
-var renderImgUpload = function () {
-  var ImgUploadContent = React.createClass({
-    render: function () {
-      return (
-        <div className="uploadView">
-          <h1>Upload Image</h1>
-          <form id="uploadForm"
-            enctype="multipart/form-data"
-            action="/uploadimg"
-            method="post">
-            <input type="file" id="userPhotoInput" name="userPhoto" />
-          </form>
+var ImgUploadContent = React.createClass({
+  render: function () {
+    return (
+      <div className="uploadView">
+        <h1>Upload Image</h1>
+        <form id="uploadForm"
+          enctype="multipart/form-data"
+          action="/uploadimg"
+          method="post">
+          <input type="file" id="userPhotoInput" name="userPhoto" />
+        </form>
 
-        <span id="status" />
-        <img id="uploadedImage" />
-        <button type="button" onClick={uploadImg}>Upload to Server</button>
-      </div>
-      );
-    }
+      <span id="status" />
+      <img id="uploadedImage" />
+      <button type="button" onClick={uploadImg}>Upload to Server</button>
+    </div>
+    );
+  }
 
-  });
+});
 
-  React.render(<ImgUploadContent />, $('.main')[0]);
-};

@@ -1,77 +1,64 @@
-var createNav = function () {
-  var Navigation = React.createClass({
+var Route = ReactRouter.Route;
+var DefaultRoute = ReactRouter.DefaultRoute;
+var RouteHandler = ReactRouter.RouteHandler;
+var Link = ReactRouter.Link;
 
-    getInitialState: function(){
-        return { focused: 0 };
-    },
+var Navigation = React.createClass({
 
-    clicked: function(index, cb){
+  getInitialState: function(){
+      return { focused: 0 };
+  },
 
-        // The click handler will update the state with
-        // the index of the focused menu entry
+  clicked: function(index){
+    this.setState({focused: index});
+  },
 
-        this.setState({focused: index});
-        cb();
-    },
-
-    render: function () {
-
-      var self = this;
-      return (
-        <div className="nav-menu">
-          { this.props.items.map(function(m, index){
-
-                    var style = 'nav-link';
-
-                    if(self.state.focused == index){
-                        style = 'nav-link-focused';
-                    }
-
-                    // Notice the use of the bind() method. It makes the
-                    // index available to the clicked function:
-
-                    return <a className={style} onClick={self.clicked.bind(self, index, m.cb)}>{m.name}</a>;
-
+  render: function () {
+    return (
+      <div className="nav-menu">
+        { this.props.items.map(function(m, index){
+            return <Link activeClassName="nav-link-focused" className="nav-link" to={m.name}>{m.name}</Link>;
           }) }
+      </div>
+    );
+  }
+});
 
+var Main = React.createClass({
+
+  render: function () {
+    return (
+      <div className="viewPort">
+
+        <Navigation items={ [
+          {name:'Home'},
+          {name:'Rent'},
+          {name:'List'},
+          {name:'Img Upload'}
+        ] } />
+        <div className="main">
+          <RouteHandler />
         </div>
+      </div>
+    );
+  }
+});
+
+var routing = function () {
+  var routes = (
+        <Route path="/" handler={Main}>
+          <Route name="Home" handler={Content} />
+          <Route name="Rent" handler={RentContent} />
+          <Route name="List" handler={ListContent} />
+          <Route name="Img Upload" handler={ImgUploadContent} />
+          <DefaultRoute handler={Content} />
+        </Route>
       );
-    }
+
+  ReactRouter.run(routes, function (Handler) {
+    React.render(<Handler />, $('body')[0]);
   });
-
-
-  // var Header = React.createClass({
-  //   render: function () {
-  //     return (
-  //       <h1>Rent a Pool</h1>
-  //     );
-  //   }
-
-  // });
-
-  var Main = React.createClass({
-    render: function () {
-      return (
-        <div className="viewPort">
-
-          <Navigation items={ [
-            {name:'Home',cb:renderHome},
-            {name:'Rent',cb:renderRent},
-            {name:'List',cb:renderList},
-            {name:'Img Upload', cb:renderImgUpload}
-          ] } />
-          <div className="main">
-          </div>
-        </div>
-      );
-    }
-
-  });
-
-  React.render(<Main />, $('body')[0]);
-
 };
 
-var goRent = function() {
-  console.log('goRent');
-}
+
+
