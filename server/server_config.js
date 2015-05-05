@@ -51,7 +51,6 @@ app.post('/signup', function(req, res) {
       res.status(500).send({errorMessage: 'error in searching database upon signup'});
     }
     else if (!user) {
-      console.log('time to save the information username is free', user);
       var newUser = new User({
         username: info.username,
         password: info.password
@@ -63,6 +62,7 @@ app.post('/signup', function(req, res) {
           res.status(500).send({errorMessage: 'error in saving user info to Database'})
         }
         else {
+          console.log('successful signup');
           res.status(201).send({success: 'user info saved successfully!'});
         }
       });
@@ -81,7 +81,6 @@ app.post('/login', function(req, res) {
       res.status(500).send({errorMessage: 'error in search of db upon login'});
     } 
     else if(user) {
-      console.log('about to compare!');
       user.comparePassword(info.password, function(err, match) {
         if(err) {
           console.log('error in comparison!', err);

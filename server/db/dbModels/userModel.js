@@ -13,8 +13,6 @@ var userSchema = mongoose.Schema({
 var User = mongoose.model('User', userSchema);
 
 User.prototype.comparePassword = function(attemptedPassword, callback) {
-    console.log('stored : ', this.password);
-    console.log('attempt: ', attemptedPassword);
   bcrypt.compare(attemptedPassword, this.get('password'), function(err, isMatch) {
     if(err) { 
         console.log('error in password compare!');
@@ -25,13 +23,13 @@ User.prototype.comparePassword = function(attemptedPassword, callback) {
 };
 
 userSchema.pre('save', function(next) {
-    console.log('saving time, password to be hashed', this.password);
+    var self = this;
     bcrypt.hash(this.password, null, null, function(err, hash) {
         if(err) {
             console.log('error in hashing!', err)
         } else {
-            this.password = hash;
-            console.log('hash success! ', this.password);
+            self.password = hash;
+            console.log('hash success! ', self.password);
             next();
         }
     });
