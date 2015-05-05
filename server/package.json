@@ -4,6 +4,7 @@
   "description": "server side implementation for rent my pool",
   "main": "server.js",
   "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
     "body-parser": "~1.12.3",
     "express": "~4.12.3",
     "express-partials": "~0.3.0",
