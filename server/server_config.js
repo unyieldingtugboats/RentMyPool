@@ -12,12 +12,16 @@ app.use(multer({ dest: './uploads/'}))
 app.use(bodyParser.json());
 app.use(express.static(__dirname + '/../client'));
 
-app.get('/rentItems', function(req, res){
-  console.log(req.body);
+
+app.get('/rent', function(req, res){
+  console.log(req.url);
   var date = req.body.date || '2015/05/06';
   Item.find({}, function(err, docs){
     if(!err){
-      res.status(200).send({results: docs});
+      var resDocs = docs.filter(function(doc) {
+        return !doc.hasOwnProperty(date);
+      });
+      res.status(200).send({results: resDocs});
     } else {
       console.log(err)
       res.status(500).send({errorMessage: 'We fucked up. Sorry:( Woo!'});
