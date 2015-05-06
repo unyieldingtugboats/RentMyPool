@@ -5,6 +5,7 @@ var Item = require('./db/dbModels/itemModel.js');
 var User = require('./db/dbModels/userModel.js');
 var bodyParser = require('body-parser');
 var multer  = require('multer');
+var url = require('url');
 
 var app = express()
 app.use(multer({ dest: './uploads/'}))
@@ -15,11 +16,13 @@ app.use(express.static(__dirname + '/../client'));
 
 app.get('/rent', function(req, res){
   console.log(req.url);
-  var date = req.body.date || '2015/05/06';
+  var query = url.parse(req.url).query;
+  var date = req.query.date || '2015/05/06';
   Item.find({}, function(err, docs){
     if(!err){
       var resDocs = docs.filter(function(doc) {
-        return !doc.hasOwnProperty(date);
+        if (!doc.calendar) return true;
+        return !doc.calendar.hasOwnProperty(date);
       });
       res.status(200).send({results: resDocs});
     } else {
@@ -49,6 +52,27 @@ app.post('/list', function(req, res){
     }
     res.status(201).send({post: 'you posted to the database'});
   });
+});
+
+app.post('/book', function(req, res){
+  console.log(req.body);
+  if (req.body.date.length === 8) {
+    Item.findOne({_id : req.body._id}, function(err, pool){
+      if(!err){
+        if (!pool.calendar) pool.calendar = {};
+        pool.calendar[req.body.date] = true;
+        pool.markModified('calendar');
+        pool.save();
+        res.status(200).send({post: 'pool booked'});
+      } else {
+        console.log(err)
+        res.status(500).send({errorMessage: 'We fucked up. Sorry:( Woo!'});
+      }
+    });
+  } else {
+    console.log('date not 8 chars');
+    res.status(500).send({errorMessage: 'We fucked up. Sorry:( Woo!'});
+  }
 });
 
 app.post('/uploadimg', function(req, res){

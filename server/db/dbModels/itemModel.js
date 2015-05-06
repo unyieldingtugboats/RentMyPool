@@ -6,7 +6,8 @@ var itemSchema = mongoose.Schema({
   address: {type: String, required: true},
   price: {type: Number, required: true},
   images: [],
-  calendar: {}
+  calendar: {},
+  rules: []
 });
 
 var Item = mongoose.model('Item', itemSchema );
