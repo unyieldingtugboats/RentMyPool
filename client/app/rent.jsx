@@ -3,14 +3,13 @@ var bookingID = '';
 
 var ListEntry = React.createClass({
 
-  handleClick: function () {
-    codeAddress(this.props.address);
-  },
 
   render: function () {
+    var cb = this.props.cb;
+    var item = this.props.item;
     return (
-      <div className="listEntry" onClick={this.handleClick}>
-        {this.props.name +' - ' + this.props.address + ' - ' + this.props.price}
+      <div className="listEntry" onClick={cb.updateDetails.bind(cb,item)}>
+        {item.name +' - ' + item.address + ' - ' + item.price}
       </div>
     );
   }
@@ -19,10 +18,10 @@ var ListEntry = React.createClass({
 var Listings = React.createClass({
 
   render: function () {
-
+    var cb = this.props.cb;
     var listItems = this.props.data.map(function (item, index) {
       return (
-        <ListEntry name={item.name} address={item.address} price={item.price} />
+        <ListEntry item={item} cb={cb} />
       );
     }, this);
 
@@ -82,7 +81,7 @@ var Booking = React.createClass({
       url: "/book",
       method: "POST",
       contentType: "application/json",
-      data: JSON.stringify({date : this.props.date, _id : bookingID}),
+      data: JSON.stringify({date : this.props.date, _id : this.props.rental.item._id}),
       success: function (){
         console.log("POST Successful.");
       },
@@ -93,12 +92,30 @@ var Booking = React.createClass({
   },
 
   render: function () {
+<<<<<<< HEAD
     return (
       <div className="booking">
         <h3>{this.props.date}</h3>
         <button onClick={this.handleBooking}>Book now</button>
       </div>
     );
+=======
+    if (this.props.rental.noDetails) { 
+      return (
+        <div className="booking">
+          <h3>Please select a rental.</h3>
+        </div>
+        );
+    } else {
+      return (
+        <div className="booking">
+          <h3>{this.props.date}</h3>
+          <h4>{this.props.rental.item.price}</h4>
+          <button onClick={this.handleBooking}>Book now</button>
+        </div>
+      );
+    }
+>>>>>>> map on right
   }
 });
 
@@ -108,7 +125,8 @@ var RentContent = React.createClass({
   getInitialState: function () {
     return {
       data: [],
-      date: bookingDate
+      date: bookingDate,
+      rental : { noDetails : true, cls : 'noShow' }
     };
   },
 
@@ -120,8 +138,18 @@ var RentContent = React.createClass({
     }.bind(this));
   },
 
+  updateDetails: function (item) {
+    codeAddress(item.address, item._id);
+    this.setState({rental:{ noDetails : false, cls : '', item : item}});
+  },
+
   componentDidMount: function () {
+<<<<<<< HEAD
     this.refreshResults();
+=======
+    initializeMap();
+    //refreshResults();
+>>>>>>> map on right
   },
   
   render: function () {
@@ -129,10 +157,23 @@ var RentContent = React.createClass({
     return (
       <div>
         <h1>Rent a Pool</h1>
+<<<<<<< HEAD
         <Filter cb={this.refreshResults}/>
         <Listings data={this.state.data} />
         <GoogleMap />
         <Booking date={this.state.date}/>
+=======
+        <Filter cb={this}/>
+        <div className="showRents">
+          <div className="showList">
+            <Listings data={this.state.data} cb={this} />
+          </div>
+          <div className="showDetails">
+            <Booking date={this.state.date} rental={this.state.rental}/>
+            <div className = {this.state.rental.cls} id="map-canvas"></div>
+          </div>
+        </div>
+>>>>>>> map on right
       </div>
     );
   }
@@ -142,6 +183,7 @@ var geocoder;
 var map;
 var oldMarker;
 
+<<<<<<< HEAD
 var GoogleMap = React.createClass({
 
   componentDidMount: function () {
@@ -162,6 +204,14 @@ var GoogleMap = React.createClass({
     return (
       <div id="map-canvas"></div>
     );
+=======
+function initializeMap(address) {
+  geocoder = new google.maps.Geocoder();
+  var latlng = new google.maps.LatLng(37.783551, -122.408990);
+  var mapOptions = {
+    zoom: 14,
+    center: latlng
+>>>>>>> map on right
   }
 
 });
