@@ -5,7 +5,12 @@ var Item = require('./db/dbModels/itemModel.js');
 var User = require('./db/dbModels/userModel.js');
 var bodyParser = require('body-parser');
 var multer  = require('multer');
+<<<<<<< HEAD
 var url = require('url');
+=======
+var session = require('express-session');
+var utils = require('./libs/utilities.js');
+>>>>>>> woo! sessions, hmm redirects having issue not really sure why!
 
 var app = express()
 app.use(multer({ dest: './uploads/'}))
@@ -13,6 +18,7 @@ app.use(multer({ dest: './uploads/'}))
 app.use(bodyParser.json());
 app.use(express.static(__dirname + '/../client'));
 
+<<<<<<< HEAD
 
 app.get('/rentItems', function(req, res){
   console.log(req.url);
@@ -29,6 +35,33 @@ app.get('/rentItems', function(req, res){
       console.log(err)
       res.status(500).send({errorMessage: 'We fucked up. Sorry:( Woo!'});
     }
+=======
+app.use(session({
+  secret: 'be very quiet its a secret, WOOO!',
+  resave: false, // session store needs touch method for this to be ok
+  saveUninitialized : false
+  //cookie: { secure : true} // requires https
+}));
+
+app.get('/index', function(req,res) {
+  console.log('Test test test');
+  res.redirect('/');
+});
+
+app.get('/rent', function(req, res){
+  console.log('rent get');
+  utils.checkUser(req,res, function() {
+    console.log('rent page!')
+    var date = req.body.date || '2015/05/06';
+    Item.find({}, function(err, docs){
+      if(!err){
+        res.status(200).send({results: docs});
+      } else {
+        console.log(err)
+        res.status(500).send({errorMessage: 'We fucked up. Sorry:( Woo!'});
+      }
+    });
+>>>>>>> woo! sessions, hmm redirects having issue not really sure why!
   });
 });
 
@@ -41,16 +74,23 @@ app.get('*', function (req, res) {
   });
 });
 
-
+app.get('/list', function(req, res) {
+  console/log('check user for list page!');
+  utils.checkUser(req,res,function(){
+    console.log('hey lists page!');
+  });
+});
 
 app.post('/list', function(req, res){
-  console.log(req.body)
-  var newPool = new Item({name: req.body.name, address: req.body.address, price: req.body.price});
-  newPool.save(function(err) {
-    if(err){
-      console.log(err);
-    }
-    res.status(201).send({post: 'you posted to the database'});
+  utils.checkUser(req,res,function() {
+    console.log('List post');
+    var newPool = new Item({name: req.body.name, address: req.body.address, price: req.body.price});
+    newPool.save(function(err) {
+      if(err){
+        console.log(err);
+      }
+      res.status(201).send({post: 'you posted to the database'});
+    });
   });
 });
 
@@ -76,9 +116,11 @@ app.post('/book', function(req, res){
 });
 
 app.post('/uploadimg', function(req, res){
-  console.log('Uploading');
-  console.log( req.files);
-  res.status(201).send('1');
+  utils.checkUser(req,res,function() {
+    console.log('Uploading');
+    console.log( req.files);
+    res.status(201).send('1');
+  });
 });
 
 app.post('/signup', function(req, res) { 
@@ -100,8 +142,8 @@ app.post('/signup', function(req, res) {
           res.status(500).send({errorMessage: 'error in saving user info to Database'})
         }
         else {
+          utils.createSession(req,res,user.username);
           console.log('successful signup');
-          res.status(302).send("Login");
         }
       });
     }
@@ -126,8 +168,9 @@ app.post('/login', function(req, res) {
         }
         else {
           if(match) {
+            // res.status(302).send('/');
+            utils.createSession(req,res,user.username);
             console.log('successful login!');
-            res.status(302).send('/');
           } 
           else {
             console.log('password fail!');
