@@ -43,26 +43,27 @@ var Filter = React.createClass({
     };
   },
 
-  handleChange: function(event) {
-    var state = {};
-    state[event.target.name] = event.target.value;
-    this.setState(state);
-    bookingDate = this.state.date;
-  },
-
-  handleSearch: function() {
+  handleSearch: function(e) {
+    e.preventDefault();
     console.log('refresh');
-    this.props.cb.refreshResults(this.state.date, this.state.location);
-
+    this.setState({
+      date: e.target.date.value,
+      location: e.target.location.value
+    }, function () {
+      this.props.cb(this.state.date, this.state.location);
+      bookingDate = this.state.date;
+    });
   },
 
   render: function () {
 
     return (
       <div className="filter">
-        <input type="text" name="date" value={this.state.date} onChange={this.handleChange}/>
-        <input type="text" name="location" value={this.state.location} onChange={this.handleChange}/>
-        <button onClick={this.handleSearch}>Search</button>
+        <form onSubmit={this.handleSearch}>
+          <input type="text" name="date" placeholder={this.state.date} />
+          <input type="text" name="location" placeholder={this.state.location} />
+          <input type="submit" value="Search" />
+        </form>
       </div>
     );
   }
@@ -89,11 +90,9 @@ var Booking = React.createClass({
         console.log("Error:", err)
       }
     });
-
   },
 
   render: function () {
-
     return (
       <div className="booking">
         <h3>{this.props.date}</h3>
@@ -130,7 +129,7 @@ var RentContent = React.createClass({
     return (
       <div>
         <h1>Rent a Pool</h1>
-        <Filter cb={this}/>
+        <Filter cb={this.refreshResults}/>
         <Listings data={this.state.data} />
         <GoogleMap />
         <Booking date={this.state.date}/>
