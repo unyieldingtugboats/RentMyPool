@@ -14,7 +14,7 @@ app.use(bodyParser.json());
 app.use(express.static(__dirname + '/../client'));
 
 
-app.get('/rent', function(req, res){
+app.get('/rentItems', function(req, res){
   console.log(req.url);
   var query = url.parse(req.url).query;
   var date = req.query.date || '2015/05/06';
