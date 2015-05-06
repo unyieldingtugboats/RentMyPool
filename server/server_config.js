@@ -63,7 +63,7 @@ app.post('/book', function(req, res){
         pool.calendar[req.body.date] = true;
         pool.markModified('calendar');
         pool.save();
-        res.status(200).send({post: 'pool booked'});
+        res.status(302).send('Payment');
       } else {
         console.log(err)
         res.status(500).send({errorMessage: 'We fucked up. Sorry:( Woo!'});
