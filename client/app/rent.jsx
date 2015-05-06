@@ -1,17 +1,30 @@
 var bookingDate = 'test';
 var bookingID = '';
 
+var ListEntry = React.createClass({
+
+  handleClick: function () {
+    codeAddress(this.props.address);
+  },
+
+  render: function () {
+    return (
+      <div className="listEntry" onClick={this.handleClick}>
+        {this.props.name +' - ' + this.props.address + ' - ' + this.props.price}
+      </div>
+    );
+  }
+});
+
 var Listings = React.createClass({
 
   render: function () {
 
     var listItems = this.props.data.map(function (item, index) {
       return (
-        <div className="listEntry" onClick={codeAddress.bind(null,item.address, item._id)}>
-        {item.name +' - ' + item.address + ' - ' + item.price}
-        </div>
+        <ListEntry name={item.name} address={item.address} price={item.price} />
       );
-    });
+    }, this);
 
     return (
       <div className="listings">
@@ -62,7 +75,7 @@ var Booking = React.createClass({
     };
   },
 
-  handleBooking: function() {
+  handleChangedleBooking: function() {
     console.log('booking');
     $.ajax({
       url: "/book",
@@ -100,10 +113,8 @@ var RentContent = React.createClass({
     };
   },
 
-  
-
   refreshResults: function (date,location) {
-    $.get("/rent?date="+date+"&location="+location, function (data) {
+    $.get("/rentItems?date="+date+"&location="+location, function (data) {
       console.log("GET Success");
       console.dir(data.results);
       this.setState({data:data.results, date:date});
@@ -111,8 +122,7 @@ var RentContent = React.createClass({
   },
 
   componentDidMount: function () {
-    initializeMap();
-    refreshResults();
+    this.refreshResults();
   },
   
   render: function () {
@@ -122,29 +132,40 @@ var RentContent = React.createClass({
         <h1>Rent a Pool</h1>
         <Filter cb={this}/>
         <Listings data={this.state.data} />
-        <div id="map-canvas"></div>
+        <GoogleMap />
         <Booking date={this.state.date}/>
       </div>
     );
   }
 });
 
-
-
-
 var geocoder;
 var map;
 var oldMarker;
 
-function initializeMap() {
-  geocoder = new google.maps.Geocoder();
-  var latlng = new google.maps.LatLng(-34.397, 150.644);
-  var mapOptions = {
-    zoom: 14,
-    center: latlng
+var GoogleMap = React.createClass({
+
+  componentDidMount: function () {
+    this.initializeMap();
+  },
+
+  initializeMap: function () {
+    geocoder = new google.maps.Geocoder();
+    var latlng = new google.maps.LatLng(-34.397, 150.644);
+    var mapOptions = {
+      zoom: 14,
+      center: latlng
+    }
+    map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+  },
+
+  render: function () {
+    return (
+      <div id="map-canvas"></div>
+    );
   }
-  map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-}
+
+});
 
 function codeAddress(address, id) {
   bookingID = id;
