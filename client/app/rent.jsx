@@ -1,29 +1,18 @@
 var bookingDate = 'test';
 var bookingID = '';
 
-var ListEntry = React.createClass({
-
-
-  render: function () {
-    var cb = this.props.cb;
-    var item = this.props.item;
-    return (
-      <div className="listEntry" onClick={cb.updateDetails.bind(cb,item)}>
-        {item.name +' - ' + item.address + ' - ' + item.price}
-      </div>
-    );
-  }
-});
-
 var Listings = React.createClass({
 
   render: function () {
     var cb = this.props.cb;
+    console.log(this.props.data);
     var listItems = this.props.data.map(function (item, index) {
       return (
-        <ListEntry item={item} cb={cb} />
+        <div className="listEntry" onClick={cb.updateDetails.bind(cb,item)}>
+        {item.name +' - ' + item.address + ' - ' + item.price}
+        </div>
       );
-    }, this);
+    });
 
     return (
       <div className="listings">
@@ -42,27 +31,26 @@ var Filter = React.createClass({
     };
   },
 
-  handleSearch: function(e) {
-    e.preventDefault();
+  handleChange: function(event) {
+    var state = {};
+    state[event.target.name] = event.target.value;
+    this.setState(state);
+    bookingDate = this.state.date;
+  },
+
+  handleSearch: function() {
     console.log('refresh');
-    this.setState({
-      date: e.target.date.value,
-      location: e.target.location.value
-    }, function () {
-      this.props.cb(this.state.date, this.state.location);
-      bookingDate = this.state.date;
-    });
+    this.props.cb.refreshResults(this.state.date, this.state.location);
+
   },
 
   render: function () {
 
     return (
       <div className="filter">
-        <form onSubmit={this.handleSearch}>
-          <input type="text" name="date" placeholder={this.state.date} />
-          <input type="text" name="location" placeholder={this.state.location} />
-          <input type="submit" value="Search" />
-        </form>
+        <input type="text" name="date" value={this.state.date} onChange={this.handleChange}/>
+        <input type="text" name="location" value={this.state.location} onChange={this.handleChange}/>
+        <button onClick={this.handleSearch}>Search</button>
       </div>
     );
   }
@@ -75,7 +63,7 @@ var Booking = React.createClass({
     };
   },
 
-  handleChangedleBooking: function() {
+  handleBooking: function() {
     console.log('booking');
     $.ajax({
       url: "/book",
@@ -89,6 +77,7 @@ var Booking = React.createClass({
         console.log("Error:", err)
       }
     });
+
   },
 
   render: function () {
@@ -120,6 +109,8 @@ var RentContent = React.createClass({
       rental : { noDetails : true, cls : 'noShow' }
     };
   },
+
+  
 
   refreshResults: function (date,location) {
     $.get("/rentItems?date="+date+"&location="+location, function (data) {
@@ -159,10 +150,12 @@ var RentContent = React.createClass({
   }
 });
 
+
+
+
 var geocoder;
 var map;
 var oldMarker;
-
 
 function initializeMap(address) {
   geocoder = new google.maps.Geocoder();
@@ -171,8 +164,8 @@ function initializeMap(address) {
     zoom: 14,
     center: latlng
   }
-
-});
+  map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+}
 
 function codeAddress(address, id) {
   bookingID = id;
