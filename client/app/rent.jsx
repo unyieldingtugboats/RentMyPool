@@ -92,14 +92,6 @@ var Booking = React.createClass({
   },
 
   render: function () {
-<<<<<<< HEAD
-    return (
-      <div className="booking">
-        <h3>{this.props.date}</h3>
-        <button onClick={this.handleBooking}>Book now</button>
-      </div>
-    );
-=======
     if (this.props.rental.noDetails) { 
       return (
         <div className="booking">
@@ -115,7 +107,6 @@ var Booking = React.createClass({
         </div>
       );
     }
->>>>>>> map on right
   }
 });
 
@@ -144,12 +135,8 @@ var RentContent = React.createClass({
   },
 
   componentDidMount: function () {
-<<<<<<< HEAD
-    this.refreshResults();
-=======
     initializeMap();
     //refreshResults();
->>>>>>> map on right
   },
   
   render: function () {
@@ -157,12 +144,6 @@ var RentContent = React.createClass({
     return (
       <div>
         <h1>Rent a Pool</h1>
-<<<<<<< HEAD
-        <Filter cb={this.refreshResults}/>
-        <Listings data={this.state.data} />
-        <GoogleMap />
-        <Booking date={this.state.date}/>
-=======
         <Filter cb={this}/>
         <div className="showRents">
           <div className="showList">
@@ -173,7 +154,6 @@ var RentContent = React.createClass({
             <div className = {this.state.rental.cls} id="map-canvas"></div>
           </div>
         </div>
->>>>>>> map on right
       </div>
     );
   }
@@ -183,35 +163,13 @@ var geocoder;
 var map;
 var oldMarker;
 
-<<<<<<< HEAD
-var GoogleMap = React.createClass({
 
-  componentDidMount: function () {
-    this.initializeMap();
-  },
-
-  initializeMap: function () {
-    geocoder = new google.maps.Geocoder();
-    var latlng = new google.maps.LatLng(-34.397, 150.644);
-    var mapOptions = {
-      zoom: 14,
-      center: latlng
-    }
-    map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-  },
-
-  render: function () {
-    return (
-      <div id="map-canvas"></div>
-    );
-=======
 function initializeMap(address) {
   geocoder = new google.maps.Geocoder();
   var latlng = new google.maps.LatLng(37.783551, -122.408990);
   var mapOptions = {
     zoom: 14,
     center: latlng
->>>>>>> map on right
   }
 
 });
