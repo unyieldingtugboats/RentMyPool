@@ -8,6 +8,7 @@
     "body-parser": "~1.12.3",
     "express": "~4.12.3",
     "express-partials": "~0.3.0",
+    "express-session": "^1.11.1",
     "mongodb": "~2.0.28",
     "mongoose": "~4.0.2",
     "multer": "^0.1.8"
