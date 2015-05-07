@@ -1,6 +1,8 @@
 var utils = require('./utilities.js');
 var Item = require('./../db/dbModels/itemModel.js');
 var User = require('./../db/dbModels/userModel.js');
+var url = require('url');
+
 
 exports.stub = function (req,res) {
   console.log('stub', req.url);
@@ -9,21 +11,58 @@ exports.stub = function (req,res) {
 
 exports.getListings = function(req, res) {
   console.log('getListings', req.url);
-    utils.checkUser(req,res, function() {
-      console.log('getting list!')
-        var data = req.body.date || '2015/05/06';
-        //query db for all items listed
-        Item.find({}, function(err, items) {
-            if(!err) {
-                console.log('sending items back!')
-                res.status(200).send({results: items});
-            }
-            else {
-                console.log('error in retrieving listings', err);
-                res.status(500).send({errorMessage: 'error in retrieving listings'});
-            }
-        })
-    });
+  utils.checkUser(req,res, function() {
+    console.log('getting list!')
+      var query = url.parse(req.url).query;
+      var date = req.query.date || '2015/05/06';
+      //query db for all items listed
+      Item.find({}, function(err, items) {
+          if(!err) {
+            var resultItems = items.filter(function(item) {
+              if(!item.calendar) {
+                return true;
+              }
+              return !item.calendar.hasOwnProperty(date);
+            })
+            console.log('sending items back!');
+            res.status(200).send({results: resultItems});
+          }
+          else {
+              console.log('error in retrieving listings', err);
+              res.status(500).send({errorMessage: 'error in retrieving listings'});
+          }
+      })
+  });
+};
+
+exports.book = function(req, res) {
+  var info = req.body;
+  if(info.length === 8) {
+    Item.findOne({_id : info._id}, function(err, pool) {
+      if(!err) {
+        pool.calendar = pool.calendar || {};
+        pool.calendar[info.date] = true;
+        pool.markModified('calendar');
+        pool.save(function(err, pool) {
+          if(err) { 
+            console.log('error in saving in booking');
+            res.status(500).send({errorMessage : 'error with saving booking'});
+          }
+          else {
+            res.status(302).send('Payment');
+          }
+        });
+      }
+      else {
+        console.log('error in query of db for booking');
+        res.status(500).send({errorMessage: 'error in query of db for booking'});
+      }
+    })
+  }
+  else {
+    console.log('date is fudged up!');
+    res.status(500).send({errorMessage: 'error with date in booking!'});
+  }
 };
 
 exports.serveIndex = function(req, res) {
