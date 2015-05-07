@@ -41,7 +41,7 @@ var LoginContent = React.createClass({
           <br />
           <br />
           <input name="password" value={this.state.password} onChange={this.handleChange} />
-          <br />
+          <br /> 
           <br />
           <input type="submit" value="Login"/>
           <Link to="Sign Up">Sign Up</Link>

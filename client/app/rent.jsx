@@ -1,5 +1,6 @@
 var Listings = React.createClass({
 
+
   render: function () {
     var cb = this.props.cb;
     console.log(this.props.data);
@@ -54,6 +55,8 @@ var Filter = React.createClass({
 });
 
 var Booking = React.createClass({
+  
+  mixins: [ReactRouter.Navigation],
 
   getInitialState: function() {
   return {
@@ -62,19 +65,21 @@ var Booking = React.createClass({
 
   handleBooking: function() {
     console.log('booking');
+    var self = this;
     $.ajax({
       url: "/book",
       method: "POST",
       contentType: "application/json",
       data: JSON.stringify({date : this.props.date, _id : this.props.rental.item._id}),
-      success: function (){
-        console.log("POST Successful.");
-      },
-      error: function (err) {
-        console.log("Error:", err)
+      statusCode: {
+        302: function (data) {
+          self.transitionTo(data.responseText);
+        },
+        error: function (err) {
+          console.log("Error:", err)
+        }
       }
     });
-
   },
 
   render: function () {
