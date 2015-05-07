@@ -72,14 +72,14 @@ var Booking = React.createClass({
       contentType: "application/json",
       data: JSON.stringify({date : this.props.date, _id : this.props.rental.item._id}),
       statusCode: {
-      302: function (data) {
-        self.transitionTo(data.responseText);
-      },
-      error: function (err) {
-        console.log("Error:", err)
+        302: function (data) {
+          self.transitionTo(data.responseText);
+        },
+        error: function (err) {
+          console.log("Error:", err)
+        }
       }
     });
-
   },
 
   render: function () {
