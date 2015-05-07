@@ -56,7 +56,7 @@ app.post('/list', function(req, res){
 
 app.post('/book', function(req, res){
   console.log(req.body);
-  if (req.body.date.length === 8) {
+  if (req.body.date.length === 10) {
     Item.findOne({_id : req.body._id}, function(err, pool){
       if(!err){
         if (!pool.calendar) pool.calendar = {};
