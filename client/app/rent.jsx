@@ -1,6 +1,3 @@
-var bookingDate = 'test';
-var bookingID = '';
-
 var Listings = React.createClass({
 
   render: function () {
@@ -32,10 +29,10 @@ var Filter = React.createClass({
   },
 
   handleChange: function(event) {
+    console.log('chah');
     var state = {};
     state[event.target.name] = event.target.value;
     this.setState(state);
-    bookingDate = this.state.date;
   },
 
   handleSearch: function() {
@@ -48,7 +45,7 @@ var Filter = React.createClass({
 
     return (
       <div className="filter">
-        <input type="text" name="date" value={this.state.date} onChange={this.handleChange}/>
+        <input type="text" id="datepicker" name="date" value={this.state.date} onChange={this.handleChange}/>
         <input type="text" name="location" value={this.state.location} onChange={this.handleChange}/>
         <button onClick={this.handleSearch}>Search</button>
       </div>
@@ -105,7 +102,7 @@ var RentContent = React.createClass({
   getInitialState: function () {
     return {
       data: [],
-      date: bookingDate,
+      date: '',
       rental : { noDetails : true, cls : 'noShow' }
     };
   },
@@ -125,8 +122,15 @@ var RentContent = React.createClass({
     this.setState({rental:{ noDetails : false, cls : '', item : item}});
   },
 
+  changeDate: function (date) {
+    this.refreshResults(date,'San Francisco');  
+  },
+
   componentDidMount: function () {
     initializeMap();
+    $( "#datepicker" ).datepicker({
+      onSelect : this.changeDate.bind(this)
+    });
     //refreshResults();
   },
   
