@@ -37,7 +37,7 @@ exports.getListings = function(req, res) {
 
 exports.book = function(req, res) {
   var info = req.body;
-  if(info.length === 8) {
+  if(info.date.length === 10) {
     Item.findOne({_id : info._id}, function(err, pool) {
       if(!err) {
         pool.calendar = pool.calendar || {};
