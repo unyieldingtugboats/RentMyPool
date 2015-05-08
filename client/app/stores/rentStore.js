@@ -1,6 +1,6 @@
-var _fetchEntries = function (date, location) {
+var _fetchEntries = function () {
   return new Promise(function (resolve, reject) {
-    $.get("/rentItems?date="+date+"&location="+location, function (data) {
+    $.get("/rentItems", function (data) {
       resolve(data);
     });
   });
@@ -41,6 +41,10 @@ var RentStore = ObjectAssign({}, EventEmitter.prototype, {
 
   addNewBookingListener: function (callback) {
 
+  },
+
+  addFilterChangeListener: function (callback) {
+    this.on(RentConstants.FILTER_CHANGE, callback);
   }
 
 });
@@ -53,9 +57,9 @@ RentDispatcher.register(function (action) {
   };
 
   actions[RentConstants.FETCH_ENTRIES] = function () {
-    _fetchEntries(action.load.date, action.load.location)
+    _fetchEntries()
       .then(function (data) {
-        RentStore.emit(RentConstants.FETCH_ENTRIES, data);
+        RentStore.emit(RentConstants.FETCH_ENTRIES, data.results);
       });
   };
 
@@ -66,5 +70,10 @@ RentDispatcher.register(function (action) {
       }.bind(this));
   };
 
+  actions[RentConstants.FILTER_CHANGE] = function () {
+    RentStore.emit(RentConstants.FILTER_CHANGE, action.load);
+  };
+
   actions[action.type]();
 });
+

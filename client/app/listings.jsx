@@ -4,8 +4,13 @@ var ListContent = React.createClass({
   return {
     name: 'Name',
     address : 'Address',
-    price : 'Price'
+    price : 'Price',
+    date: "Date"
     };
+  },
+
+  componentDidMount: function () {
+    $( "#datepicker" ).datepicker();
   },
 
   handleSubmit: function (e) {
@@ -14,7 +19,8 @@ var ListContent = React.createClass({
     this.setState({
       name: e.target.name.value,
       address: e.target.address.value,
-      price: e.target.price.value
+      price: e.target.price.value,
+      date: e.target.date.value
     }, 
       function () {
         ListingsActions.listingSubmitted(this.state);
@@ -34,6 +40,9 @@ var ListContent = React.createClass({
           <br />
           <br />
           <input name="price" placeholder={this.state.price} type="text" />
+          <br />
+          <br />
+          <input name="date" id="datepicker" placeholder={this.state.date} type="text" />
           <br />
           <br />
           <input type="submit" />

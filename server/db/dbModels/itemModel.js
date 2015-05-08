@@ -7,7 +7,8 @@ var itemSchema = mongoose.Schema({
   price: {type: Number, required: true},
   images: [],
   calendar: {},
-  rules: []
+  rules: [],
+  date: ""
 });
 
 var Item = mongoose.model('Item', itemSchema );

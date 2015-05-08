@@ -90,9 +90,12 @@ exports.addItemToListings = function(req, res) {
   console.log('addItemToListings');
   utils.checkUser(req, res, function() {
     var itemInfo = req.body;
-    var newPool = new Item({ name : itemInfo.name, 
-                             address : itemInfo.address,
-                             price : itemInfo.price });
+    var newPool = new Item({ 
+      name : itemInfo.name, 
+      address : itemInfo.address,
+      price : itemInfo.price,
+      date: itemInfo.date
+    });
     newPool.save(function(err) {
       if(err) {
         console.log('error in saving new listing', err);
