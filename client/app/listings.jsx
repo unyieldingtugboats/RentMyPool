@@ -15,23 +15,11 @@ var ListContent = React.createClass({
       name: e.target.name.value,
       address: e.target.address.value,
       price: e.target.price.value
-    }, function () {  
-        console.log(this.state)
-
-        $.ajax({
-          url: "/list",
-          method: "POST",
-          contentType: "application/json",
-          data: JSON.stringify(this.state),
-          success: function (){
-            console.log("POST Successful.");
-          },
-          error: function (err) {
-            console.log("Error:", err)
-          }
-        });
-    });
-
+    }, 
+      function () {
+        ListingsActions.listingSubmitted(this.state);
+      }.bind(this)
+    );
   },
 
   render: function () {
