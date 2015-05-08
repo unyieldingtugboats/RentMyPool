@@ -1,16 +1,16 @@
-var Dispatcher = new Flux.Dispatcher();
+var RentDispatcher = new Flux.Dispatcher();
 
 var RentActions = {
 
   entryClicked: function (data) {
-    Dispatcher.dispatch({
+    RentDispatcher.dispatch({
       type: RentConstants.ENTRY_CLICKED,
       load: data
     });
   },
 
   fetchEntries: function (data) {
-    Dispatcher.dispatch({
+    RentDispatcher.dispatch({
       type: RentConstants.FETCH_ENTRIES,
       load: data
     });

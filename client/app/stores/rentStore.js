@@ -18,7 +18,7 @@ var RentStore = ObjectAssign({}, EventEmitter.prototype, {
 
 });
 
-Dispatcher.register(function (action) {
+RentDispatcher.register(function (action) {
   var actions = {};
 
   actions[RentConstants.ENTRY_CLICKED] = function () {
