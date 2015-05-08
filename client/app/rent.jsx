@@ -7,7 +7,7 @@ var ListEntry = React.createClass({
   render: function () {
     return (
       <div className="listEntry" onClick={this.handleClick}>
-        {this.props.name +' - ' + this.props.address + ' - ' + this.props.price}
+        {this.props.name +' - ' + this.props.address + ' - ' + this.props.price + ' - ' + this.props.date}
       </div>
     );
   }
@@ -33,7 +33,7 @@ var Listings = React.createClass({
     })
   },
 
-  refreshResults: function (date,location) {
+  refreshResults: function (date, location) {
     RentActions.fetchEntries({
       date: date,
       location: location
@@ -43,7 +43,7 @@ var Listings = React.createClass({
   render: function () {
     var listItems = this.state.data.map(function (item, index) {
       return (
-        <ListEntry name={item.name} address={item.address} price={item.price} />
+        <ListEntry date={item.date} name={item.name} address={item.address} price={item.price} />
       );
     });
 
@@ -96,27 +96,22 @@ var Booking = React.createClass({
 
   getInitialState: function() {
     return {
-      noDetails: true
+      noDetails: true,
+      rental: {}
     };
   },
 
+  componentWillMount: function () {
+    RentStore.addEntryClickedListener(function (load) {
+      this.setState({
+        noDetails: false,
+        rental: load
+      });
+    }.bind(this));
+  },
+
   handleBooking: function() {
-    console.log('booking');
-    var self = this;
-    $.ajax({
-      url: "/book",
-      method: "POST",
-      contentType: "application/json",
-      data: JSON.stringify({date : this.props.date, _id : this.props.rental.item._id}),
-      statusCode: {
-        302: function (data) {
-          self.transitionTo(data.responseText);
-        },
-        error: function (err) {
-          console.log("Error:", err)
-        }
-      }
-    });
+    RentActions.newBooking(this.state.rental);
   },
 
   render: function () {
@@ -129,8 +124,10 @@ var Booking = React.createClass({
     } else {
       return (
         <div className="booking">
-          <h3>{this.props.date}</h3>
-          <h4>{this.props.rental.item.price}</h4>
+          <h2>{this.state.rental.name}</h2>
+          <h3>{this.state.rental.address}</h3>
+          <h3>{this.state.rental.date}</h3>
+          <h4>{this.state.rental.price}</h4>
           <button onClick={this.handleBooking}>Book now</button>
         </div>
       );

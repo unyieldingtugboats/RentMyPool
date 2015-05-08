@@ -6,6 +6,29 @@ var _fetchEntries = function (date, location) {
   });
 };
 
+var _postBooking = function (date, id) {
+  return new Promise(function (resolve, reject) {
+    $.ajax({
+      url: "/book",
+      method: "POST",
+      contentType: "application/json",
+      data: JSON.stringify({date : this.props.date, _id : this.props.rental.item._id}),
+      statusCode: {
+        302: function (data) {
+          resolve({
+            statusCode: 302,
+            data: data
+          });
+        },
+        error: function (err) {
+          console.log("Error:", err)
+          reject(err);
+        }
+      }
+    });
+  });
+};
+
 var RentStore = ObjectAssign({}, EventEmitter.prototype, {
 
   addEntryClickedListener: function (callback) {
@@ -14,6 +37,10 @@ var RentStore = ObjectAssign({}, EventEmitter.prototype, {
 
   addFetchEntriesListener: function (callback) {
     this.on(RentConstants.FETCH_ENTRIES, callback);
+  },
+
+  addNewBookingListener: function (callback) {
+
   }
 
 });
@@ -30,6 +57,13 @@ RentDispatcher.register(function (action) {
       .then(function (data) {
         RentStore.emit(RentConstants.FETCH_ENTRIES, data);
       });
+  };
+
+  actions[RentConstants.NEW_BOOKING] = function () {
+    _postBooking(action.load.date, action.load.id)
+      .then(function (data) {
+        this.emit(RentConstants.NEW_BOOKING, data);
+      }.bind(this));
   };
 
   actions[action.type]();
