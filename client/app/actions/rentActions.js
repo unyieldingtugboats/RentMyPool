@@ -20,7 +20,14 @@ var RentActions = {
     RentDispatcher.dispatch({
       type: RentConstants.NEW_BOOKING,
       load: data
-    })
+    });
+  },
+
+  filterChange: function (data) {
+    RentDispatcher.dispatch({
+      type: RentConstants.FILTER_CHANGE,
+      load: data
+    });
   }
 
 }

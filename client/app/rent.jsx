@@ -7,7 +7,7 @@ var ListEntry = React.createClass({
   render: function () {
     return (
       <div className="listEntry" onClick={this.handleClick}>
-        {this.props.name +' - ' + this.props.address + ' - ' + this.props.price + ' - ' + this.props.date}
+        {this.props.name +' - ' + this.props.address + ' - ' + this.props.price + ' - ' + new Date(this.props.date).toDateString().slice(3)}
       </div>
     );
   }
@@ -18,32 +18,53 @@ var Listings = React.createClass({
 
   getInitialState: function () {
     return {
-      data: []
+      data: [],
+      allData: []
     };
   },
 
   componentWillMount: function () {
-    RentStore.addFetchEntriesListener(function (data) {
-      this.setState({data: data.results});
-    }.bind(this));
+    RentStore.addFetchEntriesListener(this.refreshResults);
+    RentStore.addFilterChangeListener(this.handleFilterChange);
 
-    this.refreshResults({
-      date: "",
-      location: ""
-    })
+    RentActions.fetchEntries();
   },
 
-  refreshResults: function (date, location) {
-    RentActions.fetchEntries({
-      date: date,
-      location: location
+  handleNewEntries: function (data) {
+    this.setState({data: data});
+  },
+
+  handleFilterChange: function (data) {
+    var newEntries =  this.state.allData.filter(function (item, index) {
+      if(data.date && !data.location) {
+        if(item.date && item.date.includes(data.date))
+          return true;
+      }
+      else if (data.date && data.location) {
+        if(item.date && item.date.includes(data.date) && item.address.includes(data.location))
+          return true;
+      }
+      else if (!data.date && data.location) {
+        if(item.address.includes(data.location))
+          return true;
+      }
+      else {
+        return true;
+      }
     });
+
+    this.handleNewEntries(newEntries);
+  },
+
+  refreshResults: function (data) {
+    this.setState({allData: data});
+    this.handleNewEntries(data);
   },
 
   render: function () {
     var listItems = this.state.data.map(function (item, index) {
       return (
-        <ListEntry date={item.date} name={item.name} address={item.address} price={item.price} />
+        <ListEntry key={index} date={item.date} name={item.name} address={item.address} price={item.price} />
       );
     });
 
@@ -59,32 +80,43 @@ var Filter = React.createClass({
 
   getInitialState: function() {
     return {
-      date: 'Date',
-      location : 'Location',
+      date: null,
+      location : null,
     };
   },
 
-  handleChange: function(event) {
-    console.log('change');
-    var state = {};
-    state[event.target.name] = event.target.value;
-    this.setState(state);
+  componentDidMount: function () {
+    $( "#datepicker" ).datepicker()
+      .on("input change", this.handleDateChange);
   },
 
-  handleSearch: function() {
-    RentActions.fetchEntries({
-      date: this.state.date,
-      location: this.state.location
-    });
+  handleDateChange: function(e) {
+    var date = e.target.value;
+    this.setState({
+      date: date
+    },
+      function () {
+        RentActions.filterChange(this.state);
+      }
+    );
+  },
+
+  handleLocationChange: function(e) {
+    this.setState({
+      location: e.target.value
+    },
+      function () {
+        RentActions.filterChange(this.state);
+      }
+    );
   },
 
   render: function () {
 
     return (
       <div className="filter">
-        <input type="text" id="datepicker" name="date" value={this.state.date} onChange={this.handleChange}/>
-        <input type="text" name="location" value={this.state.location} onChange={this.handleChange}/>
-        <button onClick={this.handleSearch}>Search</button>
+        <input type="text" id="datepicker" name="date" placeholder="Date" />
+        <input type="text" name="location" placeholder="Location" onChange={this.handleLocationChange} />
       </div>
     );
   }
@@ -126,7 +158,7 @@ var Booking = React.createClass({
         <div className="booking">
           <h2>{this.state.rental.name}</h2>
           <h3>{this.state.rental.address}</h3>
-          <h3>{this.state.rental.date}</h3>
+          <h3>{new Date(this.state.rental.date).toDateString().slice(4)}</h3>
           <h4>{this.state.rental.price}</h4>
           <button onClick={this.handleBooking}>Book now</button>
         </div>
@@ -143,12 +175,6 @@ var RentContent = React.createClass({
       data: [],
       date: ''
     };
-  },
-
-  componentDidMount: function () {
-    $( "#datepicker" ).datepicker({
-      onSelect : {}
-    });
   },
   
   render: function () {
