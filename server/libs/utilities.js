@@ -9,9 +9,9 @@ exports.isLoggedIn = function(request) {
 
 exports.checkUser =  function(request, response, next) {
     console.log('checking user');
-    if(!exports.isLoggedIn(request)) {
+    if(!exports.isLoggedIn(request) && request.url.toLowerCase() !== "/home") {
         console.log('not logged in! redirect');
-        response.status(302).send('Home');
+        response.redirect("/Home")
     } 
     else {
         console.log('check user callback time! (user/sess valid!)')
@@ -28,6 +28,6 @@ exports.createSession = function(request, response, user) {
         }
         request.session.username = user;
         console.log('created that session, redirect to home');
-        response.status(302).send('Home');
+        response.status(302).send("/Home");
     });
 }

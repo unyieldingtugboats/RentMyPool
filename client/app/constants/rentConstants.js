@@ -1,0 +1,6 @@
+var RentConstants = {
+
+  ENTRY_CLICKED: "ENTRY_CLICKED",
+  FETCH_ENTRIES: "FETCH_ENTRIES"
+
+}

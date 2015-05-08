@@ -1,14 +1,49 @@
-var Listings = React.createClass({
+var ListEntry = React.createClass({
 
+  handleClick: function () {
+    RentActions.entryClicked(this.props);
+  },
 
   render: function () {
-    var cb = this.props.cb;
-    console.log(this.props.data);
-    var listItems = this.props.data.map(function (item, index) {
+    return (
+      <div className="listEntry" onClick={this.handleClick}>
+        {this.props.name +' - ' + this.props.address + ' - ' + this.props.price}
+      </div>
+    );
+  }
+
+});
+
+var Listings = React.createClass({
+
+  getInitialState: function () {
+    return {
+      data: []
+    };
+  },
+
+  componentWillMount: function () {
+    RentStore.addFetchEntriesListener(function (data) {
+      this.setState({data: data.results});
+    }.bind(this));
+
+    this.refreshResults({
+      date: "",
+      location: ""
+    })
+  },
+
+  refreshResults: function (date,location) {
+    RentActions.fetchEntries({
+      date: date,
+      location: location
+    });
+  },
+
+  render: function () {
+    var listItems = this.state.data.map(function (item, index) {
       return (
-        <div className="listEntry" onClick={cb.updateDetails.bind(cb,item)}>
-        {item.name +' - ' + item.address + ' - ' + item.price}
-        </div>
+        <ListEntry name={item.name} address={item.address} price={item.price} />
       );
     });
 
@@ -23,23 +58,24 @@ var Listings = React.createClass({
 var Filter = React.createClass({
 
   getInitialState: function() {
-  return {
-    date: 'Date',
-    location : 'Location',
+    return {
+      date: 'Date',
+      location : 'Location',
     };
   },
 
   handleChange: function(event) {
-    console.log('chah');
+    console.log('change');
     var state = {};
     state[event.target.name] = event.target.value;
     this.setState(state);
   },
 
   handleSearch: function() {
-    console.log('refresh');
-    this.props.cb.refreshResults(this.state.date, this.state.location);
-
+    RentActions.fetchEntries({
+      date: this.state.date,
+      location: this.state.location
+    });
   },
 
   render: function () {
@@ -59,7 +95,8 @@ var Booking = React.createClass({
   mixins: [ReactRouter.Navigation],
 
   getInitialState: function() {
-  return {
+    return {
+      noDetails: true
     };
   },
 
@@ -83,7 +120,7 @@ var Booking = React.createClass({
   },
 
   render: function () {
-    if (this.props.rental.noDetails) { 
+    if (this.state.noDetails) { 
       return (
         <div className="booking">
           <h3>Please select a rental.</h3>
@@ -107,36 +144,14 @@ var RentContent = React.createClass({
   getInitialState: function () {
     return {
       data: [],
-      date: '',
-      rental : { noDetails : true, cls : 'noShow' }
+      date: ''
     };
   },
 
-  
-
-  refreshResults: function (date,location) {
-    $.get("/rentItems?date="+date+"&location="+location, function (data) {
-      console.log("GET Success");
-      console.dir(data.results);
-      this.setState({data:data.results, date:date});
-    }.bind(this));
-  },
-
-  updateDetails: function (item) {
-    codeAddress(item.address, item._id);
-    this.setState({rental:{ noDetails : false, cls : '', item : item}});
-  },
-
-  changeDate: function (date) {
-    this.refreshResults(date,'San Francisco');  
-  },
-
   componentDidMount: function () {
-    initializeMap();
     $( "#datepicker" ).datepicker({
-      onSelect : this.changeDate.bind(this)
+      onSelect : {}
     });
-    //refreshResults();
   },
   
   render: function () {
@@ -147,11 +162,11 @@ var RentContent = React.createClass({
         <Filter cb={this}/>
         <div className="showRents">
           <div className="showList">
-            <Listings data={this.state.data} cb={this} />
+            <Listings />
+            <Booking />
           </div>
           <div className="showDetails">
-            <Booking date={this.state.date} rental={this.state.rental}/>
-            <div className = {this.state.rental.cls} id="map-canvas"></div>
+            <GoogleMap />
           </div>
         </div>
       </div>
@@ -160,35 +175,49 @@ var RentContent = React.createClass({
 });
 
 
+var GoogleMap = React.createClass({
 
+  map: null,
+  geocoder: new google.maps.Geocoder(),
+  oldMarker: null,
 
-var geocoder;
-var map;
-var oldMarker;
+  componentDidMount: function () {
+    this.initializeMap();
+    RentStore.addEntryClickedListener(function (load) {
+      this.codeAddress(load.address);
+    }.bind(this));
+  },
 
-function initializeMap(address) {
-  geocoder = new google.maps.Geocoder();
-  var latlng = new google.maps.LatLng(37.783551, -122.408990);
-  var mapOptions = {
-    zoom: 14,
-    center: latlng
-  }
-  map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-}
+  codeAddress: function (address) {
+    if (this.oldMarker) this.oldMarker.setMap(null);
+    this.geocoder.geocode( { 'address': address}, function(results, status) {
+      if (status == google.maps.GeocoderStatus.OK) {
+        this.map.setCenter(results[0].geometry.location);
+        var marker = new google.maps.Marker({
+            map: this.map,
+            position: results[0].geometry.location
+        });
+        this.oldMarker = marker;
+      } else {
+        alert('Geocode was not successful for the following reason: ' + status);
+      }
+    }.bind(this));
+  },
 
-function codeAddress(address, id) {
-  bookingID = id;
-  if (oldMarker) oldMarker.setMap(null);
-  geocoder.geocode( { 'address': address}, function(results, status) {
-    if (status == google.maps.GeocoderStatus.OK) {
-      map.setCenter(results[0].geometry.location);
-      var marker = new google.maps.Marker({
-          map: map,
-          position: results[0].geometry.location
-      });
-      oldMarker = marker;
-    } else {
-      alert('Geocode was not successful for the following reason: ' + status);
+  initializeMap: function () {
+    var latlng = new google.maps.LatLng(37.783551, -122.408990);
+    var mapOptions = {
+     zoom: 14,
+     center: latlng
     }
-  });
-}
+    this.map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+  },
+
+  render: function () {
+    return (
+      <div id="map-canvas"></div>
+    );
+  }
+
+});
+
