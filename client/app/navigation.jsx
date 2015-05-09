@@ -41,38 +41,15 @@ var CurrentUser = React.createClass({
 
   getInitialState: function () {
     return {
-      showDetails: false
+      showDetails: false,
+      user: null
     }
-  },
-
-  handleClick: function () {
-    if(this.props.user)
-      this.setState({
-        showDetails: !this.state.showDetails
-      });
-  },
-
-  render: function () {
-      return (
-        <div  onClick={this.handleClick} className="currentUser">
-          <UserButton user={this.props.user} />
-          <UserDetails show={this.state.showDetails} user={this.props.user || {}} />
-        </div>
-      );
-  }
-
-});
-
-var Navigation = React.createClass({
-
-  getInitialState: function(){
-      return { 
-        user: null
-      };
   },
 
   componentWillMount: function () {
     AppStore.addUserLoginListener(this.handleNewUser);
+    AppStore.addFetchUserListener(this.handleNewUser);
+    AppActions.fetchUser();
   },
 
   handleNewUser: function (data) {
@@ -81,13 +58,33 @@ var Navigation = React.createClass({
     });
   },
 
+  handleClick: function () {
+    if(this.state.user)
+      this.setState({
+        showDetails: !this.state.showDetails
+      });
+  },
+
+  render: function () {
+      return (
+        <div  onClick={this.handleClick} className="currentUser">
+          <UserButton user={this.state.user} />
+          <UserDetails show={this.state.showDetails} user={this.state.user || {}} />
+        </div>
+      );
+  }
+
+});
+
+var Navigation = React.createClass({
+
   render: function () {
     return (
       <div className="nav-menu">
         { this.props.items.map(function(m, index){
             return <Link key={index} activeClassName="nav-link-focused" className="nav-link" to={m.name}>{m.name}</Link>;
           }) }
-        <CurrentUser user={this.state.user} />
+        <CurrentUser />
       </div>
     );
   }

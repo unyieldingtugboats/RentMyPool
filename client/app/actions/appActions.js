@@ -7,6 +7,13 @@ var AppActions = {
       type: AppConstants.USER_LOGIN,
       load: data
     });
+  },
+
+  fetchUser: function (data) {
+    AppDispatcher.dispatch({
+      type: AppConstants.FETCH_USER,
+      load: data
+    });
   }
 
 };

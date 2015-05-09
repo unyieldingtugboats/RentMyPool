@@ -1,10 +1,18 @@
 var session = require('express-session');
 
 exports.isLoggedIn = function(request) {
+    console.log(request.session.user)
     if(request.session) {
-        return !!request.session.username;
+        return !!request.session.user;
     }
     return false
+};
+
+exports.getUser = function (request, response) {
+    if(request.session)
+        return request.session.user;
+    else
+        return null;
 };
 
 exports.checkUser =  function(request, response, next) {
@@ -26,7 +34,7 @@ exports.createSession = function(request, response, user) {
             console.log('error in creating a session', err);
             throw err;
         }
-        request.session.username = user.username;
+        request.session.user = user;
         console.log('created that session, redirect to home');
         response.status(200).send(user);
     });
