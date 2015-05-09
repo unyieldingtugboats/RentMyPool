@@ -22,7 +22,9 @@ app.use(session({
 
 app.get('/rentItems', handlers.getListings);
 
-app.get('/favicon.ico', handlers.stub)
+app.get('/currentUser', handlers.getUser);
+
+app.get('/favicon.ico', handlers.stub);
 
 app.get('*', handlers.checkServeIndex);
 

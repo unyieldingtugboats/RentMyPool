@@ -9,6 +9,10 @@ exports.stub = function (req,res) {
   res.status(204);
 };
 
+exports.getUser = function (req, res) {
+  res.status(200).send(utils.getUser(req, res));
+};
+
 exports.getListings = function(req, res) {
   console.log('getListings', req.url);
   utils.checkUser(req,res, function() {
@@ -165,7 +169,7 @@ exports.login = function(req, res) {
         }
         else {
           if(match) {
-            utils.createSession(req,res,user.username);
+            utils.createSession(req,res,user);
             console.log('successful login!');
           } 
           else {

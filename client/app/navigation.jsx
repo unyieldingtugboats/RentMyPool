@@ -3,15 +3,80 @@ var DefaultRoute = ReactRouter.DefaultRoute;
 var RouteHandler = ReactRouter.RouteHandler;
 var Link = ReactRouter.Link;
 
+var UserButton = React.createClass({
+
+  render: function () {
+    if(this.props.user)
+      return (
+        <span> 
+        {"Logged in as " + this.props.user.username}
+        </span>
+      );
+    else 
+      return(
+        <span>
+          {"Not Logged In."}
+        </span>
+      );
+  }
+
+});
+
+var UserDetails = React.createClass({
+
+  render: function () {
+    return (
+      <div className="userDetailsContainer">
+        <div className={this.props.show ? "userDetails show" : "userDetails"}>
+          <h1>{this.props.user.username}</h1>
+          <h2>Listings</h2>
+        </div>
+      </div>
+    );
+  }
+
+});
+
+var CurrentUser = React.createClass({
+
+  getInitialState: function () {
+    return {
+      showDetails: false,
+      user: null
+    }
+  },
+
+  componentWillMount: function () {
+    AppStore.addUserLoginListener(this.handleNewUser);
+    AppStore.addFetchUserListener(this.handleNewUser);
+    AppActions.fetchUser();
+  },
+
+  handleNewUser: function (data) {
+    this.setState({
+      user: data
+    });
+  },
+
+  handleClick: function () {
+    if(this.state.user)
+      this.setState({
+        showDetails: !this.state.showDetails
+      });
+  },
+
+  render: function () {
+      return (
+        <div  onClick={this.handleClick} className="currentUser">
+          <UserButton user={this.state.user} />
+          <UserDetails show={this.state.showDetails} user={this.state.user || {}} />
+        </div>
+      );
+  }
+
+});
+
 var Navigation = React.createClass({
-
-  getInitialState: function(){
-      return { focused: 0 };
-  },
-
-  clicked: function(index){
-    this.setState({focused: index});
-  },
 
   render: function () {
     return (
@@ -19,6 +84,7 @@ var Navigation = React.createClass({
         { this.props.items.map(function(m, index){
             return <Link key={index} activeClassName="nav-link-focused" className="nav-link" to={m.name}>{m.name}</Link>;
           }) }
+        <CurrentUser />
       </div>
     );
   }
