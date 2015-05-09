@@ -31,6 +31,7 @@ var Listings = React.createClass({
   },
 
   handleNewEntries: function (data) {
+    console.log(data)
     this.setState({data: data});
   },
 
@@ -57,8 +58,10 @@ var Listings = React.createClass({
   },
 
   refreshResults: function (data) {
-    this.setState({allData: data});
-    this.handleNewEntries(data);
+    this.setState({allData: data},
+      function () {
+        this.handleNewEntries(data);
+      });
   },
 
   render: function () {
@@ -133,7 +136,7 @@ var Booking = React.createClass({
     };
   },
 
-  componentWillMount: function () {
+  componentDidMount: function () {
     RentStore.addEntryClickedListener(function (load) {
       this.setState({
         noDetails: false,

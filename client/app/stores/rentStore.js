@@ -1,6 +1,7 @@
 var _fetchEntries = function () {
   return new Promise(function (resolve, reject) {
     $.get("/rentItems", function (data) {
+      console.log(data);
       resolve(data);
     });
   });
@@ -66,7 +67,7 @@ RentDispatcher.register(function (action) {
   actions[RentConstants.NEW_BOOKING] = function () {
     _postBooking(action.load.date, action.load.id)
       .then(function (data) {
-        this.emit(RentConstants.NEW_BOOKING, data);
+        RentStore.emit(RentConstants.NEW_BOOKING, data);
       }.bind(this));
   };
 

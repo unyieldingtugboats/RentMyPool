@@ -17,6 +17,10 @@ body{
     padding : 2em;
 }
 
+.viewPort {
+    overflow: hidden;
+}
+
 .nav-menu{
 
     list-style:none;
@@ -29,7 +33,7 @@ body{
 
 .nav-link{
     display: inline-block;
-    padding: 10px 20px;
+    padding: 13px 20px;
     cursor:pointer;
     text-decoration: none;
     background-color:#eee;
@@ -44,7 +48,7 @@ body{
 
 .nav-link-focused{
     display: inline-block;
-    padding: 10px 20px;
+    padding: 13px 20px;
     cursor:pointer;
     background-color:#eee;
     color:#fff;
@@ -106,3 +110,50 @@ body{
     width: 55%;
     float: left;
 }
+
+.currentUser {
+    float: right;
+    font-size: 17px;
+    font-weight: bold;
+    margin-right: 8%;
+    display: inline-block;
+    padding: 11px 20px;
+    cursor: pointer;
+
+}
+
+.currentUser:hover {
+    background-color: #beecea;
+}
+
+.userDetailsContainer {
+    float: right;
+    position: absolute;
+    left: 83.3%;
+    height: 100%;
+    top: 41px;
+    width: 16.7%;
+    overflow: hidden;
+
+}
+
+.userDetails {
+    position: relative;
+    height: 100%;
+    width: 0%;
+    text-align: right;
+    left:100%;
+    background-color: rgba(255, 0, 255, .5);
+    transition: left 2s, width 2s;
+}
+
+.userDetails.show {
+    width: 100%;
+    left: 0%;
+    text-align: right;
+    visibility: visible;
+    background-color: rgba(255, 0, 255, .5);
+    transition: left 2s, width 2s;
+}
+
+

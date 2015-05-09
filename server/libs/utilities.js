@@ -26,8 +26,8 @@ exports.createSession = function(request, response, user) {
             console.log('error in creating a session', err);
             throw err;
         }
-        request.session.username = user;
+        request.session.username = user.username;
         console.log('created that session, redirect to home');
-        response.status(302).send("/Home");
+        response.status(200).send(user);
     });
 }

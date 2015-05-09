@@ -165,7 +165,7 @@ exports.login = function(req, res) {
         }
         else {
           if(match) {
-            utils.createSession(req,res,user.username);
+            utils.createSession(req,res,user);
             console.log('successful login!');
           } 
           else {
