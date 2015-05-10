@@ -202,6 +202,7 @@ var RentContent = React.createClass({
     
     return (
       <div>
+        <LoginTransitioner />
         <h1>Rent a Pool</h1>
         <Filter cb={this}/>
         <div className="showRents">

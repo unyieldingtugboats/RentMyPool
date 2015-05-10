@@ -98,7 +98,8 @@ exports.addItemToListings = function(req, res) {
       name : itemInfo.name, 
       address : itemInfo.address,
       price : itemInfo.price,
-      date: itemInfo.date
+      date: itemInfo.date,
+      user_id: itemInfo.user_id
     });
     newPool.save(function(err) {
       if(err) {

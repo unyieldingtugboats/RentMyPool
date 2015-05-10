@@ -22,14 +22,51 @@ var UserButton = React.createClass({
 
 });
 
+var UserListing = React.createClass({
+
+  render: function  () {
+    return (
+      <div>
+        <span>
+          {"Date: " + this.props.listing.date}
+        </span>
+        <br />
+        <span>
+          {"Name: " + this.props.listing.name}
+        </span>
+        <br />
+        <span>
+          {"Address: " + this.props.listing.address}
+        </span>
+        <br />
+        <span>
+          {"Price: " + this.props.listing.price}
+        </span>
+        <br />
+        <br />
+      </div>
+    );
+  }
+
+});
+
 var UserDetails = React.createClass({
 
   render: function () {
+    var userListings = this.props.listings.map(function (item, index){
+      return (
+        <UserListing key={index} listing={item} />
+      );
+    });
+
     return (
       <div className="userDetailsContainer">
         <div className={this.props.show ? "userDetails show" : "userDetails"}>
           <h1>{this.props.user.username}</h1>
-          <h2>Listings</h2>
+          <hr />
+          <h2>{this.props.listings.length} Listings</h2>
+          <br />
+          {userListings}
         </div>
       </div>
     );
@@ -64,17 +101,36 @@ var CurrentUser = React.createClass({
   },
 
   handleClick: function () {
-    if(this.state.user)
-      this.setState({
-        showDetails: !this.state.showDetails
-      });
+    var userData;
+    var self = this;
+
+    $.ajax({
+      url: "/rentItems",
+      contentType: "application/json",
+      method: "GET",
+      statusCode: {
+        200: function (data) {
+          userData = _.filter(data.results, function (item, index) {
+            if(item.user_id === self.state.user._id) return true
+            else return false;
+          });
+
+          if(self.state.user)
+            self.setState({
+              showDetails: !self.state.showDetails,
+              userListings: userData
+            });
+        }
+      }
+    });
+    
   },
 
   render: function () {
       return (
         <div  onClick={this.handleClick} className="currentUser">
           <UserButton user={this.state.user} />
-          <UserDetails show={this.state.showDetails} user={this.state.user || {}} />
+          <UserDetails show={this.state.showDetails} user={this.state.user || {}} listings={this.state.userListings || []} />
         </div>
       );
   }

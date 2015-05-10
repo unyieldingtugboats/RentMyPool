@@ -5,12 +5,28 @@ var ListContent = React.createClass({
     name: 'Name',
     address : 'Address',
     price : 'Price',
-    date: "Date"
+    date: "Date",
+    user_id: ""
     };
+  },
+
+  componentWillMount: function () {
+    AppStore.addFetchUserListener(this.handleFetchUser);
   },
 
   componentDidMount: function () {
     $( "#datepicker" ).datepicker();
+    AppActions.fetchUser();
+  },
+
+  componentWillUnmount: function () {
+    AppStore.removeFetchUserListener(this.handleFetchUser);
+  },
+
+  handleFetchUser: function (data) {
+    this.setState({
+      user_id: data._id
+    });
   },
 
   handleSubmit: function (e) {
@@ -31,6 +47,7 @@ var ListContent = React.createClass({
   render: function () {
     return (
       <div className="listView">
+        <LoginTransitioner />
         <h1>List a Pool</h1>
         <form onSubmit={this.handleSubmit}>
           <input name="name" placeholder={this.state.name} type="text" />
