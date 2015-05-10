@@ -45,6 +45,14 @@ var AppStore = ObjectAssign({}, EventEmitter.prototype, {
     this.on(AppConstants.FETCH_USER, callback);
   },
 
+  removeUserLoginListener: function (callback) {
+    this.removeListener(AppConstants.USER_LOGIN, callback);
+  },
+
+  removeFetchUserListener: function (callback) {
+    this.removeListener(AppConstants.FETCH_USER, callback);
+  }
+
 });
 
 AppDispatcher.register(function (action) {

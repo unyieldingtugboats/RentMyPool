@@ -1,7 +1,6 @@
 var _fetchEntries = function () {
   return new Promise(function (resolve, reject) {
     $.get("/rentItems", function (data) {
-      console.log(data);
       resolve(data);
     });
   });
@@ -46,7 +45,23 @@ var RentStore = ObjectAssign({}, EventEmitter.prototype, {
 
   addFilterChangeListener: function (callback) {
     this.on(RentConstants.FILTER_CHANGE, callback);
-  }
+  },
+
+  removeEntryClickedListener: function (callback) {
+    this.removeListener(RentConstants.ENTRY_CLICKED, callback);
+  },
+
+  removeFetchEntriesListener: function (callback) {
+    this.removeListener(RentConstants.FETCH_ENTRIES, callback);
+  },
+
+  removeNewBookingListener: function (callback) {
+
+  },
+
+  removeFilterChangeListener: function (callback) {
+    this.removeListener(RentConstants.FILTER_CHANGE, callback);
+  },
 
 });
 

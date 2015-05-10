@@ -52,6 +52,11 @@ var CurrentUser = React.createClass({
     AppActions.fetchUser();
   },
 
+  componentWillUnmount: function () {
+    AppStore.removeUserLoginListener(this.handleNewUser);
+    AppStore.removeFetchUserListener(this.handleNewUser);
+  },
+
   handleNewUser: function (data) {
     this.setState({
       user: data
