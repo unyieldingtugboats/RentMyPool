@@ -30,8 +30,12 @@ var Listings = React.createClass({
     RentActions.fetchEntries();
   },
 
+  componentWillUnmount: function () {
+    RentStore.removeFetchEntriesListener(this.refreshResults);
+    RentStore.removeFilterChangeListener(this.handleFilterChange);    
+  },
+
   handleNewEntries: function (data) {
-    console.log(data)
     this.setState({data: data});
   },
 
@@ -58,10 +62,10 @@ var Listings = React.createClass({
   },
 
   refreshResults: function (data) {
-    this.setState({allData: data},
-      function () {
-        this.handleNewEntries(data);
-      });
+      this.setState({allData: data},
+        function () {
+          this.handleNewEntries(data);
+        });
   },
 
   render: function () {
@@ -137,12 +141,18 @@ var Booking = React.createClass({
   },
 
   componentDidMount: function () {
-    RentStore.addEntryClickedListener(function (load) {
-      this.setState({
-        noDetails: false,
-        rental: load
-      });
-    }.bind(this));
+    RentStore.addEntryClickedListener(this.handleEntryClicked);
+  },
+
+  componentWillUnmount: function () {
+    RentStore.removeEntryClickedListener(this.handleEntryClicked);
+  },
+
+  handleEntryClicked: function (load) {
+   this.setState({
+      noDetails: false,
+      rental: load
+    });
   },
 
   handleBooking: function() {
@@ -157,12 +167,23 @@ var Booking = React.createClass({
         </div>
         );
     } else {
+      var formatedPrice = "";
+      var rawPrice = String(this.state.rental.price);
+      var j;
+      for(var i = 1; i <= rawPrice.length; i++) {
+        j=rawPrice.length - i;
+        if(!(i % 3) && i < rawPrice.length) 
+          formatedPrice = "," + rawPrice[j] + formatedPrice;
+        else 
+          formatedPrice = rawPrice[j] + formatedPrice;
+      }
+      formatedPrice = "$" + formatedPrice;
       return (
         <div className="booking">
           <h2>{this.state.rental.name}</h2>
           <h3>{this.state.rental.address}</h3>
           <h3>{new Date(this.state.rental.date).toDateString().slice(4)}</h3>
-          <h4>{this.state.rental.price}</h4>
+          <h4>{formatedPrice}</h4>
           <button onClick={this.handleBooking}>Book now</button>
         </div>
       );
@@ -209,9 +230,15 @@ var GoogleMap = React.createClass({
 
   componentDidMount: function () {
     this.initializeMap();
-    RentStore.addEntryClickedListener(function (load) {
-      this.codeAddress(load.address);
-    }.bind(this));
+    RentStore.addEntryClickedListener(this.handleEntryClicked);
+  },
+
+  componentWillUnmount: function () {
+    RentStore.removeEntryClickedListener(this.handleEntryClicked);
+  },
+
+  handleEntryClicked: function (load) {
+    this.codeAddress(load.address);
   },
 
   codeAddress: function (address) {
