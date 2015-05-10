@@ -40,23 +40,20 @@ var Listings = React.createClass({
   },
 
   handleFilterChange: function (data) {
-    var newEntries =  this.state.allData.filter(function (item, index) {
-      if(data.date && !data.location) {
+    var newEntries =  this.state.allData;
+    if(data.date)
+      newEntries = newEntries.filter(function (item, index) {
         if(item.date && item.date.includes(data.date))
           return true;
-      }
-      else if (data.date && data.location) {
-        if(item.date && item.date.includes(data.date) && item.address.includes(data.location))
-          return true;
-      }
-      else if (!data.date && data.location) {
+        else return false;
+      });
+
+    if(data.location)
+      newEntries = newEntries.filter(function (item, index) {
         if(item.address.includes(data.location))
           return true;
-      }
-      else {
-        return true;
-      }
-    });
+        else return false;
+      });
 
     this.handleNewEntries(newEntries);
   },

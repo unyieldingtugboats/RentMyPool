@@ -142,7 +142,7 @@ exports.signUpUser = function(req, res) {
           res.status(500).send({errorMessage: 'error in saving user info to Database'});
         } 
         else {
-          utils.createSession(req,res,user.username);
+          utils.createSession(req,res,user);
         }
       });
     }
