@@ -6,7 +6,7 @@ var url = require('url');
 
 exports.stub = function (req,res) {
   console.log('stub', req.url);
-  res.status(204);
+  res.status(204).send();
 };
 
 exports.getUser = function (req, res) {
@@ -142,7 +142,7 @@ exports.signUpUser = function(req, res) {
           res.status(500).send({errorMessage: 'error in saving user info to Database'});
         } 
         else {
-          utils.createSession(req,res,user.username);
+          utils.createSession(req,res,user);
         }
       });
     }
