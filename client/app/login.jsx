@@ -9,6 +9,18 @@ var LoginContent = React.createClass({
     };  
   },
 
+  componentWillMount: function () {
+    AppStore.addUserLoginListener(this.handleUserLogin);
+  },
+
+  componentWillUnount: function () {
+    AppStore.removeUserLoginListener(this.handleUserLogin);
+  },
+
+  handleUserLogin: function () {
+    this.transitionTo("Home");
+  },
+
   handleSubmit: function (e) {
     e.preventDefault();
 

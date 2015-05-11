@@ -6,11 +6,12 @@ var _postLogin = function (user) {
       contentType: "application/json",
       data: JSON.stringify(user),
       statusCode: {
-        200: function (data) {
+        201: function (data) {
+          console.log("201");
           resolve(data);
         }
       }, 
-      error: function () {
+      error: function (err) {
         reject("Error");
       }
     });

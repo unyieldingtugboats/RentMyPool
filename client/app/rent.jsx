@@ -68,7 +68,7 @@ var Listings = React.createClass({
   render: function () {
     var listItems = this.state.data.map(function (item, index) {
       return (
-        <ListEntry key={index} date={item.date} name={item.name} address={item.address} price={item.price} />
+        <ListEntry key={index} id={item._id} date={item.date} name={item.name} address={item.address} price={item.price} />
       );
     });
 
@@ -127,8 +127,6 @@ var Filter = React.createClass({
 });
 
 var Booking = React.createClass({
-  
-  mixins: [ReactRouter.Navigation],
 
   getInitialState: function() {
     return {
@@ -153,6 +151,7 @@ var Booking = React.createClass({
   },
 
   handleBooking: function() {
+    console.log(this.state.rental)
     RentActions.newBooking(this.state.rental);
   },
 
@@ -191,11 +190,26 @@ var Booking = React.createClass({
 
 var RentContent = React.createClass({
 
+  mixins: [ReactRouter.Navigation],
+
   getInitialState: function () {
     return {
       data: [],
       date: ''
     };
+  },
+
+  componentWillMount: function () {
+    RentStore.addNewBookingListener(this.handleBooking);
+  },
+
+  componentWillUnmount: function () {
+    RentStore.removeNewBookingListener(this.handleBooking);
+  },
+
+  handleBooking: function (data) {
+    console.log("transition", this)
+    this.transitionTo("Confirmation");
   },
   
   render: function () {

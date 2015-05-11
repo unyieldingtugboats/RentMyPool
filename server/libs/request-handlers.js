@@ -49,7 +49,7 @@ exports.book = function(req, res) {
         pool.markModified('calendar');
         pool.save(function(err, pool) {
           if(err) { 
-            console.log('error in saving in booking');
+            console.log('error in saving in booking', err);
             res.status(500).send({errorMessage : 'error with saving booking'});
           }
           else {
