@@ -101,7 +101,8 @@ var CurrentUser = React.createClass({
   },
 
   handleClick: function () {
-    var userData;
+    var userListings;
+    var userBookings;
     var self = this;
 
     $.ajax({
@@ -110,15 +111,20 @@ var CurrentUser = React.createClass({
       method: "GET",
       statusCode: {
         200: function (data) {
-          userData = _.filter(data.results, function (item, index) {
+          userListings = _.filter(data.results, function (item, index) {
             if(item.user_id === self.state.user._id) return true
+            else return false;
+          });
+
+          userBookings = _.filter(data.results, function (item, index) {
+            if(item.booking_id === self.state.user._id) return true
             else return false;
           });
 
           if(self.state.user)
             self.setState({
               showDetails: !self.state.showDetails,
-              userListings: userData
+              userListings: userListings
             });
         }
       }
@@ -130,7 +136,7 @@ var CurrentUser = React.createClass({
       return (
         <div  onClick={this.handleClick} className="currentUser">
           <UserButton user={this.state.user} />
-          <UserDetails show={this.state.showDetails} user={this.state.user || {}} listings={this.state.userListings || []} />
+          <UserDetails show={this.state.showDetails} user={this.state.user || {}} listings={this.state.userListings || []} bookings={this.state.userBookings || []} />
         </div>
       );
   }
