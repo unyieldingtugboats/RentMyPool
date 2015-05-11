@@ -26,6 +26,8 @@ app.get('/currentUser', handlers.getUser);
 
 app.get('/favicon.ico', handlers.stub);
 
+app.get('/userBookings', handlers.getBookings);
+
 app.get('*', handlers.checkServeIndex);
 
 app.get('/rentItems', handlers.getListings);
@@ -34,7 +36,6 @@ app.post('/book', handlers.book);
 
 app.post('/list', handlers.addItemToListings);
 
-app.get('/userBookings', handlers.getBookings);
 
 app.post('/uploadimg', handlers.uploadImage);
 

@@ -151,7 +151,7 @@ var Booking = React.createClass({
   },
 
   handleBooking: function() {
-    console.log(this.state.rental)
+    console.log(this.state.rental);
     RentActions.newBooking(this.state.rental);
   },
 
@@ -209,7 +209,6 @@ var RentContent = React.createClass({
   },
 
   handleBooking: function (data) {
-    console.log("transition", this)
     this.transitionTo("Confirmation");
   },
   
