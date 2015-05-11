@@ -34,6 +34,8 @@ app.post('/book', handlers.book);
 
 app.post('/list', handlers.addItemToListings);
 
+app.get('/userBookings', handlers.getBookings);
+
 app.post('/uploadimg', handlers.uploadImage);
 
 app.get('/signup', handlers.serveIndex);

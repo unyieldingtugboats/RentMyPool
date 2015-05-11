@@ -42,34 +42,6 @@ exports.getListings = function(req, res) {
 
 exports.book = function(req, res) {
   var info = req.body;
-<<<<<<< HEAD
-  if(info.date.length === 10) {
-    Item.findOne({_id : info._id}, function(err, pool) {
-      if(!err) {
-        pool.calendar = pool.calendar || {};
-        pool.calendar[info.date] = true;
-        pool.markModified('calendar');
-        pool.save(function(err, pool) {
-          if(err) { 
-            console.log('error in saving in booking', err);
-            res.status(500).send({errorMessage : 'error with saving booking'});
-          }
-          else {
-            res.status(302).send('Payment');
-          }
-        });
-      }
-      else {
-        console.log('error in query of db for booking');
-        res.status(500).send({errorMessage: 'error in query of db for booking'});
-      }
-    })
-  }
-  else {
-    console.log('date is fudged up!');
-    res.status(500).send({errorMessage: 'error with date in booking!'});
-  }
-=======
   utils.checkUser(req, res, function() {
     if(info.date.length === 10) {
       Item.findOne({_id : info._id}, function(err, pool) {
@@ -102,7 +74,6 @@ exports.book = function(req, res) {
       res.status(400).send({errorMessage: 'error with date in booking!'});
     }
   });
->>>>>>> -added booker_id to item schema
 };
 
 exports.serveIndex = function(req, res) {
@@ -225,7 +196,7 @@ exports.login = function(req, res) {
   });
 };
 
-exports.getbookings = function(req,res) {
+exports.getBookings = function(req,res) {
   console.log('getBookings');
   var info = req.bod;
   var user = req.session.user;
