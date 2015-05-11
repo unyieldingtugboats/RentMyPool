@@ -25,6 +25,7 @@ var UserButton = React.createClass({
 var UserListing = React.createClass({
 
   render: function  () {
+    
     return (
       <div>
         <span>
@@ -50,12 +51,46 @@ var UserListing = React.createClass({
 
 });
 
+var UserBooking = React.createClass({
+
+  render: function  () {
+    
+    return (
+      <div>
+        <span>
+          {"Date: " + this.props.booking.date}
+        </span>
+        <br />
+        <span>
+          {"Name: " + this.props.booking.name}
+        </span>
+        <br />
+        <span>
+          {"Address: " + this.props.booking.address}
+        </span>
+        <br />
+        <span>
+          {"Price: " + this.props.booking.price}
+        </span>
+        <br />
+        <br />
+      </div>
+    );
+  }
+
+});
+
 var UserDetails = React.createClass({
 
   render: function () {
     var userListings = this.props.listings.map(function (item, index){
       return (
         <UserListing key={index} listing={item} />
+      );
+    });
+    var userBookings = this.props.bookings.map(function (item, index){
+      return (
+        <UserBooking key={index} booking={item} />
       );
     });
 
@@ -67,6 +102,10 @@ var UserDetails = React.createClass({
           <h2>{this.props.listings.length} Listings</h2>
           <br />
           {userListings}
+          <br />
+          <h2>{this.props.bookings.length} Bookings</h2>
+          <br />
+          {userBookings}
         </div>
       </div>
     );
@@ -116,11 +155,6 @@ var CurrentUser = React.createClass({
             else return false;
           });
 
-          userBookings = _.filter(data.results, function (item, index) {
-            if(item.booking_id === self.state.user._id) return true
-            else return false;
-          });
-
           if(self.state.user)
             self.setState({
               showDetails: !self.state.showDetails,
@@ -130,6 +164,19 @@ var CurrentUser = React.createClass({
       }
     });
     
+    $.ajax({
+      url: "/userBookings",
+      contentType: "application/json",
+      method: "GET",
+      statusCode: {
+        200: function (data) {
+          if(self.state.user)
+            self.setState({
+              userBookings: data.results
+            });
+        }
+      }
+    });
   },
 
   render: function () {
@@ -167,7 +214,6 @@ var Main = React.createClass({
           {name:'Home'},
           {name:'Rent'},
           {name:'List'},
-          {name:'Img Upload'},
           {name: 'Login'}
         ] } />
         <div className="main">
@@ -184,7 +230,6 @@ var routing = function () {
           <Route name="Home" handler={Content} />
           <Route name="Rent" handler={RentContent} />
           <Route name="List" handler={ListContent} />
-          <Route name="Img Upload" handler={ImgUploadContent} />
           <Route name="Login" handler={LoginContent} />
           <Route name="Sign Up" handler={SignUpContent} />
           <Route name="Confirmation" handler={ConfirmationContent} />

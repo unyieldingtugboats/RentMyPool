@@ -177,6 +177,7 @@ hr {
     left: 0%;
     text-align: right;
     visibility: visible;
+    overflow-y: scroll;
     background-color: #beecea;
     transition: left 1.3s, width 1.3s;
 }

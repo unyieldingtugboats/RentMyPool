@@ -1,7 +1,6 @@
 var _fetchEntries = function () {
   return new Promise(function (resolve, reject) {
     $.get("/rentItems", function (data) {
-      console.dir(data);
       resolve(data);
     });
   });
@@ -16,7 +15,6 @@ var _postBooking = function (date, id) {
       data: JSON.stringify({date : date, _id : id}),
       statusCode: {
         302: function (data) {
-          console.log("Posted:", data);
           resolve({
             statusCode: 302,
             data: data
@@ -84,7 +82,6 @@ RentDispatcher.register(function (action) {
   actions[RentConstants.NEW_BOOKING] = function () {
     _postBooking(action.load.date, action.load.id)
       .then(function (data) {
-        console.log("THEN")
         RentStore.emit(RentConstants.NEW_BOOKING, data);
       })
       .catch(function (err) {
