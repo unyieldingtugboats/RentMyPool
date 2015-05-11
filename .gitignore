@@ -10,6 +10,7 @@ logs
 *.1
 *.ns
 *.lock
+.DS_store
 journal
 
 # Runtime data
