@@ -24,9 +24,9 @@
 
 > This app allows users to either post thier own pool for rent or search through a list of posted pools to rent. A user is first taken to the home page. From there, the user will either need to Sign-Up or Login. After Login, the user can navigate to the List page or the Rent page. 
 
-From the List page the user can post thier pool to the site, uploading thier Name, Address, Price of thier pool, Date thier pool is available and an image of thier pool. 
+> From the List page the user can post thier pool to the site, uploading thier Name, Address, Price of thier pool, Date thier pool is available and an image of thier pool. 
 
-From the Rent page the user sees a list of pools that are available for rent. Users are able to search through available pools by Date or Location. Clicking on a pool in the list shows it's location on the map and an image of the pool below. Users are then alble to select the "Book Now" button which redirects them to the payments page. Payments are facilitated through Stripe API. 
+> From the Rent page the user sees a list of pools that are available for rent. Users are able to search through available pools by Date or Location. Clicking on a pool in the list shows it's location on the map and an image of the pool below. Users are then alble to select the "Book Now" button which redirects them to the payments page. Payments are facilitated through Stripe API. 
 
 
 ## Requirements
