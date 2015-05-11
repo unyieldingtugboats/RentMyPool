@@ -1,6 +1,7 @@
 var _fetchEntries = function () {
   return new Promise(function (resolve, reject) {
     $.get("/rentItems", function (data) {
+      console.dir(data);
       resolve(data);
     });
   });

@@ -36,7 +36,8 @@ var ListContent = React.createClass({
       name: e.target.name.value,
       address: e.target.address.value,
       price: e.target.price.value,
-      date: e.target.date.value
+      date: e.target.date.value,
+      file: e.target.userPhoto.files[0]
     }, 
       function () {
         ListingsActions.listingSubmitted(this.state);
@@ -62,7 +63,9 @@ var ListContent = React.createClass({
           <input name="date" id="datepicker" placeholder={this.state.date} type="text" />
           <br />
           <br />
-          <input type="file" name="file" />
+          <input type="file" id="userPhotoInput" name="userPhoto" />
+          <br />
+          <br />
           <input type="submit" />
         </form>
       </div>

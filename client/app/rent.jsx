@@ -68,7 +68,7 @@ var Listings = React.createClass({
   render: function () {
     var listItems = this.state.data.map(function (item, index) {
       return (
-        <ListEntry key={index} id={item._id} date={item.date} name={item.name} address={item.address} price={item.price} />
+        <ListEntry key={index} id={item._id} imgPath={item.img} date={item.date} name={item.name} address={item.address} price={item.price} />
       );
     });
 
@@ -178,6 +178,7 @@ var Booking = React.createClass({
         <div className="booking">
           <h2>{this.state.rental.name}</h2>
           <h3>{this.state.rental.address}</h3>
+          <img className="poolImg" src={this.state.rental.imgPath}/> 
           <h3>{new Date(this.state.rental.date).toDateString().slice(4)}</h3>
           <h4>{formatedPrice}</h4>
           <button onClick={this.handleBooking}>Book now</button>

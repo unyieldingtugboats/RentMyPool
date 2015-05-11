@@ -46,8 +46,8 @@ var LoginContent = React.createClass({
           <input type="password" name="password" placeholder={this.state.password} onChange={this.handleChange} />
           <br /> 
           <br />
-          <input type="submit" value="Login"/>
-          <Link to="Sign Up">Sign Up</Link>
+          <input className="nav-link" type="submit" value="Login"/>
+          <Link className="btn-link" to="Sign Up">Sign Up</Link>
         </form>
       </div>
     );

@@ -8,7 +8,7 @@ var session = require('express-session');
 var handlers = require('./libs/request-handlers');
 
 var app = express()
-app.use(multer({ dest: './uploads/'}))
+app.use(multer({ dest: '../client/res/imgs/'}))
 
 app.use(bodyParser.json());
 app.use(express.static(__dirname + '/../client'));

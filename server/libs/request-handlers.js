@@ -29,6 +29,7 @@ exports.getListings = function(req, res) {
               return !item.calendar.hasOwnProperty(date);
             })
             console.log('sending items back!');
+            console.log(resultItems);
             res.status(200).send({results: resultItems});
           }
           else {
@@ -92,6 +93,7 @@ exports.checkServeIndex = function(req, res) {
 
 exports.addItemToListings = function(req, res) {
   console.log('addItemToListings');
+  console.log( req.body);
   utils.checkUser(req, res, function() {
     var itemInfo = req.body;
     var newPool = new Item({ 
@@ -99,7 +101,8 @@ exports.addItemToListings = function(req, res) {
       address : itemInfo.address,
       price : itemInfo.price,
       date: itemInfo.date,
-      user_id: itemInfo.user_id
+      user_id: itemInfo.user_id,
+      img: itemInfo.file
     });
     newPool.save(function(err) {
       if(err) {
@@ -118,8 +121,8 @@ exports.uploadImage = function(req, res) {
   console.log('uploadImage', req.url);
   utils.checkUser(req,res,function() {
     console.log('Uploading');
-    console.log( req.files);
-    res.status(201).send('1');
+    var path = req.files.file.path;
+    res.status(201).send(req.files.file.path.substring(9));
   });
 };
 
