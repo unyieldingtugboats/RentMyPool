@@ -43,14 +43,14 @@
 
 Dependencies for both the frontend and backend need to be installed.
 
--Installing Frontend Dependencies... 
+- Installing Frontend Dependencies... 
 
 In your terminal, from within the client directory:
 
 ```sh
 bower install
 ```
--Installing Backend Dependencies...
+- Installing Backend Dependencies...
 
 In your terminal, from within the server directory:
 
