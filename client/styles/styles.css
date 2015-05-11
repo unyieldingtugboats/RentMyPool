@@ -13,6 +13,11 @@ body{
 
 }
 
+.poolImg {
+    width: 300px;
+}
+
+
 .main {
     padding : 2em;
 }
@@ -30,6 +35,23 @@ body{
     padding-left : 40px;
 }
 
+.btn-link{
+    display: inline-block;
+    padding: 13px 20px;
+    cursor:pointer;
+    background-color:#eee;
+    color:#fff;
+    text-decoration: none;
+    background-color:#41c7c2;
+    border-radius: 10px;
+    margin : 20px;
+    transition:0.3s;
+}
+
+.btn-link:hover{
+    background-color:#beecea;
+    color:#7B8585;
+}
 
 .nav-link{
     display: inline-block;

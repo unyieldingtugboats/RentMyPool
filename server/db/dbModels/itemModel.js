@@ -9,7 +9,8 @@ var itemSchema = mongoose.Schema({
   calendar: {},
   rules: [],
   date: "",
-  user_id: {type: String, required: true}
+  user_id: {type: String, required: true},
+  img : {type: String, required: false}
 });
 
 var Item = mongoose.model('Item', itemSchema );
