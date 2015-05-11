@@ -14,6 +14,7 @@ var ImgUploadContent = React.createClass({
   render: function () {
     return (
       <div className="uploadView">
+        <LoginTransitioner />
         <h1>Upload Image</h1>
         <form id="uploadForm"
           onSubmit={this.handleSubmit}>
