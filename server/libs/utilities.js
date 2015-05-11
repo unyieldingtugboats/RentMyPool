@@ -36,6 +36,6 @@ exports.createSession = function(request, response, user) {
         }
         request.session.user = user;
         console.log('created that session, redirect to home');
-        response.status(200).send(user);
+        response.status(201).send(user);
     });
 }

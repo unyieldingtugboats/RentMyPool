@@ -62,6 +62,7 @@ var ListContent = React.createClass({
           <input name="date" id="datepicker" placeholder={this.state.date} type="text" />
           <br />
           <br />
+          <input type="file" name="file" />
           <input type="submit" />
         </form>
       </div>

@@ -68,7 +68,7 @@ var Listings = React.createClass({
   render: function () {
     var listItems = this.state.data.map(function (item, index) {
       return (
-        <ListEntry key={index} date={item.date} name={item.name} address={item.address} price={item.price} />
+        <ListEntry key={index} id={item._id} date={item.date} name={item.name} address={item.address} price={item.price} />
       );
     });
 
@@ -153,6 +153,7 @@ var Booking = React.createClass({
   },
 
   handleBooking: function() {
+    console.log(this.state.rental)
     RentActions.newBooking(this.state.rental);
   },
 
