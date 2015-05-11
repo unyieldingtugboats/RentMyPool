@@ -127,8 +127,6 @@ var Filter = React.createClass({
 });
 
 var Booking = React.createClass({
-  
-  mixins: [ReactRouter.Navigation],
 
   getInitialState: function() {
     return {
@@ -192,11 +190,26 @@ var Booking = React.createClass({
 
 var RentContent = React.createClass({
 
+  mixins: [ReactRouter.Navigation],
+
   getInitialState: function () {
     return {
       data: [],
       date: ''
     };
+  },
+
+  componentWillMount: function () {
+    RentStore.addNewBookingListener(this.handleBooking);
+  },
+
+  componentWillUnmount: function () {
+    RentStore.removeNewBookingListener(this.handleBooking);
+  },
+
+  handleBooking: function (data) {
+    console.log("transition", this)
+    this.transitionTo("Confirmation");
   },
   
   render: function () {

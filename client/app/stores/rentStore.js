@@ -21,7 +21,7 @@ var _postBooking = function (date, id) {
             data: data
           });
         },
-        error: function (err) {
+        500: function (err) {
           console.log("Error:", err)
           reject(err);
         }
@@ -83,10 +83,11 @@ RentDispatcher.register(function (action) {
   actions[RentConstants.NEW_BOOKING] = function () {
     _postBooking(action.load.date, action.load.id)
       .then(function (data) {
+        console.log("THEN")
         RentStore.emit(RentConstants.NEW_BOOKING, data);
       })
       .catch(function (err) {
-        console.log("Booking Error.");
+        console.log("Booking Error.",err);
       });
   };
 

@@ -181,7 +181,7 @@ var routing = function () {
           <Route name="Img Upload" handler={ImgUploadContent} />
           <Route name="Login" handler={LoginContent} />
           <Route name="Sign Up" handler={SignUpContent} />
-          <Route name="Payment" handler={PaymentContent} />
+          <Route name="Confirmation" handler={ConfirmationContent} />
           <DefaultRoute handler={Content} />
         </Route>
       );
