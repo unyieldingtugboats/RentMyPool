@@ -1,14 +1,5 @@
 # RentMyPool
 
-## Team
-
-  - __Product Owner__: Eden Mazzola
-  - __Scrum Master__: Derek Boero
-  - __Development Team Members__: 
-    John Pizzo,
-    Eden Mazzola,
-    Derek Boero,
-    David Kiesewetter
 
 ## Table of Contents
 
@@ -19,6 +10,7 @@
     1. [Tasks](#tasks)
 1. [Team](#team)
 1. [Contributing](#contributing)
+
 
 ## Usage
 
@@ -31,11 +23,19 @@
 
 ## Requirements
 
-- Node 0.10.x
-- Redis 2.6.x
-- Postgresql 9.1.x
-- etc
-- etc
+- React 0.13.2
+- Jquery 2.1.4
+- React-Router 0.13.3
+- Underscore 1.8.3
+- Bcrypt-nodejs 0.0.3
+- Body-parser 1.12.3
+- Express 4.12.3
+- Express-partials 0.3.0
+- Express-session 1.11.1
+- Mongodb 2.0.28
+- Mongoose 4.0.2
+- Multer 0.1.8
+- Node 0.12.2
 
 ## Development
 
@@ -62,6 +62,18 @@ npm install
 ### Roadmap
 
 View the project roadmap [here](LINK_TO_PROJECT_ISSUES)
+
+
+## Team
+
+  - __Product Owner__: Eden Mazzola
+  - __Scrum Master__: Derek Boero
+  - __Development Team Members__: 
+    John Pizzo,
+    Eden Mazzola,
+    Derek Boero,
+    David Kiesewetter
+
 
 
 ## Contributing
