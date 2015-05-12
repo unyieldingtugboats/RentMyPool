@@ -31,7 +31,7 @@ var ConfirmationContent = React.createClass({
     });
 
     return(
-      <div>
+      <div className="bookingCon">
         <h1>Booking Confirmed!</h1>
         <h3>{userBookings.length} Current Bookings</h3>
         {userBookings}

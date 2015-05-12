@@ -11,12 +11,12 @@ var SignUpContent = React.createClass({
   },
 
   handleSubmit: function (e) {
-    e.preventDefault();
+    var $form = $('#signUpForm')[0];
     var self = this;
 
     this.setState({
-      username: e.target.username.value,
-      password: e.target.password.value
+      username: $form.username.value,
+      password: $form.password.value
     },
       function () {
         $.ajax({
@@ -36,17 +36,17 @@ var SignUpContent = React.createClass({
 
   render: function () {
     return (
-      <div className="signUp">
+      <div className="login">
         <h1>Sign Up</h1>
         <br />
-        <form onSubmit={this.handleSubmit}>
-          <input name="username" placeholder={this.state.username} onChange={this.handleChange} />
+        <form id="signUpForm">
+          <input className="loginInput" name="username" placeholder={this.state.username} onChange={this.handleChange} />
           <br />
           <br />
-          <input type="password" name="password" placeholder={this.state.password} onChange={this.handleChange} />
+          <input className="loginInput" type="password" name="password" placeholder={this.state.password} onChange={this.handleChange} />
           <br />
           <br />
-          <input type="submit" value="Sign Up" />
+          <a className="btn-link" onClick={this.handleSubmit}>Sign Up</a>
         </form>
       </div>
     );
