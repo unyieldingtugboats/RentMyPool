@@ -13,6 +13,53 @@ body{
 
 }
 
+.home h1 {
+    padding-top: 30px;
+    text-align: center;
+    color: #eee;
+    text-shadow: 2px 2px 4px #000000;
+}
+.signUp h1 {
+    padding-top: 30px;
+    text-align: center;
+    color: #eee;
+    text-shadow: 2px 2px 4px #000000;
+}
+.login h1 {
+    padding-top: 30px;
+    text-align: center;
+    color: #eee;
+    text-shadow: 2px 2px 4px #000000;
+}
+
+.rentPool h1 {
+    padding-top: 30px;
+    color: #eee;
+    text-shadow: 2px 2px 4px #000000;
+}
+
+.booking h3 {
+    color: #eee;
+    text-shadow: 2px 2px 4px #000000;
+}
+
+.listView h1 {
+    padding-top: 30px;
+    text-align: center;
+    color: #eee;
+    text-shadow: 2px 2px 4px #000000;
+}
+
+.poolImg {
+    width: 300px; 
+}
+
+.main {
+    height: 100%;
+    background-image: url('/res/pool1.jpg');
+    background-size: cover;   
+}
+
 .poolImg {
     width: 300px;
 }
@@ -105,24 +152,12 @@ body{
     background-color:#41c7c2;
 }
 
-.introImgDiv {
-    margin-top : 50px;
-
-}
-
-.introImgDiv img {
-  width :500px;
-  border-radius : 20px;
-}
-
-
 .listEntry {
     margin : 0px;
     width : 460px;
     background-color: #eee;
     padding: 10px;
     cursor: pointer;
-
     transition:0.3s;
 }
 
@@ -134,6 +169,7 @@ body{
     height: 80%;
     width: 65%;
     margin: auto auto;
+    
 }
 
 .noShow {
