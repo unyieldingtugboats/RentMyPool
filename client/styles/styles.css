@@ -55,6 +55,11 @@ body{
     width: 350px;
 }
 
+.h4book {
+    color: #eee;
+    text-shadow: 2px 2px 4px #000000;
+}
+
 .poolImg {
     width: 300px; 
 }

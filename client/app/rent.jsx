@@ -176,11 +176,11 @@ var Booking = React.createClass({
       formatedPrice = "$" + formatedPrice;
       return (
         <div className="booking">
-          <h2>{this.state.rental.name}</h2>
+          <h2 className="h4book">{this.state.rental.name}</h2>
           <h3>{this.state.rental.address}</h3>
           <img className="poolImg" src={this.state.rental.imgPath}/> 
           <h3>{new Date(this.state.rental.date).toDateString().slice(4)}</h3>
-          <h4>{formatedPrice}</h4>
+          <h4 className="h4book">{formatedPrice}</h4>
           <button onClick={this.handleBooking}>Book now</button>
         </div>
       );
