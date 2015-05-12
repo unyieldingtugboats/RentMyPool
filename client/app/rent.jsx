@@ -68,7 +68,7 @@ var Listings = React.createClass({
   render: function () {
     var listItems = this.state.data.map(function (item, index) {
       return (
-        <ListEntry key={index} date={item.date} name={item.name} address={item.address} price={item.price} />
+        <ListEntry key={index} id={item._id} imgPath={item.img} date={item.date} name={item.name} address={item.address} price={item.price} />
       );
     });
 
@@ -127,8 +127,6 @@ var Filter = React.createClass({
 });
 
 var Booking = React.createClass({
-  
-  mixins: [ReactRouter.Navigation],
 
   getInitialState: function() {
     return {
@@ -153,6 +151,7 @@ var Booking = React.createClass({
   },
 
   handleBooking: function() {
+    console.log(this.state.rental);
     RentActions.newBooking(this.state.rental);
   },
 
@@ -179,6 +178,7 @@ var Booking = React.createClass({
         <div className="booking">
           <h2>{this.state.rental.name}</h2>
           <h3>{this.state.rental.address}</h3>
+          <img className="poolImg" src={this.state.rental.imgPath}/> 
           <h3>{new Date(this.state.rental.date).toDateString().slice(4)}</h3>
           <h4>{formatedPrice}</h4>
           <button onClick={this.handleBooking}>Book now</button>
@@ -191,17 +191,32 @@ var Booking = React.createClass({
 
 var RentContent = React.createClass({
 
+  mixins: [ReactRouter.Navigation],
+
   getInitialState: function () {
     return {
       data: [],
       date: ''
     };
   },
+
+  componentWillMount: function () {
+    RentStore.addNewBookingListener(this.handleBooking);
+  },
+
+  componentWillUnmount: function () {
+    RentStore.removeNewBookingListener(this.handleBooking);
+  },
+
+  handleBooking: function (data) {
+    this.transitionTo("Confirmation");
+  },
   
   render: function () {
     
     return (
       <div>
+        <LoginTransitioner />
         <h1>Rent a Pool</h1>
         <Filter cb={this}/>
         <div className="showRents">

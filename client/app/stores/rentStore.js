@@ -12,7 +12,7 @@ var _postBooking = function (date, id) {
       url: "/book",
       method: "POST",
       contentType: "application/json",
-      data: JSON.stringify({date : this.props.date, _id : this.props.rental.item._id}),
+      data: JSON.stringify({date : date, _id : id}),
       statusCode: {
         302: function (data) {
           resolve({
@@ -20,7 +20,7 @@ var _postBooking = function (date, id) {
             data: data
           });
         },
-        error: function (err) {
+        500: function (err) {
           console.log("Error:", err)
           reject(err);
         }
@@ -40,7 +40,7 @@ var RentStore = ObjectAssign({}, EventEmitter.prototype, {
   },
 
   addNewBookingListener: function (callback) {
-
+    this.on(RentConstants.NEW_BOOKING, callback);
   },
 
   addFilterChangeListener: function (callback) {
@@ -56,7 +56,7 @@ var RentStore = ObjectAssign({}, EventEmitter.prototype, {
   },
 
   removeNewBookingListener: function (callback) {
-
+    this.removeListener(RentConstants.NEW_BOOKING, callback);
   },
 
   removeFilterChangeListener: function (callback) {
@@ -83,7 +83,10 @@ RentDispatcher.register(function (action) {
     _postBooking(action.load.date, action.load.id)
       .then(function (data) {
         RentStore.emit(RentConstants.NEW_BOOKING, data);
-      }.bind(this));
+      })
+      .catch(function (err) {
+        console.log("Booking Error.",err);
+      });
   };
 
   actions[RentConstants.FILTER_CHANGE] = function () {

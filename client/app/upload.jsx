@@ -5,7 +5,8 @@ var ImgUploadContent = React.createClass({
     form.append("file",e.target.userPhoto.files[0])
     var xhr = new XMLHttpRequest();
     xhr.open('post', '/uploadimg', true);
-    xhr.onload= function () {
+    xhr.onload= function (data) {
+      console.log(xhr.responseText);
       console.log("loaded.");
     }
     xhr.send(form);
@@ -14,6 +15,7 @@ var ImgUploadContent = React.createClass({
   render: function () {
     return (
       <div className="uploadView">
+        <LoginTransitioner />
         <h1>Upload Image</h1>
         <form id="uploadForm"
           onSubmit={this.handleSubmit}>

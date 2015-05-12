@@ -29,6 +29,7 @@ exports.getListings = function(req, res) {
               return !item.calendar.hasOwnProperty(date);
             })
             console.log('sending items back!');
+            console.log(resultItems);
             res.status(200).send({results: resultItems});
           }
           else {
@@ -41,32 +42,38 @@ exports.getListings = function(req, res) {
 
 exports.book = function(req, res) {
   var info = req.body;
-  if(info.date.length === 10) {
-    Item.findOne({_id : info._id}, function(err, pool) {
-      if(!err) {
-        pool.calendar = pool.calendar || {};
-        pool.calendar[info.date] = true;
-        pool.markModified('calendar');
-        pool.save(function(err, pool) {
-          if(err) { 
-            console.log('error in saving in booking');
-            res.status(500).send({errorMessage : 'error with saving booking'});
-          }
-          else {
-            res.status(302).send('Payment');
-          }
-        });
-      }
-      else {
-        console.log('error in query of db for booking');
-        res.status(500).send({errorMessage: 'error in query of db for booking'});
-      }
-    })
-  }
-  else {
-    console.log('date is fudged up!');
-    res.status(500).send({errorMessage: 'error with date in booking!'});
-  }
+  utils.checkUser(req, res, function() {
+    if(info.date.length === 10) {
+      Item.findOne({_id : info._id}, function(err, pool) {
+        if(!err) {
+          var user = req.session.user;
+
+          pool.booker_id = user._id;
+          pool.calendar = pool.calendar || {};
+          pool.calendar[info.date] = true;
+          pool.markModified('calendar');
+
+          pool.save(function(err, pool) {
+            if(err) { 
+              console.log('error in saving in booking');
+              res.status(500).send({errorMessage : 'error with saving booking'});
+            }
+            else {
+              res.status(302).send('Payment');
+            }
+          });
+        }
+        else {
+          console.log('error in query of db for booking');
+          res.status(500).send({errorMessage: 'error in query of db for booking'});
+        }
+      })
+    }
+    else {
+      console.log('date is fudged up!');
+      res.status(400).send({errorMessage: 'error with date in booking!'});
+    }
+  });
 };
 
 exports.serveIndex = function(req, res) {
@@ -92,13 +99,16 @@ exports.checkServeIndex = function(req, res) {
 
 exports.addItemToListings = function(req, res) {
   console.log('addItemToListings');
+  console.log( req.body);
   utils.checkUser(req, res, function() {
     var itemInfo = req.body;
     var newPool = new Item({ 
       name : itemInfo.name, 
       address : itemInfo.address,
       price : itemInfo.price,
-      date: itemInfo.date
+      date: itemInfo.date,
+      user_id: itemInfo.user_id,
+      img: itemInfo.file
     });
     newPool.save(function(err) {
       if(err) {
@@ -117,8 +127,8 @@ exports.uploadImage = function(req, res) {
   console.log('uploadImage', req.url);
   utils.checkUser(req,res,function() {
     console.log('Uploading');
-    console.log( req.files);
-    res.status(201).send('1');
+    var path = req.files.file.path;
+    res.status(201).send(req.files.file.path.substring(9));
   });
 };
 
@@ -185,3 +195,21 @@ exports.login = function(req, res) {
     }
   });
 };
+
+exports.getBookings = function(req,res) {
+  console.log('getBookings');
+  var info = req.bod;
+  var user = req.session.user;
+  utils.checkUser(req, res, function() {
+    Item.find({booker_id : user._id}, function (err, bookings) {
+      if(err) { 
+        console.log('error in querying db for bookings', err);
+        res.status(500).send({errorMessage: 'error in querying db for bookings'});
+      }
+      else {
+        console.log('success in getting bookings');
+        res.status(200).send({results: bookings});
+      }
+    });
+  });
+}

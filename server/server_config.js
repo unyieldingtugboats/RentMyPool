@@ -8,7 +8,7 @@ var session = require('express-session');
 var handlers = require('./libs/request-handlers');
 
 var app = express()
-app.use(multer({ dest: './uploads/'}))
+app.use(multer({ dest: '../client/res/imgs/'}))
 
 app.use(bodyParser.json());
 app.use(express.static(__dirname + '/../client'));
@@ -26,6 +26,8 @@ app.get('/currentUser', handlers.getUser);
 
 app.get('/favicon.ico', handlers.stub);
 
+app.get('/userBookings', handlers.getBookings);
+
 app.get('*', handlers.checkServeIndex);
 
 app.get('/rentItems', handlers.getListings);
@@ -33,6 +35,7 @@ app.get('/rentItems', handlers.getListings);
 app.post('/book', handlers.book);
 
 app.post('/list', handlers.addItemToListings);
+
 
 app.post('/uploadimg', handlers.uploadImage);
 
