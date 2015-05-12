@@ -36,7 +36,11 @@ var ListingsStore = ObjectAssign({}, EventEmitter.prototype, {
 
   addListingSubmittedListener: function (callback) {
     this.on(ListingsConstants.LISTING_SUBMITTED, callback);
-  }
+  },
+  
+  removeListingSubmittedListener: function (callback) {
+    this.removeListener(ListingsConstants.LISTING_SUBMITTED, callback);
+  },
 
 });
 

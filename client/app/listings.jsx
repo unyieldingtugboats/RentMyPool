@@ -1,5 +1,7 @@
 var ListContent = React.createClass({
 
+  mixins: [ReactRouter.Navigation],
+
   getInitialState: function() {
   return {
     name: 'Name',
@@ -12,6 +14,7 @@ var ListContent = React.createClass({
 
   componentWillMount: function () {
     AppStore.addFetchUserListener(this.handleFetchUser);
+    ListingsStore.addListingSubmittedListener(this.handleListingSubmitted);
   },
 
   componentDidMount: function () {
@@ -21,6 +24,11 @@ var ListContent = React.createClass({
 
   componentWillUnmount: function () {
     AppStore.removeFetchUserListener(this.handleFetchUser);
+    ListingsStore.removeListingSubmittedListener(this.handleListingSubmitted);
+  },
+
+  handleListingSubmitted: function () {
+    this.transitionTo("Rent");
   },
 
   handleFetchUser: function (data) {
