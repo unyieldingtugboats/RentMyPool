@@ -30,14 +30,14 @@ var ListContent = React.createClass({
   },
 
   handleSubmit: function (e) {
-    e.preventDefault();
+    var $form = $("#listingForm")[0];
 
     this.setState({
-      name: e.target.name.value,
-      address: e.target.address.value,
-      price: e.target.price.value,
-      date: e.target.date.value,
-      file: e.target.userPhoto.files[0]
+      name: $form.name.value,
+      address: $form.address.value,
+      price: $form.price.value,
+      date: $form.date.value,
+      file: $form.userPhoto.files[0]
     }, 
       function () {
         ListingsActions.listingSubmitted(this.state);
@@ -50,23 +50,23 @@ var ListContent = React.createClass({
       <div className="listView">
         <LoginTransitioner />
         <h1>List a Pool</h1>
-        <form onSubmit={this.handleSubmit}>
-          <input name="name" placeholder={this.state.name} type="text" />
+        <form id="listingForm">
+          <input className="listingInput" name="name" placeholder={this.state.name} type="text" />
           <br />
           <br />
-          <input name="address" placeholder={this.state.address} type="text" />
+          <input className="listingInput" name="address" placeholder={this.state.address} type="text" />
           <br />
           <br />
-          <input name="price" placeholder={this.state.price} type="text" />
+          <input className="listingInput" name="price" placeholder={this.state.price} type="text" />
           <br />
           <br />
-          <input name="date" id="datepicker" placeholder={this.state.date} type="text" />
+          <input className="listingInput" name="date" id="datepicker" placeholder={this.state.date} type="text" />
           <br />
           <br />
           <input type="file" id="userPhotoInput" name="userPhoto" />
           <br />
           <br />
-          <input type="submit" />
+          <a className="btn-link" onClick={this.handleSubmit}>List</a>
         </form>
       </div>
     );
