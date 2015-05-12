@@ -49,6 +49,11 @@ body{
     color: #eee;
     text-shadow: 2px 2px 4px #000000;
 }
+.bookingCon {
+    background-color: rgba(118, 123, 123, .4);
+    color: #fff;
+    width: 350px;
+}
 
 .poolImg {
     width: 300px; 
