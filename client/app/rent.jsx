@@ -344,8 +344,15 @@ var GoogleMap = React.createClass({
   codeAddress: function (address) {
     if (this.oldMarker) this.oldMarker.setMap(null);
     this.geocoder.geocode( { 'address': address}, function(results, status) {
+
+      // Extract the city and state from Google location object (to use with weather API)
+      // address[1] is the city name
+      // address[2] is the 2-digit state abbreviation
+      var address = /,\s([a-zA-Z\s]+),\s(\w{2})/g.exec(results[0].formatted_address);
+
       if (status == google.maps.GeocoderStatus.OK) {
         this.map.setCenter(results[0].geometry.location);
+
         var marker = new google.maps.Marker({
             map: this.map,
             position: results[0].geometry.location
