@@ -328,6 +328,7 @@ var GoogleMap = React.createClass({
   map: null,
   geocoder: new google.maps.Geocoder(),
   oldMarker: null,
+  address: [],
 
   componentDidMount: function () {
     this.initializeMap();
@@ -349,7 +350,10 @@ var GoogleMap = React.createClass({
       // Extract the city and state from Google location object (to use with weather API)
       // address[1] is the city name
       // address[2] is the 2-digit state abbreviation
-      var address = /,\s([a-zA-Z\s]+),\s(\w{2})/g.exec(results[0].formatted_address);
+      this.address = /,\s([a-zA-Z\s]+),\s(\w{2})/g.exec(results[0].formatted_address);
+      this.address = [this.address[1],this.address[2]];
+      // dispatch event for sending city/state data to weather component
+      RentActions.sendCityState(this.address);
 
       if (status == google.maps.GeocoderStatus.OK) {
         this.map.setCenter(results[0].geometry.location);
@@ -384,9 +388,23 @@ var GoogleMap = React.createClass({
 
 // Create Weather component
 var Weather = React.createClass({
+  getInitialState: function() {
+    return {
+      city: 'san fran'
+    }
+  },
+
+  componentDidMount: function() {
+    RentStore.addCityStateListener(this.updateInfo);
+  },
+
+  updateInfo: function(data) {
+    this.setState({city: data[0]});
+    console.log('from the weather component:', data);
+  },
 
   render: function() {
-    return ( <div id="weather">It be hot</div> );
+    return ( <div id="weather">It be hot in {this.state.city}</div> );
   }
 });
 

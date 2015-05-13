@@ -105,6 +105,10 @@ var RentStore = ObjectAssign({}, EventEmitter.prototype, {
     this.on(RentConstants.NEW_REVIEW, callback);
   },
 
+  addCityStateListener: function (callback) {
+    this.on(RentConstants.CITYSTATE, callback);
+  },
+
   removeEntryClickedListener: function (callback) {
     this.removeListener(RentConstants.ENTRY_CLICKED, callback);
   },
@@ -185,6 +189,10 @@ RentDispatcher.register(function (action) {
       .catch(function (err) {
         console.log('error', err);
       });
+  },
+
+  actions[RentConstants.CITYSTATE] = function() {
+    RentStore.emit(RentConstants.CITYSTATE, action.load);
   };
 
   actions[action.type]();
