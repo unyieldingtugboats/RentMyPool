@@ -282,4 +282,7 @@ hr {
     transition: left 1.3s, width 1.3s;
 }
 
-
+#weather {
+    background: rgba(255,255,255,0.9);
+    font-size: 2em;
+}

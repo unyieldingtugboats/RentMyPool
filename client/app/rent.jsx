@@ -314,6 +314,7 @@ var RentContent = React.createClass({
           </div>
           <div className="showDetails">
             <GoogleMap />
+            <Weather />
           </div>
         </div>
       </div>
@@ -379,5 +380,13 @@ var GoogleMap = React.createClass({
     );
   }
 
+});
+
+// Create Weather component
+var Weather = React.createClass({
+
+  render: function() {
+    return ( <div id="weather">It be hot</div> );
+  }
 });
 
