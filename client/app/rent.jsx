@@ -136,6 +136,8 @@ var Filter = React.createClass({
   }
 });
 
+// view for an individual booking, including a map view and image of the pool
+// this view shows when a listing is selected from the list
 var Booking = React.createClass({
 
   getInitialState: function() {
@@ -145,6 +147,7 @@ var Booking = React.createClass({
     };
   },
 
+  // listen for when an entry is clicked
   componentDidMount: function () {
     RentStore.addEntryClickedListener(this.handleEntryClicked);
   },
@@ -173,6 +176,7 @@ var Booking = React.createClass({
         </div>
         );
     } else {
+      // format price display
       var formatedPrice = "";
       var rawPrice = String(this.state.rental.price);
       var j;
@@ -184,14 +188,24 @@ var Booking = React.createClass({
           formatedPrice = rawPrice[j] + formatedPrice;
       }
       formatedPrice = "$" + formatedPrice;
+
+      console.log(this.state.rental);
       return (
         <div className="booking">
           <h2 className="h4book">{this.state.rental.name}</h2>
+          <h2 className="h4book">{this.state.rental.user_id}</h2>
           <h3>{this.state.rental.address}</h3>
           <img className="poolImg" src={this.state.rental.imgPath}/> 
           <h3>{new Date(this.state.rental.date).toDateString().slice(4)}</h3>
           <h4 className="h4book">{formatedPrice}</h4>
           <button className="button" onClick={this.handleBooking}>Book now</button>
+          <h3>Reviews for this Renter:</h3>
+          <h4 className="h4book">Leave a Review:</h4>
+            <form id="review">
+              <textarea rows="4" cols="50" type="text" name="comment" placeholder="Comments">
+              </textarea>
+              <button className="button">Submit Review</button>
+            </form>
         </div>
       );
     }
