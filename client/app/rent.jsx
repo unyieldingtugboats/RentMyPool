@@ -1,3 +1,4 @@
+// view for an individual entry in the pool listing
 var ListEntry = React.createClass({
 
   handleClick: function () {
@@ -14,6 +15,7 @@ var ListEntry = React.createClass({
 
 });
 
+// view for the list of available pools
 var Listings = React.createClass({
 
   getInitialState: function () {
@@ -23,6 +25,14 @@ var Listings = React.createClass({
     };
   },
 
+  /*
+   * before mounting:
+   * - add listeners. 
+   *   addFetchEntriesListener listens for changes in the data (ex. adding a new listing), and refreshes the list
+   *    addFilterChangeListener listens for search input and filters the data
+   * - fetch the entries from the server, which triggers this.refreshResults
+   *
+   */
   componentWillMount: function () {
     RentStore.addFetchEntriesListener(this.refreshResults);
     RentStore.addFilterChangeListener(this.handleFilterChange);
@@ -181,7 +191,7 @@ var Booking = React.createClass({
           <img className="poolImg" src={this.state.rental.imgPath}/> 
           <h3>{new Date(this.state.rental.date).toDateString().slice(4)}</h3>
           <h4 className="h4book">{formatedPrice}</h4>
-          <button onClick={this.handleBooking}>Book now</button>
+          <button className="button" onClick={this.handleBooking}>Book now</button>
         </div>
       );
     }
