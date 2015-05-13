@@ -10,7 +10,7 @@ html{
 }
 
 body{
-
+  font-size: 19px;
 }
 
 .home h1 {
@@ -55,9 +55,21 @@ body{
     width: 350px;
 }
 
+.filter input{
+  font-size: 19px;
+}
+
 .h4book {
     color: #eee;
     text-shadow: 2px 2px 4px #000000;
+}
+
+.button {
+  color: white;
+  border-style: none;
+  border-color: black;
+  padding: 10px;
+  font-size: 19px;
 }
 
 .poolImg {
@@ -68,6 +80,7 @@ body{
     height: 100%;
     background-image: url('/res/pool1.jpg');
     background-size: cover;   
+    background-attachment: fixed;
 }
 
 .poolImg {
@@ -90,6 +103,7 @@ body{
     background-color:#eee;
     width : 100%;
     padding-left : 40px;
+    position: fixed;
 }
 
 
