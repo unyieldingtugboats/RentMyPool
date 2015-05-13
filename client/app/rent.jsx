@@ -313,8 +313,10 @@ var RentContent = React.createClass({
             <Booking />
           </div>
           <div className="showDetails">
-            <GoogleMap />
-            <Weather />
+            <div className="mapWeatherContainer">
+              <GoogleMap />
+              <Weather />
+            </div>
           </div>
         </div>
       </div>
@@ -390,9 +392,11 @@ var GoogleMap = React.createClass({
 var Weather = React.createClass({
   getInitialState: function() {
     return {
-      city: 'san fran',
-      state: 'ca',
-      temp: 134
+      city: '',
+      state: '',
+      currentTemp: null,
+      icon: 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7', // 1x1 transparent gif
+      uv: null
     }
   },
 
@@ -405,7 +409,7 @@ var Weather = React.createClass({
   },
 
   render: function() {
-    return ( <div id="weather">It be {this.state.temp} in {this.state.city}, {this.state.state}</div> );
+    return ( <div id="weather"><img width="50" height="50" src={this.state.icon} /> {this.state.currentTemp} {this.state.city} {this.state.state}</div> );
   }
 });
 

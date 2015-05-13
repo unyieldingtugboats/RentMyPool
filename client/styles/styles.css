@@ -202,8 +202,8 @@ body{
 }
 
 #map-canvas {
-    height: 80%;
-    width: 65%;
+    height: 50%;
+    width: 90%;
     margin: auto auto;
     
 }
@@ -232,6 +232,14 @@ body{
     position: relative;
     width: 55%;
     float: left;
+}
+
+.mapWeatherContainer {
+    width: 70%;
+    background: rgba(20,20,20,0.9);
+    padding: 4% 0;
+    margin: auto auto;
+    border-radius: 10px;
 }
 
 .currentUser {
@@ -283,6 +291,11 @@ hr {
 }
 
 #weather {
-    background: rgba(255,255,255,0.9);
+    width: 90%;
+    background: rgba(240,240,240,.95);
     font-size: 2em;
+    color: #222;
+    padding: 4%;
+    margin: 4% auto 0 auto;
+    box-sizing: border-box;
 }
