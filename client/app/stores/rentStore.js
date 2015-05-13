@@ -79,6 +79,22 @@ var _postReview = function(review) {
   });
 };
 
+// call weather underground api
+var _getWeather = function(city, state, callback) {
+  $.ajax({
+    url : "http://api.wunderground.com/api/3bebaec867a8aa26/geolookup/conditions/q/" + state + "/" + city + ".json",
+    dataType : "jsonp",
+    success : function(parsed_json) {
+      var location = parsed_json['location']['city'];
+      var state = parsed_json['location']['state'];
+      var temp_f = String(Math.round(+parsed_json['current_observation']['temp_f']));
+      console.log("Current temperature in " + location+state + " is: " + temp_f);
+      console.log(parsed_json)
+      callback({city: location, state: state, temp: temp_f});
+    }
+  });
+};
+
 var RentStore = ObjectAssign({}, EventEmitter.prototype, {
 
   addEntryClickedListener: function (callback) {

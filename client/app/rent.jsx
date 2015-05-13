@@ -390,21 +390,22 @@ var GoogleMap = React.createClass({
 var Weather = React.createClass({
   getInitialState: function() {
     return {
-      city: 'san fran'
+      city: 'san fran',
+      state: 'ca',
+      temp: 134
     }
   },
 
   componentDidMount: function() {
-    RentStore.addCityStateListener(this.updateInfo);
+    RentStore.addCityStateListener(this.updateWeather);
   },
 
-  updateInfo: function(data) {
-    this.setState({city: data[0]});
-    console.log('from the weather component:', data);
+  updateWeather: function(data) {
+    _getWeather(data[0], data[1], this.setState.bind(this));
   },
 
   render: function() {
-    return ( <div id="weather">It be hot in {this.state.city}</div> );
+    return ( <div id="weather">It be {this.state.temp} in {this.state.city}, {this.state.state}</div> );
   }
 });
 
