@@ -56,6 +56,7 @@ var UserBooking = React.createClass({
   //cancel a booking
   handleCancel: function() {
     console.log(this.props);
+    RentActions.cancelBooking(this.props.booking._id);
   },
 
   render: function  () {

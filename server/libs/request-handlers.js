@@ -113,6 +113,12 @@ exports.book = function(req, res) {
   });
 };
 
+exports.cancelBooking = function(req, res) {
+  console.log('cancelBooking');
+  console.log(req.body);
+  res.status(201).send();
+};
+
 exports.serveIndex = function(req, res) {
   console.log('serveIndex', req.url);
   var options = {
