@@ -342,10 +342,11 @@ var GoogleMap = React.createClass({
   },
 
   handleEntryClicked: function (load) {
-    this.codeAddress(load);
+    this.codeAddress(load.listing);
   },
 
   codeAddress: function (data) {
+    console.log('wtf', data)
     if (this.oldMarker) this.oldMarker.setMap(null);
     this.geocoder.geocode( { 'address': data.address}, function(results, status) {
 
@@ -355,7 +356,6 @@ var GoogleMap = React.createClass({
       this.address = /,\s([a-zA-Z\s]+),\s(\w{2})/g.exec(results[0].formatted_address);
       this.address = [this.address[1],this.address[2]];
       // get day month year of listing
-      console.log('is the date in here? ', data)
       this.address.date = /(\d+)\/(\d+)\/(\d+)/g.exec(data.date);
       // dispatch event for sending city/state data to weather component
       RentActions.sendCityState(this.address);
