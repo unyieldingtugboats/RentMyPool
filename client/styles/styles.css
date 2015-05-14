@@ -234,14 +234,6 @@ body{
     float: left;
 }
 
-.mapWeatherContainer {
-    width: 70%;
-    background: rgba(20,20,20,0.9);
-    padding: 4% 0;
-    margin: auto auto;
-    border-radius: 10px;
-}
-
 .currentUser {
     float: right;
     font-size: 17px;
@@ -290,12 +282,60 @@ hr {
     transition: left 1.3s, width 1.3s;
 }
 
-#weather {
+.weather {
     width: 90%;
+    height: 120px;
     background: rgba(240,240,240,.95);
     font-size: 2em;
     color: #222;
-    padding: 4%;
-    margin: 4% auto 0 auto;
+    padding: 0;
+    margin: 5% auto 0 auto;
     box-sizing: border-box;
+}
+
+.mapWeatherContainer {
+    width: 70%;
+    background: rgba(20,20,20,0.9);
+    padding: 4% 0;
+    margin: auto auto;
+    border-radius: 10px;
+}
+
+.weatherTitle {
+    background: #193F85;
+    text-align: center;
+    color: #f0f0f0;
+    font-size: 0.8em;
+    padding: 4px 2px;
+}
+
+.weatherInfo {
+    padding: 0;
+    margin: 0;
+
+}
+
+.weatherInfo div {
+    width: 30%;
+    height: 87px;
+    margin: 0;
+    display: inline-block;
+    float:left;
+}
+
+.date {
+    background: #aaa;
+    font-size: 1.8em;
+    color: #f0f0f0;
+    text-align: center;
+}
+
+.weatherDescription {
+    font-size: 0.6em;
+    text-align: center;
+}
+
+.temp {
+    font-size: 2.8em;
+    text-align: center;
 }

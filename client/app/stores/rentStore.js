@@ -80,7 +80,7 @@ var _postReview = function(review) {
 };
 
 // call weather underground api
-var _getWeather = function(city, state, callback) {
+var _getWeather = function(city, state, day, month, year, callback) {
   $.ajax({
     url : "http://api.wunderground.com/api/3bebaec867a8aa26/forecast10day/conditions/q/" + state + "/" + city + ".json",
     dataType : "jsonp",
@@ -90,10 +90,10 @@ var _getWeather = function(city, state, callback) {
       var state = parsed_json['current_observation']['display_location']['state'];
       var temp_f = String(Math.round(+parsed_json['current_observation']['temp_f']));
       var icon = parsed_json['current_observation']['icon_url'];
-      console.log("Current temperature in " + location+state + " is: " + temp_f);
+      console.log("Current temperature in " + location+state + " is: " + temp_f + "day " + day);
 
       // update data for weather component
-      callback({city: location, state: state, currentTemp: temp_f, icon: icon});
+      callback({location: location+', '+state, date: day+'/'+month, currentTemp: temp_f, icon: icon});
     }
   });
 };
