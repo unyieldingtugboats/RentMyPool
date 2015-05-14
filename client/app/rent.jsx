@@ -65,6 +65,12 @@ var Listings = React.createClass({
         else return false;
       });
 
+    if(data.poolType)
+      newEntries = newEntries.filter(function (item, index) {
+        if(item.poolType.includes(data.poolType))
+          return true;
+        else return false;
+      });
     this.handleNewEntries(newEntries);
   },
 
@@ -96,6 +102,7 @@ var Filter = React.createClass({
     return {
       date: null,
       location : null,
+      poolType: null
     };
   },
 
@@ -125,19 +132,32 @@ var Filter = React.createClass({
     );
   },
 
+  handleTypeChange: function(e) {
+    this.setState({
+      poolType: e.target.value
+    },
+      function () {
+        RentActions.filterChange(this.state);
+      }
+    );
+  },
+
   render: function () {
 
     return (
       <div className="filter">
         <input type="text" id="datepicker" name="date" placeholder="Date" />
         <input type="text" name="location" placeholder="Location" onChange={this.handleLocationChange} />
+        <input type="text" name="location" placeholder="Type" onChange={this.handleTypeChange} />
       </div>
     );
   }
 });
 
+
 // view for an individual booking, including a map view and image of the pool
 // this view shows when a listing is selected from the list
+
 var Booking = React.createClass({
 
   getInitialState: function() {

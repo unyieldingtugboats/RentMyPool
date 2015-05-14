@@ -144,6 +144,7 @@ exports.addItemToListings = function(req, res) {
       address : itemInfo.address,
       price : itemInfo.price,
       date: itemInfo.date,
+      poolType: itemInfo.poolType,
       user_id: itemInfo.user_id,
       img: itemInfo.file
     });

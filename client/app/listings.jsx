@@ -8,12 +8,14 @@ var ListContent = React.createClass({
     address : 'Address',
     price : 'Price',
     date: "Date",
+    poolType: [],
     user_id: ""
     };
   },
 
   componentWillMount: function () {
     AppStore.addFetchUserListener(this.handleFetchUser);
+    ListingsStore.addPoolTypeAddListener(this.handlePoolTypeAdd);
     ListingsStore.addListingSubmittedListener(this.handleListingSubmitted);
   },
 
@@ -31,6 +33,14 @@ var ListContent = React.createClass({
     this.transitionTo("Rent");
   },
 
+  handlePoolTypeAdd: function (data) {
+    this.setState({ 
+    poolType: this.state.poolType.concat([data])
+    }, function(){
+      console.log('state: ', this.state);
+    })
+  },
+
   handleFetchUser: function (data) {
     this.setState({
       user_id: data._id
@@ -39,12 +49,14 @@ var ListContent = React.createClass({
 
   handleSubmit: function (e) {
     var $form = $("#listingForm")[0];
+    //get the props off of the dropdown component 
 
     this.setState({
       name: $form.name.value,
       address: $form.address.value,
       price: $form.price.value,
       date: $form.date.value,
+      // poolType: $form.poolType.value, //this is going to be an array of items selected from the dropdown
       file: $form.userPhoto.files[0]
     }, 
       function () {
@@ -59,6 +71,9 @@ var ListContent = React.createClass({
         <LoginTransitioner />
         <h1>List a Pool</h1>
         <form id="listingForm">
+          <DropdownClass  />   
+          <br />
+          <br />
           <input className="listingInput" name="name" placeholder={this.state.name} type="text" />
           <br />
           <br />
@@ -69,6 +84,9 @@ var ListContent = React.createClass({
           <br />
           <br />
           <input className="listingInput" name="date" id="datepicker" placeholder={this.state.date} type="text" />
+          <br />
+          <br />
+          <input className="listingInput" name="poolType" placeholder={this.state.poolType} type="text" />
           <br />
           <br />
           <input type="file" id="userPhotoInput" name="userPhoto" />
