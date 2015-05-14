@@ -395,9 +395,12 @@ var GoogleMap = React.createClass({
 var Weather = React.createClass({
   getInitialState: function() {
     return {
+      show: false,
       location: '',
       date: '',
-      currentTemp: null,
+      dayName: '',
+      highTemp: null,
+      conditions: '',
       icon: 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7', // 1x1 transparent gif
       uv: null
     }
@@ -413,22 +416,26 @@ var Weather = React.createClass({
   },
 
   render: function() {
-    return (<div className="weather">
-              <div className="weatherTitle">
-                Weather forecast for {this.state.location}
-              </div>
-              <div className="weatherInfo">
-                <div className="date">
-                 {this.state.date}
+    if(this.state.show === true) {
+      return (<div className="weather">
+                <div className="weatherTitle">
+                  Weather forecast for {this.state.location}
                 </div>
-                <div className="temp">
-                  {this.state.currentTemp}
+                <div className="weatherInfo">
+                  <div className="date">
+                   {this.state.date}<br/><span className="dayName">{this.state.dayName}</span>
+                  </div>
+                  <div className="temp">
+                    {this.state.highTemp}
+                  </div>
+                  <div className="weatherDescription"> 
+                    <img src={this.state.icon} /><br/>{this.state.conditions}
+                  </div>
                 </div>
-                <div className="weatherDescription"> 
-                  <img src={this.state.icon} /><br/>Partly Cloudy
-                </div>
-              </div>
-            </div> );
+              </div> );
+    } else {
+      return (<div></div>);
+    }
   }
 });
 

@@ -302,7 +302,7 @@ hr {
 }
 
 .weatherTitle {
-    background: #193F85;
+    background: #333;
     text-align: center;
     color: #f0f0f0;
     font-size: 0.8em;
@@ -325,9 +325,14 @@ hr {
 
 .date {
     background: #aaa;
-    font-size: 1.8em;
+    font-size: 1.6em;
     color: #f0f0f0;
     text-align: center;
+}
+
+.dayName {
+    font-size: 0.5em;
+    color: #444;
 }
 
 .weatherDescription {

@@ -88,12 +88,15 @@ var _getWeather = function(city, state, day, month, year, callback) {
       console.log(parsed_json)
       var location = parsed_json['current_observation']['display_location']['city'];
       var state = parsed_json['current_observation']['display_location']['state'];
-      var temp_f = String(Math.round(+parsed_json['current_observation']['temp_f']));
-      var icon = parsed_json['current_observation']['icon_url'];
-      console.log("Current temperature in " + location+state + " is: " + temp_f + "day " + day);
+      var icon = parsed_json['forecast']['simpleforecast']['forecastday'][0]['icon_url'];
+      var conditions = parsed_json['forecast']['simpleforecast']['forecastday'][0]['conditions'];
+      var highTemp = parsed_json['forecast']['simpleforecast']['forecastday'][0]['high']['fahrenheit'];
+      var day = parsed_json['forecast']['simpleforecast']['forecastday'][0]['date']['day'];
+      var month = parsed_json['forecast']['simpleforecast']['forecastday'][0]['date']['month'];
+      var dayName = parsed_json['forecast']['simpleforecast']['forecastday'][0]['date']['weekday'];
 
       // update data for weather component
-      callback({location: location+', '+state, date: day+'/'+month, currentTemp: temp_f, icon: icon});
+      callback({show: true, location: location+', '+state, date: month+'/'+day, dayName: dayName, highTemp: highTemp, conditions: conditions, icon: icon});
     }
   });
 };
