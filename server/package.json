@@ -11,7 +11,9 @@
     "express-session": "^1.11.1",
     "mongodb": "~2.0.28",
     "mongoose": "~4.0.2",
-    "multer": "^0.1.8"
+    "multer": "^0.1.8",
+    "react": "^0.13.3",
+    "react-star-rating": "^1.1.4"
   },
   "devDependencies": {},
   "scripts": {

@@ -152,6 +152,7 @@ var Booking = React.createClass({
   componentDidMount: function () {
     RentStore.addEntryClickedListener(this.handleEntryClicked);
     RentStore.addReviewSubmittedListener(this.refreshReviews);
+    RentStore.addNewReviewsListener(this.handleNewReviews);
   },
 
   componentWillUnmount: function () {
@@ -172,6 +173,10 @@ var Booking = React.createClass({
     });
   },
 
+  handleNewReviews: function () {
+    RentActions.fetchReviews(this.state.rental.listing.user_id);
+  },
+
   //refresh the reviews view
   refreshReviews: function (data) {
     console.log('reviews received!');
@@ -187,13 +192,17 @@ var Booking = React.createClass({
   },
 
   // handle a submitted review
-  handleSubmit: function() {
+  handleSubmit: function(e) {
+    e.preventDefault();
     var $form = $('#review')[0];
     var formData = {
       rating: Number($form.rating.value),
       comment: $form.comment.value,
       user_id: this.state.rental.listing.user_id
     };
+
+    $form.rating.value = '';
+    $form.comment.value = '';
 
     RentActions.reviewSubmitted(formData);
   },
@@ -218,7 +227,23 @@ var Booking = React.createClass({
           formatedPrice = rawPrice[j] + formatedPrice;
       }
       formatedPrice = "$" + formatedPrice;
+
+      //render list of reviews
       var reviews = this.state.reviews;
+      if(reviews.length) {
+        var reviewList = reviews.map(function (item, index) {
+          return (
+            <div key={index} className="review">
+              <form>
+                <StarRating name="rating" ratingAmount={5} rating={item.rating} disabled={true} />
+              </form>
+              <br />
+              <p>{item.comment}</p>
+            </div>
+          );
+        });
+      } else { reviews = {}; }
+
       console.log(reviews);
 
       return (
@@ -232,19 +257,19 @@ var Booking = React.createClass({
           <br />
           <br />
           <h3>Reviews for this Renter:</h3>
-            <h4>{reviews[0] ? reviews[0].comment : {}}</h4>
+            {reviewList}
           <br />
           <h4 className="h4book">Leave a Review:</h4>
             <form id="review">
-              <input type="text" name="rating" placeholder="Rating (1-5)" />
+              <StarRating name="rating" ratingAmount={5} />
               <br />
               <br />
               <textarea rows="4" cols="45" type="text" name="comment" placeholder="Comments">
               </textarea>
               <br />
               <br />
+              <input type="submit" value="Submit Review" className="button" onClick={this.handleSubmit}/>
             </form>
-            <button className="button" onClick={this.handleSubmit}>Submit Review</button>
         </div>
       );
     }

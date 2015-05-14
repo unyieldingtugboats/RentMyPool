@@ -101,6 +101,10 @@ var RentStore = ObjectAssign({}, EventEmitter.prototype, {
     this.on(RentConstants.REVIEW_SUBMITTED, callback);
   },
 
+  addNewReviewsListener: function (callback) {
+    this.on(RentConstants.NEW_REVIEW, callback);
+  },
+
   removeEntryClickedListener: function (callback) {
     this.removeListener(RentConstants.ENTRY_CLICKED, callback);
   },
@@ -160,6 +164,7 @@ RentDispatcher.register(function (action) {
     _postReview(action.load)
       .then(function (data) {
         console.log('posted');
+        RentStore.emit(RentConstants.NEW_REVIEW, data.data);
       })
       .catch(function (err) {
         console.log('error', err);
