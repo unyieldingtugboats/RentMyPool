@@ -5,6 +5,7 @@ var itemSchema = mongoose.Schema({
   name: {type: String, required: true},
   address: {type: String, required: true},
   price: {type: Number, required: true},
+  poolType: String, 
   calendar: {},
   rules: [],
   date: "", //change to an array for date ranges

@@ -42,6 +42,15 @@ var ListingsStore = ObjectAssign({}, EventEmitter.prototype, {
     this.removeListener(ListingsConstants.LISTING_SUBMITTED, callback);
   },
 
+  addPoolTypeAddListener: function (callback) {
+    this.on(ListingsConstants.POOL_TYPE_ADD, callback);
+  },
+
+  addPoolTypeRemoveListener: function (callback) {
+    this.on(ListingsConstants.POOL_TYPE_REMOVE, callback);
+  }
+
+
 });
 
 
@@ -52,6 +61,14 @@ ListingsDispatcher.register(function (action) {
     _postListing(action.load).then(function (data) {
       ListingsStore.emit(ListingsConstants.LISTING_SUBMITTED, data);
     });
+  };
+
+  actions[ListingsConstants.POOL_TYPE_ADD] = function () {
+    ListingsStore.emit(ListingsConstants.POOL_TYPE_ADD, action.load);
+  };
+
+  actions[ListingsConstants.POOL_TYPE_REMOVE] = function () {
+    ListingsStore.emit(ListingsConstants.POOL_TYPE_REMOVE, action.load);
   };
 
   actions[action.type]();

@@ -55,6 +55,7 @@ body{
 }
 
 .listView h1 {
+    width: 100%;
     padding-top: 30px;
     text-align: center;
     color: #eee;
@@ -105,6 +106,7 @@ body{
     padding : 2em;
 }
 
+
 .viewPort {
     overflow: hidden;
 }
@@ -122,14 +124,14 @@ body{
 
 .login {
     width: 20%;
-    margin-left: 40%;
-    margin-top: 7%;
+    margin: 0 auto;
+    /*margin-top: 7%;*/
     text-align: center;
 }
 
 .listView {
-    width: 20%;
-    margin-left: 40%;
+    width: 50%;
+    margin: 0 auto;
     margin-top: 4%;
     text-align: center;
 }
@@ -137,6 +139,10 @@ body{
 .listingInput {
     width: 80%;
     height: 35px;
+}
+
+#userPhotoInput {
+  width: 80%;
 }
 
 .loginInput {
@@ -153,7 +159,6 @@ body{
     color:#fff;
     text-decoration: none;
     background-color:#41c7c2;
-    border-radius: 10px;
     margin : 6px;
     width: 65%;
     height: 10px;
@@ -324,6 +329,104 @@ hr {
     float:left;
 }
 
+/////////////////////////////////////
+//        Dropdown                 //
+////////////////////////////////////
+
+.dropdown-items {
+  list-style-type: none;
+}
+
+.dropdown-item {
+  list-style-type: none;
+}
+
+
+.header {
+  height: 35px;
+  width: 100%;
+  color: white;
+  text-align: left;
+  background-color: #41c7c2;
+  margin: 0 auto;
+}
+.header .icon-options {
+  width: 1.563em;
+  height: 1.563em;
+  left: auto;
+}
+.header-inner {
+  float: right;
+  position: relative;
+  top: 0.2em;
+  right: 1em;
+}
+.dropdown-menu {
+  width: 100%;
+  color: #4D4D4D;
+  position: relative;
+  top: 0.13em;
+  /*left: auto;
+  right: 0.03em;*/
+  background-color: white;
+  box-shadow: -2px 2px 15px 2px rgba(0,0,0,0.15);
+  -webkit-transform-origin: 100% 0%;
+  transform-origin: 100% 0%;
+  transition: all 150ms;
+  display: none;
+}
+.dropdown-header {
+  padding: 0.9em 1em;
+  overflow: auto;
+}
+.dropdown-header .icon-options {
+  width: 1.563em;
+  height: 1.563em;
+  top: -0.1em;
+  left: 0.5em;
+}
+.dropdown-toggle {
+  float: right;
+}
+
+.icon {
+  width: 1.250em;
+  height: 1.250em;
+  position: relative;
+  cursor: pointer;
+}
+
+.icon svg {
+  max-width: 100%;
+  max-height: 100%;
+}
+.dropdown-items .dropdown-item {
+  margin: 0 auto;
+  text-align: center; 
+  padding: 0.9em 1em;
+  cursor: pointer;
+  opacity: 0;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.dropdown-items .dropdown-item:hover {
+  background-color: #f2f2f2;
+}
+
+.selected {
+  background-color: #f2f2f2;
+}
+
+.dropdown-item.selected li {
+  width: 100%;
+  text-align: center; 
+}
+
+.main-wrapper {
+  width: 80%;
+  margin: 0 auto;
+}
+
 .date {
     background: #aaa;
     font-size: 1.3em;
@@ -344,4 +447,8 @@ hr {
 .temp {
     font-size: 2em;
     text-align: center;
+}
+
+#dropdown-filter {
+  width: 30%;
 }
