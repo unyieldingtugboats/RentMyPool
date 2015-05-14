@@ -448,3 +448,7 @@ hr {
     font-size: 2em;
     text-align: center;
 }
+
+#dropdown-filter {
+  width: 30%;
+}
