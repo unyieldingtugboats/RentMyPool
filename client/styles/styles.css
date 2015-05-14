@@ -47,6 +47,13 @@ body{
     text-shadow: 2px 2px 4px #000000;
 }
 
+.review {
+  background-color: white;
+  padding: 10px;
+  margin: 5px;
+  margin-top: 10px;
+}
+
 .listView h1 {
     padding-top: 30px;
     text-align: center;
@@ -244,7 +251,7 @@ body{
 
 .userDetailsContainer {
     float: right;
-    position: absolute;
+    position: fixed;
     left: 83.3%;
     height: 100%;
     top: 41px;
