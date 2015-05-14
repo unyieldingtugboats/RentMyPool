@@ -80,20 +80,31 @@ var _postReview = function(review) {
 };
 
 // call weather underground api
-var _getWeather = function(city, state, day, month, year, callback) {
+var _getWeather = function(city, state, requestedMonth, requestedDay, weatherYear, callback) {
   $.ajax({
     url : "http://api.wunderground.com/api/3bebaec867a8aa26/forecast10day/conditions/q/" + state + "/" + city + ".json",
     dataType : "jsonp",
     success : function(parsed_json) {
-      console.log(parsed_json)
+      // compare current date with requested date
+      var forecasts = parsed_json['forecast']['simpleforecast']['forecastday'];
+
+      // try to find weather for requested day
+      var weatherDay = 0; // index of day to show
+
+      for(var i=0;i<forecasts.length;i++) {
+        if(forecasts[i].date.day == requestedDay && forecasts[i].date.month == requestedMonth) {
+          weatherDay = i; // 
+        } 
+      }
+
       var location = parsed_json['current_observation']['display_location']['city'];
       var state = parsed_json['current_observation']['display_location']['state'];
-      var icon = parsed_json['forecast']['simpleforecast']['forecastday'][0]['icon_url'];
-      var conditions = parsed_json['forecast']['simpleforecast']['forecastday'][0]['conditions'];
-      var highTemp = parsed_json['forecast']['simpleforecast']['forecastday'][0]['high']['fahrenheit'];
-      var day = parsed_json['forecast']['simpleforecast']['forecastday'][0]['date']['day'];
-      var month = parsed_json['forecast']['simpleforecast']['forecastday'][0]['date']['month'];
-      var dayName = parsed_json['forecast']['simpleforecast']['forecastday'][0]['date']['weekday'];
+      var icon = forecasts[weatherDay]['icon_url'];
+      var conditions = forecasts[weatherDay]['conditions'];
+      var highTemp = forecasts[weatherDay]['high']['fahrenheit'];
+      var day = forecasts[weatherDay]['date']['day'];
+      var month = forecasts[weatherDay]['date']['month'];
+      var dayName = forecasts[weatherDay]['date']['weekday'];
 
       // update data for weather component
       callback({show: true, location: location+', '+state, date: month+'/'+day, dayName: dayName, highTemp: highTemp, conditions: conditions, icon: icon});
