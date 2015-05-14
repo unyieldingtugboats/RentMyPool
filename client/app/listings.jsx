@@ -16,6 +16,7 @@ var ListContent = React.createClass({
   componentWillMount: function () {
     AppStore.addFetchUserListener(this.handleFetchUser);
     ListingsStore.addPoolTypeAddListener(this.handlePoolTypeAdd);
+    ListingsStore.addPoolTypeRemoveListener(this.handlePoolTypeRemove);
     ListingsStore.addListingSubmittedListener(this.handleListingSubmitted);
   },
 
@@ -37,8 +38,19 @@ var ListContent = React.createClass({
     this.setState({ 
     poolType: this.state.poolType.concat([data])
     }, function(){
-      console.log('state: ', this.state);
+      console.log('state: ', this.state.poolType);
     })
+  },
+
+  handlePoolTypeRemove: function(data) {
+    var newTypeList = this.state.poolType.filter(function(type){
+      return type !== data; 
+    });
+    this.setState({
+      poolType: newTypeList
+    }, function(){
+      console.log('new state: ', this.state.poolType);
+    });
   },
 
   handleFetchUser: function (data) {
@@ -73,6 +85,8 @@ var ListContent = React.createClass({
         <form id="listingForm">
           <DropdownClass  />   
           <br />
+          <input className="listingInput" name="poolType" placeholder="Select a pool type" value={this.state.poolType} type="text" />
+          <br />
           <br />
           <input className="listingInput" name="name" placeholder={this.state.name} type="text" />
           <br />
@@ -84,9 +98,6 @@ var ListContent = React.createClass({
           <br />
           <br />
           <input className="listingInput" name="date" id="datepicker" placeholder={this.state.date} type="text" />
-          <br />
-          <br />
-          <input className="listingInput" name="poolType" placeholder={this.state.poolType} type="text" />
           <br />
           <br />
           <input type="file" id="userPhotoInput" name="userPhoto" />

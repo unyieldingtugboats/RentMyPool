@@ -102,13 +102,23 @@ var Filter = React.createClass({
     return {
       date: null,
       location : null,
-      poolType: null
+      poolType: []
     };
+  },
+
+  componentWillMount: function() {
+    RentStore.addPoolTypeAddListener(this.handlePoolTypeAdd);
+    RentStore.addPoolTypeRemoveListener(this.handlePoolTypeRemove);
   },
 
   componentDidMount: function () {
     $( "#datepicker" ).datepicker()
       .on("input change", this.handleDateChange);
+  },
+
+  componentWillUnmount: function () {
+    RentStore.removePoolTypeAddListener(this.handlePoolTypeAdd); 
+    RentStore.removePoolTypeRemoveListener(this.handlePoolTypeRemove);
   },
 
   handleDateChange: function(e) {
@@ -132,23 +142,34 @@ var Filter = React.createClass({
     );
   },
 
-  handleTypeChange: function(e) {
-    this.setState({
-      poolType: e.target.value
-    },
-      function () {
-        RentActions.filterChange(this.state);
-      }
-    );
+  handlePoolTypeAdd: function (data) {
+    this.setState({ 
+    poolType: this.state.poolType.concat([data])
+    }, function(){
+      console.log('filter state: ', this.state.poolType);
+      RentActions.filterChange(this.state);
+    })
   },
 
+  handlePoolTypeRemove: function (data) {
+    var newTypeList = this.state.poolType.filter(function(type){
+      return type !== data; 
+    });
+    this.setState({
+      poolType: newTypeList
+    }, function(){
+      console.log('new state: ', this.state.poolType);
+      RentActions.filterChange(this.state);
+    });
+  },
+  
   render: function () {
 
     return (
       <div className="filter">
         <input type="text" id="datepicker" name="date" placeholder="Date" />
         <input type="text" name="location" placeholder="Location" onChange={this.handleLocationChange} />
-        <input type="text" name="location" placeholder="Type" onChange={this.handleTypeChange} />
+        <DropdownClass  />
       </div>
     );
   }

@@ -26,9 +26,35 @@ $.Velocity.RegisterUI("slideInLeft", {
 });
 
 var DropdownItem = React.createClass({
+  getInitialState: function() {
+    return {
+      selected: false,
+      classState: ''
+    }
+  },
+
+  handleClick : function() {
+    console.log('you clicked an item from inside dropdown item and it was: ', this.props.name);
+    if (!this.state.selected){
+      this.setState({
+        selected: true,
+        classState: 'selected'
+      })
+      ListingsActions.poolTypeAdded(this.props.name);
+    } else {
+      console.log('you already selected that!');
+      this.setState({
+        selected: false,
+        classState: ''
+      })
+      ListingsActions.poolTypeRemoved(this.props.name);
+    }
+  },
+
   render: function() {
+    var classes = classNames("dropdown-item", this.state.classState);
     return (
-      <li className="dropdown-item" onClick={this.props.handleClick}>{this.props.name}</li>
+      <li className={classes} onClick={this.handleClick}>{this.props.name}</li>
     );
   }
 });
@@ -36,14 +62,6 @@ var DropdownItem = React.createClass({
 
 
 var DropdownItems = React.createClass({
-  handleClick : function(i) {
-    $('li.dropdown-item').on('click', function(event) {
-      $(this).addClass('clicked');
-    });
-    console.log('you clicked an item from inside dropdown itemS and it was: ', this.props.items[i]);
-    //send the item added to the dispatcher
-    ListingsActions.poolTypeAdded(this.props.items[i]);
-  },
 
   getDefaultProps: function() {
     return {
@@ -59,7 +77,7 @@ var DropdownItems = React.createClass({
 
   render: function() {
     var items = this.props.items.map(function(item, i) {
-      return (<DropdownItem name={item} handleClick={this.handleClick.bind(this, i)} key={i} />);
+      return (<DropdownItem name={item} key={i} />);
     }.bind(this))
     return (
       <ul className="dropdown-items">
@@ -135,7 +153,7 @@ var DropdownClass = React.createClass({
   render: function() {
     return (
       <div className="main-wrapper">
-        <div className="header">
+        <div className="header"> Pool Type Selector
           <div className="header-inner">
             <Icon type="options" fill="#ffffff" handleClick={this.dropdownToggle}/>
           </div>

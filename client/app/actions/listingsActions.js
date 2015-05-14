@@ -10,10 +10,19 @@ var ListingsActions = {
   },
 
   poolTypeAdded: function (load) {
+  	console.log('dispatch.poolTypeAdded Called');
   	ListingsDispatcher.dispatch({
   		type: ListingsConstants.POOL_TYPE_ADD,
   		load: load
   	})
+  },
+
+  poolTypeRemoved: function (load) {
+  	ListingsDispatcher.dispatch({
+  		type: ListingsConstants.POOL_TYPE_REMOVE,
+  		load: load
+  	})
   }
+
 
 };

@@ -160,6 +160,22 @@ var RentStore = ObjectAssign({}, EventEmitter.prototype, {
 
   removeReviewSubmittedListener: function (callback) {
     this.removeListener(RentConstants.REVIEW_SUBMITTED, callback);
+  },
+
+  addPoolTypeAddListener: function(callback) {
+    this.on(ListingsConstants.POOL_TYPE_ADD, callback);
+  },
+
+  addPoolTypeRemoveListener: function(callback) {
+    this.on(ListingsConstants.POOL_TYPE_REMOVE, callback);
+  },
+
+  removePoolTypeAddListener: function(callback) {
+    this.removeListener(ListingsConstants.POOL_TYPE_ADD, callback);
+  },
+
+  removePoolTypeRemoveListener: function(callback) {
+    this.removeListener(ListingsConstants.POOL_TYPE_REMOVE, callback);
   }
 
 });
@@ -230,6 +246,25 @@ RentDispatcher.register(function (action) {
     RentStore.emit(RentConstants.CITYSTATE, action.load);
   };
 
+
   actions[action.type]();
 });
 
+ListingsDispatcher.register(function (action) {
+  var actions = {};
+
+  actions[ListingsConstants.POOL_TYPE_ADD] = function () {
+    console.log('pool type add dispatched event heard in rentStore');
+    RentStore.emit(ListingsConstants.POOL_TYPE_ADD, action.load);
+  };
+
+  actions[ListingsConstants.POOL_TYPE_REMOVE] = function () {
+    console.log('pool type remove dispatched event heard in rent store');
+    RentStore.emit(ListingsConstants.POOL_TYPE_REMOVE, action.load);
+  };
+  
+  if (actions[action.type]){
+    actions[action.type]();
+  }
+
+})
