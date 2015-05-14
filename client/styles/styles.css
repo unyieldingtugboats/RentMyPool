@@ -64,6 +64,7 @@ body{
     background-color: rgba(118, 123, 123, .4);
     color: #fff;
     width: 350px;
+    margin-top: 75px;
 }
 
 .filter input{

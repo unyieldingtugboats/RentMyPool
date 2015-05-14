@@ -144,7 +144,9 @@ RentDispatcher.register(function (action) {
   };
 
   actions[RentConstants.NEW_BOOKING] = function () {
-    _postBooking(action.load.date, action.load.id)
+    console.log('new booking');
+    console.log(action.load);
+    _postBooking(action.load.listing.date, action.load.listing._id)
       .then(function (data) {
         RentStore.emit(RentConstants.NEW_BOOKING, data);
       })
