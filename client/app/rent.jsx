@@ -167,9 +167,14 @@ var Filter = React.createClass({
 
     return (
       <div className="filter">
+      <div id="filter-input">
         <input type="text" id="datepicker" name="date" placeholder="Date" />
         <input type="text" name="location" placeholder="Location" onChange={this.handleLocationChange} />
+        <input type="text" name="poolType" placeholder="pool type" value={this.state.poolType} />
+      </div>
+      <div id="dropdown-filter">
         <DropdownClass  />
+      </div>  
       </div>
     );
   }
