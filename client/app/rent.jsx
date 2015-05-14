@@ -346,15 +346,15 @@ var GoogleMap = React.createClass({
   },
 
   codeAddress: function (data) {
-    console.log('wtf', data)
+    
     if (this.oldMarker) this.oldMarker.setMap(null);
     this.geocoder.geocode( { 'address': data.address}, function(results, status) {
-
+      console.log('wtf', results)
       // Extract the city and state from Google location object (to use with weather API)
       // address[1] is the city name
       // address[2] is the 2-digit state abbreviation
-      this.address = /,\s([a-zA-Z\s]+),\s(\w{2})/g.exec(results[0].formatted_address);
-      this.address = [this.address[1],this.address[2]];
+      this.address = /([a-zA-Z\s]+),\s([A-Z]{2})\s{0,1}/g.exec(results[0].formatted_address);
+      this.address = [this.address[1].trim(),this.address[2]];
       // get day month year of listing
       this.address.date = /(\d+)\/(\d+)\/(\d+)/g.exec(data.date);
       // dispatch event for sending city/state data to weather component
