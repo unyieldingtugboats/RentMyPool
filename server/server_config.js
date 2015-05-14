@@ -36,6 +36,9 @@ app.post('/book', handlers.book);
 
 app.post('/list', handlers.addItemToListings);
 
+app.post('/review', handlers.newReview);
+
+app.post('/userReviews', handlers.getReviews);
 
 app.post('/uploadimg', handlers.uploadImage);
 

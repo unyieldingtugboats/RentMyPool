@@ -8,7 +8,7 @@ var ListEntry = React.createClass({
   render: function () {
     return (
       <div className="listEntry" onClick={this.handleClick}>
-        {this.props.name +' - ' + this.props.address + ' - ' + this.props.price + ' - ' + new Date(this.props.date).toDateString().slice(3)}
+        {this.props.listing.name +' - ' + this.props.listing.address + ' - ' + this.props.listing.price + ' - ' + new Date(this.props.listing.date).toDateString().slice(3)}
       </div>
     );
   }
@@ -78,7 +78,7 @@ var Listings = React.createClass({
   render: function () {
     var listItems = this.state.data.map(function (item, index) {
       return (
-        <ListEntry key={index} id={item._id} imgPath={item.img} date={item.date} name={item.name} address={item.address} price={item.price} />
+        <ListEntry key={index} listing ={item} />
       );
     });
 
@@ -136,33 +136,66 @@ var Filter = React.createClass({
   }
 });
 
+// view for an individual booking, including a map view and image of the pool
+// this view shows when a listing is selected from the list
 var Booking = React.createClass({
 
   getInitialState: function() {
     return {
       noDetails: true,
-      rental: {}
+      rental: {},
+      reviews: []
     };
   },
 
+  // listen for when an entry is clicked
   componentDidMount: function () {
     RentStore.addEntryClickedListener(this.handleEntryClicked);
+    RentStore.addReviewSubmittedListener(this.refreshReviews);
   },
 
   componentWillUnmount: function () {
     RentStore.removeEntryClickedListener(this.handleEntryClicked);
+    RentStore.removeReviewSubmittedListener(this.refreshReviews);
   },
 
+  //shows the entry that was clicked
   handleEntryClicked: function (load) {
-   this.setState({
+    // get the listing entry
+    this.setState({
       noDetails: false,
       rental: load
+    }, function() { 
+        console.log(this.state.rental);
+        //get reviews
+        RentActions.fetchReviews(this.state.rental.listing.user_id);
+    });
+  },
+
+  //refresh the reviews view
+  refreshReviews: function (data) {
+    console.log('reviews received!');
+    this.setState({
+      reviews: data
+    }, function() { 
+        console.log(this.state.reviews);
     });
   },
 
   handleBooking: function() {
-    console.log(this.state.rental);
     RentActions.newBooking(this.state.rental);
+  },
+
+  // handle a submitted review
+  handleSubmit: function() {
+    var $form = $('#review')[0];
+    var formData = {
+      rating: Number($form.rating.value),
+      comment: $form.comment.value,
+      user_id: this.state.rental.listing.user_id
+    };
+
+    RentActions.reviewSubmitted(formData);
   },
 
   render: function () {
@@ -173,8 +206,9 @@ var Booking = React.createClass({
         </div>
         );
     } else {
+      // format price display
       var formatedPrice = "";
-      var rawPrice = String(this.state.rental.price);
+      var rawPrice = String(this.state.rental.listing.price);
       var j;
       for(var i = 1; i <= rawPrice.length; i++) {
         j=rawPrice.length - i;
@@ -184,14 +218,33 @@ var Booking = React.createClass({
           formatedPrice = rawPrice[j] + formatedPrice;
       }
       formatedPrice = "$" + formatedPrice;
+      var reviews = this.state.reviews;
+      console.log(reviews);
+
       return (
         <div className="booking">
-          <h2 className="h4book">{this.state.rental.name}</h2>
-          <h3>{this.state.rental.address}</h3>
-          <img className="poolImg" src={this.state.rental.imgPath}/> 
-          <h3>{new Date(this.state.rental.date).toDateString().slice(4)}</h3>
+          <h2 className="h4book">{this.state.rental.listing.name}</h2>
+          <h3>{this.state.rental.listing.address}</h3>
+          <img className="poolImg" src={this.state.rental.listing.img}/> 
+          <h3>{new Date(this.state.rental.listing.date).toDateString().slice(4)}</h3>
           <h4 className="h4book">{formatedPrice}</h4>
           <button className="button" onClick={this.handleBooking}>Book now</button>
+          <br />
+          <br />
+          <h3>Reviews for this Renter:</h3>
+            <h4>{reviews[0] ? reviews[0].comment : {}}</h4>
+          <br />
+          <h4 className="h4book">Leave a Review:</h4>
+            <form id="review">
+              <input type="text" name="rating" placeholder="Rating (1-5)" />
+              <br />
+              <br />
+              <textarea rows="4" cols="45" type="text" name="comment" placeholder="Comments">
+              </textarea>
+              <br />
+              <br />
+            </form>
+            <button className="button" onClick={this.handleSubmit}>Submit Review</button>
         </div>
       );
     }
@@ -260,7 +313,7 @@ var GoogleMap = React.createClass({
   },
 
   handleEntryClicked: function (load) {
-    this.codeAddress(load.address);
+    this.codeAddress(load.listing.address);
   },
 
   codeAddress: function (address) {

@@ -11,6 +11,10 @@ html{
 
 body{
   font-size: 19px;
+   background-image: url('/res/pool1.jpg');
+   background-size: cover;   
+   background-attachment: fixed;
+   padding-bottom: 20px;
 }
 
 .home h1 {
@@ -59,6 +63,10 @@ body{
   font-size: 19px;
 }
 
+#review textarea, input {
+  font-size: 19px;
+}
+
 .h4book {
     color: #eee;
     text-shadow: 2px 2px 4px #000000;
@@ -78,9 +86,6 @@ body{
 
 .main {
     height: 100%;
-    background-image: url('/res/pool1.jpg');
-    background-size: cover;   
-    background-attachment: fixed;
 }
 
 .poolImg {

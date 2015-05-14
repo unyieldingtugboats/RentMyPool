@@ -16,6 +16,13 @@ var RentActions = {
     });
   },
 
+  fetchReviews: function(data) {
+    RentDispatcher.dispatch({
+      type: RentConstants.FETCH_REVIEWS,
+      load: data
+    });
+  },
+
   newBooking: function (data) {
     RentDispatcher.dispatch({
       type: RentConstants.NEW_BOOKING,
@@ -26,6 +33,13 @@ var RentActions = {
   filterChange: function (data) {
     RentDispatcher.dispatch({
       type: RentConstants.FILTER_CHANGE,
+      load: data
+    });
+  },
+
+  reviewSubmitted: function (data) { 
+    RentDispatcher.dispatch({
+      type: RentConstants.REVIEW_SUBMITTED,
       load: data
     });
   }

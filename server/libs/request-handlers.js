@@ -1,6 +1,7 @@
 var utils = require('./utilities.js');
 var Item = require('./../db/dbModels/itemModel.js');
 var User = require('./../db/dbModels/userModel.js');
+var Review = require('./../db/dbModels/reviewModel.js');
 var url = require('url');
 
 
@@ -37,6 +38,42 @@ exports.getListings = function(req, res) {
               res.status(500).send({errorMessage: 'error in retrieving listings'});
           }
       })
+  });
+};
+
+exports.newReview = function(req, res) {
+  console.log('newReview');
+  console.log(req.body);
+  
+  var review = {
+    rating: req.body.rating,
+    comment: req.body.comment
+  };
+
+  User.findByIdAndUpdate(
+    req.body.user_id,
+    {$push: {"reviews": review}},
+    {safe: true, upsert: true},
+    function(err, model) {
+      if(err) {
+        console.log(err);
+        res.status(500).send();
+      }
+      res.status(201).send();
+    });
+};
+
+exports.getReviews = function(req, res) {
+  console.log('getReviews');
+  console.log(req.body);
+
+  User.findById(req.body.user_id, function(err, user) {
+    if(err) {
+      console.log(err);
+      res.status(500).send();
+    }
+    console.log(user);
+    res.status(201).send(user.reviews);
   });
 };
 
