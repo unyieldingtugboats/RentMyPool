@@ -37,9 +37,16 @@ var RentActions = {
     });
   },
 
+
   reviewSubmitted: function (data) { 
     RentDispatcher.dispatch({
       type: RentConstants.REVIEW_SUBMITTED,
+    });
+  },
+
+  sendCityState: function (data) {
+    RentDispatcher.dispatch({
+      type: RentConstants.CITYSTATE,
       load: data
     });
   }

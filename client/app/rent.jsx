@@ -313,7 +313,10 @@ var RentContent = React.createClass({
             <Booking />
           </div>
           <div className="showDetails">
-            <GoogleMap />
+            <div className="mapWeatherContainer">
+              <GoogleMap />
+              <Weather />
+            </div>
           </div>
         </div>
       </div>
@@ -327,6 +330,7 @@ var GoogleMap = React.createClass({
   map: null,
   geocoder: new google.maps.Geocoder(),
   oldMarker: null,
+  address: [],
 
   componentDidMount: function () {
     this.initializeMap();
@@ -338,14 +342,27 @@ var GoogleMap = React.createClass({
   },
 
   handleEntryClicked: function (load) {
-    this.codeAddress(load.listing.address);
+    this.codeAddress(load.listing);
   },
 
-  codeAddress: function (address) {
+  codeAddress: function (data) {
+    console.log('wtf', data)
     if (this.oldMarker) this.oldMarker.setMap(null);
-    this.geocoder.geocode( { 'address': address}, function(results, status) {
+    this.geocoder.geocode( { 'address': data.address}, function(results, status) {
+
+      // Extract the city and state from Google location object (to use with weather API)
+      // address[1] is the city name
+      // address[2] is the 2-digit state abbreviation
+      this.address = /,\s([a-zA-Z\s]+),\s(\w{2})/g.exec(results[0].formatted_address);
+      this.address = [this.address[1],this.address[2]];
+      // get day month year of listing
+      this.address.date = /(\d+)\/(\d+)\/(\d+)/g.exec(data.date);
+      // dispatch event for sending city/state data to weather component
+      RentActions.sendCityState(this.address);
+
       if (status == google.maps.GeocoderStatus.OK) {
         this.map.setCenter(results[0].geometry.location);
+
         var marker = new google.maps.Marker({
             map: this.map,
             position: results[0].geometry.location
@@ -372,5 +389,53 @@ var GoogleMap = React.createClass({
     );
   }
 
+});
+
+// Create Weather component
+var Weather = React.createClass({
+  getInitialState: function() {
+    return {
+      show: false,
+      location: '',
+      date: '',
+      dayName: '',
+      highTemp: null,
+      conditions: '',
+      icon: 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7', // 1x1 transparent gif
+      uv: null
+    }
+  },
+
+  componentDidMount: function() {
+    RentStore.addCityStateListener(this.updateWeather);
+  },
+
+  updateWeather: function(data) {
+    console.log('is the date here?? ',data)
+    _getWeather(data[0], data[1], data.date[1], data.date[2], data.date[3], this.setState.bind(this));
+  },
+
+  render: function() {
+    if(this.state.show === true) {
+      return (<div className="weather">
+                <div className="weatherTitle">
+                  Weather forecast for {this.state.location}
+                </div>
+                <div className="weatherInfo">
+                  <div className="date">
+                   {this.state.date}<br/><span className="dayName">{this.state.dayName}</span>
+                  </div>
+                  <div className="temp">
+                    {this.state.highTemp}
+                  </div>
+                  <div className="weatherDescription"> 
+                    <img src={this.state.icon} /><br/>{this.state.conditions}
+                  </div>
+                </div>
+              </div> );
+    } else {
+      return (<div></div>);
+    }
+  }
 });
 
