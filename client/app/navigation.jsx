@@ -53,6 +53,11 @@ var UserListing = React.createClass({
 
 var UserBooking = React.createClass({
 
+  //cancel a booking
+  handleCancel: function() {
+    console.log(this.props);
+  },
+
   render: function  () {
     
     return (
@@ -71,6 +76,10 @@ var UserBooking = React.createClass({
         <br />
         <span>
           {"Price: " + this.props.booking.price}
+        </span>
+        <br />
+        <span>
+          <button onClick={this.handleCancel} className="button">Cancel Booking</button>
         </span>
         <br />
         <br />
