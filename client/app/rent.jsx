@@ -227,7 +227,6 @@ var Booking = React.createClass({
       reviews: [],
       errors: '',
       avgRating: 0,
-      reviews: []
     };
   },
 
