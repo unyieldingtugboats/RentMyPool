@@ -335,7 +335,7 @@ var Booking = React.createClass({
           <h3>{this.state.rental.listing.address}</h3>
           <img className="poolImg" src={this.state.rental.listing.img}/> 
           <h3>{new Date(this.state.rental.listing.date).toDateString().slice(4)}</h3>
-          <h4 className="h4book">{formatedPrice}</h4>
+          <h4 className="h4book">{formatedPrice}/hour</h4>
           <h4 className="h4book"> Pool Features </h4>
           <p className="h4book"> {poolFeatures} </p>
           {bookingButton}
