@@ -48,8 +48,8 @@ var Listings = React.createClass({
   },
 
   componentWillUnmount: function () {
-    RentStore.removeListener(RentConstants.FETCH_ENTRIES, this.refreshResults);
-    RentStore.removeListener(RentConstants.FILTER_CHANGE, this.handleFilterChange);    
+    RentStore.removeDaListener(RentConstants.FETCH_ENTRIES, this.refreshResults);
+    RentStore.removeDaListener(RentConstants.FILTER_CHANGE, this.handleFilterChange);    
   },
 
   handleNewEntries: function (data) {
@@ -219,8 +219,8 @@ var Booking = React.createClass({
   },
 
   componentWillUnmount: function () {
-    RentStore.removeListener(RentConstants.ENTRY_CLICKED, this.handleEntryClicked);
-    RentStore.removeListener(RentConstants.REVIEW_SUBMITTED, this.refreshReviews);
+    RentStore.removeDaListener(RentConstants.ENTRY_CLICKED, this.handleEntryClicked);
+    RentStore.removeDaListener(RentConstants.REVIEW_SUBMITTED, this.refreshReviews);
   },
 
   removeDetails: function () {
@@ -370,7 +370,7 @@ var RentContent = React.createClass({
   },
 
   componentWillUnmount: function () {
-    RentStore.removeListener(RentConstants.NEW_BOOKING, this.handleBooking);
+    RentStore.removeDaListener(RentConstants.NEW_BOOKING, this.handleBooking);
   },
 
   handleBooking: function (data) {
@@ -415,7 +415,7 @@ var GoogleMap = React.createClass({
   },
 
   componentWillUnmount: function () {
-    RentStore.removeListener(RentConstants.ENTRY_CLICKED, this.handleEntryClicked);
+    RentStore.removeDaListener(RentConstants.ENTRY_CLICKED, this.handleEntryClicked);
   },
 
   handleEntryClicked: function (load) {

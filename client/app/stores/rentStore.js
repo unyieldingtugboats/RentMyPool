@@ -138,12 +138,12 @@ var _getWeather = function(city, state, requestedMonth, requestedDay, weatherYea
 
 var RentStore = ObjectAssign({}, EventEmitter.prototype, {
 
-  addListener: function(event, callback) {
-    this.on(event, callback);
+  addListener: function(eventName, callback) {
+    this.on(eventName, callback);
   },
 
-  removeListener: function(event, callback) {
-    this.removeListener(event, callback);
+  removeDaListener: function(eventName, callback) {
+    this.removeListener(eventName, callback);
   },
 
   addPoolTypeAddListener: function(callback) {
