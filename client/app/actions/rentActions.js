@@ -37,6 +37,13 @@ var RentActions = {
     });
   },
 
+  removeDetails: function() {
+    RentDispatcher.dispatch({
+      type: RentConstants.REMOVE_DETAILS,
+      load: null
+    })
+  },
+
 
   reviewSubmitted: function (data) { 
     RentDispatcher.dispatch({

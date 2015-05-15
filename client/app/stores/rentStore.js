@@ -136,6 +136,10 @@ var RentStore = ObjectAssign({}, EventEmitter.prototype, {
 
   removePoolTypeRemoveListener: function(callback) {
     this.removeListener(ListingsConstants.POOL_TYPE_REMOVE, callback);
+  }, 
+
+  addRemoveDetailsListener: function(callback) {
+    this.on(RentConstants.REMOVE_DETAILS, callback);
   }
 
 });
@@ -205,6 +209,10 @@ RentDispatcher.register(function (action) {
   actions[RentConstants.CITYSTATE] = function() {
     RentStore.emit(RentConstants.CITYSTATE, action.load);
   };
+
+  actions[RentConstants.REMOVE_DETAILS] = function(){
+    RentStore.emit(RentConstants.REMOVE_DETAILS, null);
+  }
 
 
   actions[action.type]();
