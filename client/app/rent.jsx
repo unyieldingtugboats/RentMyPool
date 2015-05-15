@@ -206,7 +206,8 @@ var Booking = React.createClass({
     return {
       noDetails: true,
       rental: {},
-      reviews: []
+      reviews: [],
+      errors: ''
     };
   },
 
@@ -264,16 +265,27 @@ var Booking = React.createClass({
   handleSubmit: function(e) {
     e.preventDefault();
     var $form = $('#review')[0];
+    console.log($form.rating.value);
     var formData = {
       rating: Number($form.rating.value),
       comment: $form.comment.value,
       user_id: this.state.rental.listing.user_id
     };
 
-    $form.rating.value = '';
+    if($form.rating.value !== '0' && $form.comment.value !== '') {
+      this.setState({
+        errors: ''
+      });
+      RentActions.reviewSubmitted(formData);
+    } else {
+      this.setState({
+        errors: 'All Fields Required!'
+      });
+    }
+
+    $form.rating.value = 0;
     $form.comment.value = '';
 
-    RentActions.reviewSubmitted(formData);
   },
 
   render: function () {
@@ -354,6 +366,7 @@ var Booking = React.createClass({
               <br />
               <br />
               <input type="submit" value="Submit Review" className="button" onClick={this.handleSubmit}/>
+              <span className="error">{this.state.errors}</span>
             </form>
         </div>
       );

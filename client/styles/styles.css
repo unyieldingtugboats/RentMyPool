@@ -54,6 +54,13 @@ body{
   margin-top: 10px;
 }
 
+.error {
+  font-weight: bold;
+  color: red;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
 .listView h1 {
     width: 100%;
     padding-top: 30px;
