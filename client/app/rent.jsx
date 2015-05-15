@@ -6,9 +6,16 @@ var ListEntry = React.createClass({
   },
 
   render: function () {
+    var listing; 
+    if (Object.keys(this.props.listing).length){
+      listing = this.props.listing.name +' - ' + this.props.listing.address + ' - ' + this.props.listing.price + ' - ' + new Date(this.props.listing.date).toDateString().slice(3);
+    } else {
+      listing = 'Sorry, no listings match that criteria';
+    }
+
     return (
       <div className="listEntry" onClick={this.handleClick}>
-        {this.props.listing.name +' - ' + this.props.listing.address + ' - ' + this.props.listing.price + ' - ' + new Date(this.props.listing.date).toDateString().slice(3)}
+        {listing}
       </div>
     );
   }
@@ -46,7 +53,11 @@ var Listings = React.createClass({
   },
 
   handleNewEntries: function (data) {
-    this.setState({data: data});
+    if (data.length) {
+      this.setState({data: data});
+    } else {
+      this.setState({data: [{ }]}); 
+    }
   },
 
   handleFilterChange: function (data) {
@@ -71,6 +82,7 @@ var Listings = React.createClass({
           return true;
         else return false;
       });
+
     this.handleNewEntries(newEntries);
   },
 
@@ -128,6 +140,7 @@ var Filter = React.createClass({
     },
       function () {
         RentActions.filterChange(this.state);
+        RentActions.removeDetails(); 
       }
     );
   },
@@ -138,6 +151,7 @@ var Filter = React.createClass({
     },
       function () {
         RentActions.filterChange(this.state);
+        RentActions.removeDetails(); 
       }
     );
   },
@@ -148,6 +162,7 @@ var Filter = React.createClass({
     }, function(){
       console.log('filter state: ', this.state.poolType);
       RentActions.filterChange(this.state);
+      RentActions.removeDetails(); 
     })
   },
 
@@ -160,6 +175,7 @@ var Filter = React.createClass({
     }, function(){
       console.log('new state: ', this.state.poolType);
       RentActions.filterChange(this.state);
+      RentActions.removeDetails(); 
     });
   },
   
@@ -199,11 +215,18 @@ var Booking = React.createClass({
     RentStore.addListener(RentConstants.ENTRY_CLICKED, this.handleEntryClicked);
     RentStore.addListener(RentConstants.REVIEW_SUBMITTED, this.refreshReviews);
     RentStore.addListener(RentConstants.NEW_REVIEW, this.handleNewReviews);
+    RentStore.addRemoveDetailsListener(this.removeDetails);
   },
 
   componentWillUnmount: function () {
     RentStore.removeListener(RentConstants.ENTRY_CLICKED, this.handleEntryClicked);
     RentStore.removeListener(RentConstants.REVIEW_SUBMITTED, this.refreshReviews);
+  },
+
+  removeDetails: function () {
+    this.setState({
+      noDetails: true
+    })
   },
 
   //shows the entry that was clicked
@@ -274,6 +297,12 @@ var Booking = React.createClass({
       }
       formatedPrice = "$" + formatedPrice;
 
+      if (this.state.rental.listing.poolType.length){
+        poolFeatures = this.state.rental.listing.poolType.split(',').join(', ');
+      } else {
+        poolFeatures = 'None specified';
+      }
+
       //render list of reviews
       var reviews = this.state.reviews;
       if(reviews.length) {
@@ -299,6 +328,8 @@ var Booking = React.createClass({
           <img className="poolImg" src={this.state.rental.listing.img}/> 
           <h3>{new Date(this.state.rental.listing.date).toDateString().slice(4)}</h3>
           <h4 className="h4book">{formatedPrice}</h4>
+          <h4 className="h4book"> Pool Features </h4>
+          <p className="h4book"> {poolFeatures} </p>
           <button className="button" onClick={this.handleBooking}>Book now</button>
           <br />
           <br />
