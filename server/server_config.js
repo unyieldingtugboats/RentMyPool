@@ -34,6 +34,8 @@ app.get('/rentItems', handlers.getListings);
 
 app.post('/book', handlers.book);
 
+app.post('/deleteBooking', handlers.cancelBooking);
+
 app.post('/list', handlers.addItemToListings);
 
 app.post('/review', handlers.newReview);
