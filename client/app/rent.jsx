@@ -420,7 +420,7 @@ var Booking = React.createClass({
               </textarea>
               <br />
               <br />
-              <input type="submit" value="Submit Review" className="button" onClick={this.handleSubmit}/>
+              <input type="submit" value="Submit Review" className="btn-link" onClick={this.handleSubmit}/>
               <span className="error">{this.state.errors}</span>
             </form>
         </div>

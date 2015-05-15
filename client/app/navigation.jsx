@@ -35,6 +35,11 @@ var UserButton = React.createClass({
 
 var UserListing = React.createClass({
 
+  handleRemove: function() {
+    console.log(this.props);
+    RentActions.removeListing(this.props._id);
+  },
+
   render: function  () {
     
     return (
@@ -53,6 +58,10 @@ var UserListing = React.createClass({
         <br />
         <span>
           {"Price: " + this.props.listing.price}
+        </span>
+        <br />
+        <span>
+          <button onClick={this.handleRemove} className="button">Remove Listing</button>
         </span>
         <br />
         <br />

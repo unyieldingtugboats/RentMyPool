@@ -19,9 +19,16 @@ var ListingsActions = {
 
   poolTypeRemoved: function (load) {
   	ListingsDispatcher.dispatch({
-  		type: ListingsConstants.POOL_TYPE_REMOVE,
+  	        type: ListingsConstants.POOL_TYPE_REMOVE,
   		load: load
   	})
+  },
+
+  removeListing: function (load) {
+    Listings.Dispatcher.dispatch({
+      type: ListingsConstants.REMOVE_LISTING,
+      load: load
+    });
   }
 
 
