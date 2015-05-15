@@ -323,7 +323,7 @@ var Booking = React.createClass({
 
       var bookingButton;
       if(this.state.rental.listing.booker_id === null) {
-        bookingButton = <button className="button" onClick={this.handleBooking}>Book now</button>;
+        bookingButton = <button className="btn-link" onClick={this.handleBooking}>Book now</button>;
       } else {
           bookingButton = <button className="button">BOOKED</button>;
       }
@@ -341,7 +341,7 @@ var Booking = React.createClass({
           {bookingButton}
           <br />
           <br />
-          <h3>Reviews for this Renter:</h3>
+          <h3>Reviews for this Pool Owner:</h3>
             {reviewList}
           <br />
           <h4 className="h4book">Leave a Review:</h4>
@@ -353,7 +353,7 @@ var Booking = React.createClass({
               </textarea>
               <br />
               <br />
-              <input type="submit" value="Submit Review" className="button" onClick={this.handleSubmit}/>
+              <input type="submit" value="Submit Review" className="btn-link" onClick={this.handleSubmit}/>
             </form>
         </div>
       );
@@ -497,7 +497,7 @@ var Weather = React.createClass({
 
   updateWeather: function(data) {
     console.log('is the date here?? ',data)
-    _getWeather(data[0], data[1], data.date[1], data.date[2], data.date[3], this.setState.bind(this));
+    //_getWeather(data[0], data[1], data.date[1], data.date[2], data.date[3], this.setState.bind(this));
   },
 
   render: function() {
