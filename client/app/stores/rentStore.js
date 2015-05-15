@@ -114,52 +114,12 @@ var _getWeather = function(city, state, requestedMonth, requestedDay, weatherYea
 
 var RentStore = ObjectAssign({}, EventEmitter.prototype, {
 
-  addEntryClickedListener: function (callback) {
-    this.on(RentConstants.ENTRY_CLICKED, callback);
+  addListener: function(event, callback) {
+    this.on(event, callback);
   },
 
-  addFetchEntriesListener: function (callback) {
-    this.on(RentConstants.FETCH_ENTRIES, callback);
-  },
-
-  addNewBookingListener: function (callback) {
-    this.on(RentConstants.NEW_BOOKING, callback);
-  },
-
-  addFilterChangeListener: function (callback) {
-    this.on(RentConstants.FILTER_CHANGE, callback);
-  },
-
-  addReviewSubmittedListener: function (callback) {
-    this.on(RentConstants.REVIEW_SUBMITTED, callback);
-  },
-
-  addNewReviewsListener: function (callback) {
-    this.on(RentConstants.NEW_REVIEW, callback);
-  },
-
-  addCityStateListener: function (callback) {
-    this.on(RentConstants.CITYSTATE, callback);
-  },
-
-  removeEntryClickedListener: function (callback) {
-    this.removeListener(RentConstants.ENTRY_CLICKED, callback);
-  },
-
-  removeFetchEntriesListener: function (callback) {
-    this.removeListener(RentConstants.FETCH_ENTRIES, callback);
-  },
-
-  removeNewBookingListener: function (callback) {
-    this.removeListener(RentConstants.NEW_BOOKING, callback);
-  },
-
-  removeFilterChangeListener: function (callback) {
-    this.removeListener(RentConstants.FILTER_CHANGE, callback);
-  },
-
-  removeReviewSubmittedListener: function (callback) {
-    this.removeListener(RentConstants.REVIEW_SUBMITTED, callback);
+  removeListener: function(event, callback) {
+    this.removeListener(event, callback);
   },
 
   addPoolTypeAddListener: function(callback) {
