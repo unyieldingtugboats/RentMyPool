@@ -34,15 +34,15 @@ var Listings = React.createClass({
    *
    */
   componentWillMount: function () {
-    RentStore.addFetchEntriesListener(this.refreshResults);
-    RentStore.addFilterChangeListener(this.handleFilterChange);
+    RentStore.addListener(RentConstants.FETCH_ENTRIES, this.refreshResults);
+    RentStore.addListener(RentConstants.FILTER_CHANGE, this.handleFilterChange);
 
     RentActions.fetchEntries();
   },
 
   componentWillUnmount: function () {
-    RentStore.removeFetchEntriesListener(this.refreshResults);
-    RentStore.removeFilterChangeListener(this.handleFilterChange);    
+    RentStore.removeListener(RentConstants.FETCH_ENTRIES, this.refreshResults);
+    RentStore.removeListener(RentConstants.FILTER_CHANGE, this.handleFilterChange);    
   },
 
   handleNewEntries: function (data) {
@@ -196,14 +196,14 @@ var Booking = React.createClass({
 
   // listen for when an entry is clicked
   componentDidMount: function () {
-    RentStore.addEntryClickedListener(this.handleEntryClicked);
-    RentStore.addReviewSubmittedListener(this.refreshReviews);
-    RentStore.addNewReviewsListener(this.handleNewReviews);
+    RentStore.addListener(RentConstants.ENTRY_CLICKED, this.handleEntryClicked);
+    RentStore.addListener(RentConstants.REVIEW_SUBMITTED, this.refreshReviews);
+    RentStore.addListener(RentConstants.NEW_REVIEW, this.handleNewReviews);
   },
 
   componentWillUnmount: function () {
-    RentStore.removeEntryClickedListener(this.handleEntryClicked);
-    RentStore.removeReviewSubmittedListener(this.refreshReviews);
+    RentStore.removeListener(RentConstants.ENTRY_CLICKED, this.handleEntryClicked);
+    RentStore.removeListener(RentConstants.REVIEW_SUBMITTED, this.refreshReviews);
   },
 
   //shows the entry that was clicked
@@ -335,11 +335,11 @@ var RentContent = React.createClass({
   },
 
   componentWillMount: function () {
-    RentStore.addNewBookingListener(this.handleBooking);
+    RentStore.addListener(RentConstants.NEW_BOOKING, this.handleBooking);
   },
 
   componentWillUnmount: function () {
-    RentStore.removeNewBookingListener(this.handleBooking);
+    RentStore.removeListener(RentConstants.NEW_BOOKING, this.handleBooking);
   },
 
   handleBooking: function (data) {
@@ -380,11 +380,11 @@ var GoogleMap = React.createClass({
 
   componentDidMount: function () {
     this.initializeMap();
-    RentStore.addEntryClickedListener(this.handleEntryClicked);
+    RentStore.addListener(RentConstants.ENTRY_CLICKED, this.handleEntryClicked);
   },
 
   componentWillUnmount: function () {
-    RentStore.removeEntryClickedListener(this.handleEntryClicked);
+    RentStore.removeListener(RentConstants.ENTRY_CLICKED, this.handleEntryClicked);
   },
 
   handleEntryClicked: function (load) {
@@ -453,7 +453,7 @@ var Weather = React.createClass({
   },
 
   componentDidMount: function() {
-    RentStore.addCityStateListener(this.updateWeather);
+    RentStore.addListener(RentConstants.CITYSTATE, this.updateWeather);
   },
 
   updateWeather: function(data) {
