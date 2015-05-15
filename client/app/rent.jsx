@@ -387,10 +387,10 @@ var Booking = React.createClass({
 
 
       var bookingButton;
-      if(this.state.rental.listing.booker_id === null) {
-        bookingButton = <button className="btn-link" onClick={this.handleBooking}>Book now</button>;
+      if(!!this.state.rental.listing.booker_id) {
+        bookingButton = <button className="button">BOOKED</button>;
       } else {
-          bookingButton = <button className="button">BOOKED</button>;
+        bookingButton = <button className="btn-link" onClick={this.handleBooking}>Book now</button>;
       }
 
 
