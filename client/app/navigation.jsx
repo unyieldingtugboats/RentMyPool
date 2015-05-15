@@ -1,3 +1,14 @@
+// ReactRouter.Link
+// <Link key={index} activeClassName="nav-link-focused" 
+//   className="nav-link" to={m.name}>{m.name}</Link>
+// React will complain if there isn't a unique key for each Link
+// tag, so we mitigate this by assigning it a unique number.
+// Link's activeClassName assigns the className to the Link when it
+// is clicked. Link's "to" is like the anchor tag's href except you 
+// put the component name as the value. The component will be found 
+// if one of the routes has the same name as the string that "to" is 
+// assigned as.
+
 var Route = ReactRouter.Route;
 var DefaultRoute = ReactRouter.DefaultRoute;
 var RouteHandler = ReactRouter.RouteHandler;
