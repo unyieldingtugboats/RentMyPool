@@ -306,7 +306,8 @@ body{
 }
 
 .noShow {
-    visibility: hidden;
+    /*visibility: hidden;*/
+    display: none;
 }
 
 .showRents {
