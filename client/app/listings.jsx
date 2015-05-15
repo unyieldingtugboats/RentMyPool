@@ -116,7 +116,8 @@ var ListContent = React.createClass({
           <div className="listingInput">
             <a className="btn-link" onClick={this.handleSubmit}>List</a>
           </div>
-          <div>
+          <br />
+          <div className="error">
             {this.state.error}
           </div>
         </form>

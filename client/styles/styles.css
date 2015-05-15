@@ -90,6 +90,11 @@ body{
     width:440px;
 }
 
+.bookingCon {
+  position: relative;
+  top: 10px;
+}
+
 .filter {
   width: 500px;
   padding: 20px 30px;
