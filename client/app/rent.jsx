@@ -206,6 +206,7 @@ var Booking = React.createClass({
     return {
       noDetails: true,
       rental: {},
+      avgRating: 0,
       reviews: []
     };
   },
@@ -249,10 +250,20 @@ var Booking = React.createClass({
   //refresh the reviews view
   refreshReviews: function (data) {
     console.log('reviews received!');
+    //calculate average rating
+    var sum = 0;
+    for(var i = 0; i < data.length; i++) {
+      sum += data[i].rating;
+    }
+    var avg = sum/data.length;
+    console.log('average rating', avg);
+
     this.setState({
-      reviews: data
+      reviews: data,
+      avgRating: avg
     }, function() { 
         console.log(this.state.reviews);
+        console.log('rating', this.state.avgRating);
     });
   },
 
@@ -321,6 +332,12 @@ var Booking = React.createClass({
 
       console.log(reviews);
 
+      var avgRating;
+      if(this.state.avgRating > 0) {
+        avgRating = <form id="avgRating"><StarRating name="rating" ratingAmount={5} rating={this.state.avgRating} disabled={true} /></form>;
+      } else { avgRating = {}; }
+
+
       var bookingButton;
       if(this.state.rental.listing.booker_id === null) {
         bookingButton = <button className="btn-link" onClick={this.handleBooking}>Book now</button>;
@@ -329,9 +346,11 @@ var Booking = React.createClass({
       }
 
 
+      console.log('pre-render', this.state.avgRating);
       return (
         <div className="booking">
           <h2 className="h4book">{this.state.rental.listing.name}</h2>
+          {avgRating}
           <h3>{this.state.rental.listing.address}</h3>
           <img className="poolImg" src={this.state.rental.listing.img}/> 
           <h3>{new Date(this.state.rental.listing.date).toDateString().slice(4)}</h3>
