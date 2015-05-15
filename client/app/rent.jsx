@@ -321,6 +321,14 @@ var Booking = React.createClass({
 
       console.log(reviews);
 
+      var bookingButton;
+      if(this.state.rental.listing.booker_id === null) {
+        bookingButton = <button className="button" onClick={this.handleBooking}>Book now</button>;
+      } else {
+          bookingButton = <button className="button">BOOKED</button>;
+      }
+
+
       return (
         <div className="booking">
           <h2 className="h4book">{this.state.rental.listing.name}</h2>
@@ -330,7 +338,7 @@ var Booking = React.createClass({
           <h4 className="h4book">{formatedPrice}</h4>
           <h4 className="h4book"> Pool Features </h4>
           <p className="h4book"> {poolFeatures} </p>
-          <button className="button" onClick={this.handleBooking}>Book now</button>
+          {bookingButton}
           <br />
           <br />
           <h3>Reviews for this Renter:</h3>
