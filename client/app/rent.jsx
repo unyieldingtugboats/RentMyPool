@@ -6,16 +6,33 @@ var ListEntry = React.createClass({
   },
 
   render: function () {
-    var listing; 
+    var listing;
+    var date; 
+    var month;
+    var day;
+    var address;
+    var price;
     if (Object.keys(this.props.listing).length){
-      listing = this.props.listing.name +' - ' + this.props.listing.address + ' - ' + this.props.listing.price + ' - ' + new Date(this.props.listing.date).toDateString().slice(3);
+      date = new Date(this.props.listing.date).toDateString();
+      date = /\w+\s(\w+)\s(\w+)/g.exec(date);
+      console.log('date', date, date.slice(3))
+      month = date[1];
+      day = date[2];
+      price = '$'+this.props.listing.price;
+      address = this.props.listing.address;
+      listing = '$' + this.props.listing.price + ' - ' + month + ' ' + day + ' ' +this.props.listing.address;
     } else {
-      listing = 'Sorry, no listings match that criteria';
+      address = 'Sorry, no listings match that criteria';
     }
 
     return (
       <div className="listEntry" onClick={this.handleClick}>
-        {listing}
+        <div className="listingPrice">{price}</div>
+        <div className="listingDate">
+          <span className="monthName">{month}</span><br/>
+          <span className="dateNumber">{day}</span>
+        </div>
+        <div className="listingAddress">{address}</div>
       </div>
     );
   }
@@ -183,10 +200,11 @@ var Filter = React.createClass({
 
     return (
       <div className="filter">
+      <h1>Rent a Pool</h1>
       <div id="filter-input">
-        <input type="text" id="datepicker" name="date" placeholder="Date" />
-        <input type="text" name="location" placeholder="Location" onChange={this.handleLocationChange} />
-        <input type="text" name="poolType" placeholder="pool type" value={this.state.poolType} />
+        <input type="text" id="datepicker" name="date" placeholder="Date" className="dateInput" />
+        <input type="text" name="location" placeholder="Location" className="locationInput" onChange={this.handleLocationChange} /><br/>
+        <input type="text" name="poolType" placeholder="pool type" className="poolTypeInput" value={this.state.poolType} />
       </div>
       <div id="dropdown-filter">
         <DropdownClass  />
@@ -207,7 +225,7 @@ var Booking = React.createClass({
       noDetails: true,
       rental: {},
       reviews: [],
-      errors: ''
+      errors: '',
       avgRating: 0,
       reviews: []
     };
@@ -423,9 +441,8 @@ var RentContent = React.createClass({
     return (
       <div className="rentPool">
         <LoginTransitioner />
-        <h1>Rent a Pool</h1>
-        <Filter cb={this}/>
         <div className="showRents">
+          <Filter cb={this}/>
           <div className="showList">
             <Listings />
             <Booking />
@@ -530,7 +547,7 @@ var Weather = React.createClass({
 
   updateWeather: function(data) {
     console.log('is the date here?? ',data)
-    //_getWeather(data[0], data[1], data.date[1], data.date[2], data.date[3], this.setState.bind(this));
+    _getWeather(data[0], data[1], data.date[1], data.date[2], data.date[3], this.setState.bind(this));
   },
 
   render: function() {
