@@ -83,7 +83,9 @@ var ListContent = React.createClass({
         <LoginTransitioner />
         <h1>List a Pool</h1>
         <form id="listingForm">
-          <DropdownClass  />   
+          <div className="listingInput">
+            <DropdownClass  />   
+          </div>  
           <br />
           <input className="listingInput" name="poolType" placeholder="Select a pool type" value={this.state.poolType} type="text" />
           <br />
@@ -100,10 +102,14 @@ var ListContent = React.createClass({
           <input className="listingInput" name="date" id="datepicker" placeholder={this.state.date} type="text" />
           <br />
           <br />
-          <input type="file" id="userPhotoInput" name="userPhoto" />
+          <div className="listingInput">
+            <input type="file" id="userPhotoInput" name="userPhoto" />
+          </div>
           <br />
           <br />
-          <a className="btn-link" onClick={this.handleSubmit}>List</a>
+          <div className="listingInput">
+            <a className="btn-link" onClick={this.handleSubmit}>List</a>
+          </div>
         </form>
       </div>
     );
