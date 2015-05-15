@@ -48,8 +48,8 @@ var Listings = React.createClass({
   },
 
   componentWillUnmount: function () {
-    RentStore.removeListener(RentConstants.FETCH_ENTRIES, this.refreshResults);
-    RentStore.removeListener(RentConstants.FILTER_CHANGE, this.handleFilterChange);    
+    //RentStore.removeListener(RentConstants.FETCH_ENTRIES, this.refreshResults);
+    //RentStore.removeListener(RentConstants.FILTER_CHANGE, this.handleFilterChange);    
   },
 
   handleNewEntries: function (data) {
@@ -219,8 +219,8 @@ var Booking = React.createClass({
   },
 
   componentWillUnmount: function () {
-    RentStore.removeListener(RentConstants.ENTRY_CLICKED, this.handleEntryClicked);
-    RentStore.removeListener(RentConstants.REVIEW_SUBMITTED, this.refreshReviews);
+    //RentStore.removeListener(RentConstants.ENTRY_CLICKED, this.handleEntryClicked);
+    //RentStore.removeListener(RentConstants.REVIEW_SUBMITTED, this.refreshReviews);
   },
 
   removeDetails: function () {
@@ -321,6 +321,14 @@ var Booking = React.createClass({
 
       console.log(reviews);
 
+      var bookingButton;
+      if(this.state.rental.listing.booker_id === null) {
+        bookingButton = <button className="button" onClick={this.handleBooking}>Book now</button>;
+      } else {
+          bookingButton = <button className="button">BOOKED</button>;
+      }
+
+
       return (
         <div className="booking">
           <h2 className="h4book">{this.state.rental.listing.name}</h2>
@@ -330,7 +338,7 @@ var Booking = React.createClass({
           <h4 className="h4book">{formatedPrice}</h4>
           <h4 className="h4book"> Pool Features </h4>
           <p className="h4book"> {poolFeatures} </p>
-          <button className="button" onClick={this.handleBooking}>Book now</button>
+          {bookingButton}
           <br />
           <br />
           <h3>Reviews for this Renter:</h3>
@@ -370,7 +378,7 @@ var RentContent = React.createClass({
   },
 
   componentWillUnmount: function () {
-    RentStore.removeListener(RentConstants.NEW_BOOKING, this.handleBooking);
+    //RentStore.removeListener(RentConstants.NEW_BOOKING, this.handleBooking);
   },
 
   handleBooking: function (data) {
@@ -415,7 +423,7 @@ var GoogleMap = React.createClass({
   },
 
   componentWillUnmount: function () {
-    RentStore.removeListener(RentConstants.ENTRY_CLICKED, this.handleEntryClicked);
+    //RentStore.removeListener(RentConstants.ENTRY_CLICKED, this.handleEntryClicked);
   },
 
   handleEntryClicked: function (load) {

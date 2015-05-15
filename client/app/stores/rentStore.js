@@ -142,9 +142,9 @@ var RentStore = ObjectAssign({}, EventEmitter.prototype, {
     this.on(event, callback);
   },
 
-  removeListener: function(event, callback) {
+  /*removeListener: function(event, callback) {
     this.removeListener(event, callback);
-  },
+  },*/
 
   addPoolTypeAddListener: function(callback) {
     this.on(ListingsConstants.POOL_TYPE_ADD, callback);
