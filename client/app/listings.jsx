@@ -6,7 +6,7 @@ var ListContent = React.createClass({
   return {
     name: 'Name',
     address : 'Address',
-    price : 'Price',
+    price : 'Price (per hour)',
     date: "Date",
     poolType: [],
     user_id: "",
