@@ -41,6 +41,7 @@ var RentActions = {
   reviewSubmitted: function (data) { 
     RentDispatcher.dispatch({
       type: RentConstants.REVIEW_SUBMITTED,
+      load: data
     });
   },
 
