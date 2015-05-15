@@ -91,7 +91,7 @@ var DropdownMenu = React.createClass({
 
   componentWillUpdate: function(nextProps, nextState) {
     if (nextProps.visibility) {
-      $('.dropdown-menu').velocity("slideFadeIn", {easing: 'ease-in', duration: 75});
+      $('.dropdown-menu').velocity("slideFadeIn", {position:'absolute',easing: 'ease-in', duration: 75});
       $('.dropdown-menu .dropdown-item').velocity("slideInTop", {
         stagger: 30,
         duration: 250,

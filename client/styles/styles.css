@@ -362,10 +362,11 @@ hr {
   right: 1em;
 }
 .dropdown-menu {
-  width: 100%;
+  width: 340px;
   color: #4D4D4D;
-  position: relative;
-  top: 0.13em;
+  position: absolute;
+  z-index: 99;
+  top: 35px;
   /*left: auto;
   right: 0.03em;*/
   background-color: white;
@@ -423,7 +424,8 @@ hr {
 }
 
 .main-wrapper {
-  width: 80%;
+  width: 100%;
+  position: relative;
   margin: 0 auto;
 }
 
@@ -450,5 +452,5 @@ hr {
 }
 
 #dropdown-filter {
-  width: 30%;
+  width: 340px;
 }
