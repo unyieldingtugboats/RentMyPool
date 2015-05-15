@@ -131,7 +131,9 @@ var Filter = React.createClass({
     return {
       date: null,
       location : null,
-      poolType: []
+      poolType: [],
+      visibility: "",
+      toggleSearch: "Hide Search"
     };
   },
 
@@ -195,20 +197,36 @@ var Filter = React.createClass({
       RentActions.removeDetails(); 
     });
   },
+
+  toggleSearch: function() {
+    //hide the filter
+    if(this.state.visibility === "") {
+      this.setState({
+        visibility: "noShow",
+        toggleSearch: "Show Search"
+      });
+    } else {
+      this.setState({
+        visibility: "",
+        toggleSearch: "Hide Search"
+      });
+    }
+  },
   
   render: function () {
 
     return (
       <div className="filter">
       <h1>Rent a Pool</h1>
-      <div id="filter-input">
+      <div id="filter-input" className={this.state.visibility}>
         <input type="text" id="datepicker" name="date" placeholder="Date" className="dateInput" />
         <input type="text" name="location" placeholder="Location" className="locationInput" onChange={this.handleLocationChange} /><br/>
         <input type="text" name="poolType" placeholder="pool type" className="poolTypeInput" value={this.state.poolType} />
       </div>
-      <div id="dropdown-filter">
+      <div id="dropdown-filter" className={this.state.visibility}>
         <DropdownClass  />
-      </div>  
+      </div>
+      <button className="btn-link" onClick={this.toggleSearch}>{this.state.toggleSearch}</button>  
       </div>
     );
   }
@@ -227,7 +245,6 @@ var Booking = React.createClass({
       reviews: [],
       errors: '',
       avgRating: 0,
-      reviews: []
     };
   },
 
