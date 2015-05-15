@@ -137,8 +137,9 @@ body{
 }
 
 .listingInput {
-    width: 80%;
+    width: 340px;
     height: 35px;
+    margin: 0 auto;
 }
 
 #userPhotoInput {
