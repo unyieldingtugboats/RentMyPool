@@ -225,7 +225,7 @@ var Booking = React.createClass({
       noDetails: true,
       rental: {},
       reviews: [],
-      errors: ''
+      errors: '',
       avgRating: 0,
       reviews: []
     };
@@ -547,7 +547,7 @@ var Weather = React.createClass({
 
   updateWeather: function(data) {
     console.log('is the date here?? ',data)
-    //_getWeather(data[0], data[1], data.date[1], data.date[2], data.date[3], this.setState.bind(this));
+    _getWeather(data[0], data[1], data.date[1], data.date[2], data.date[3], this.setState.bind(this));
   },
 
   render: function() {
