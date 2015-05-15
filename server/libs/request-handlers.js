@@ -113,6 +113,23 @@ exports.book = function(req, res) {
   });
 };
 
+exports.cancelBooking = function(req, res) {
+  console.log('cancelBooking');
+  console.log(req.body);
+  Item.findByIdAndUpdate(
+    req.body.booking,
+    {"booker_id": null},
+    {safe: true, upsert: true},
+    function(err, model) {
+      if(err) {
+        console.log(err);
+        res.status(500).send();
+      }
+      console.log(model);
+      res.status(201).send();
+    });
+};
+
 exports.serveIndex = function(req, res) {
   console.log('serveIndex', req.url);
   var options = {

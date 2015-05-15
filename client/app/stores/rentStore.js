@@ -31,6 +31,30 @@ var _postBooking = function (date, id) {
   });
 };
 
+var _cancelBooking = function(data) {
+  console.log('making request...');
+  return new Promise(function(resolve, reject) {
+    $.ajax({
+      url: "/deleteBooking",
+      method: "POST",
+      contentType: "application/json",
+      data: JSON.stringify({booking: data}),
+      statusCode: {
+        201: function (data) {
+          resolve({
+            statusCode: 201,
+            data: data
+          });
+        },
+        500: function (err) {
+          console.log("Error:", err);
+          reject(err);
+        }
+      }
+    });
+  });
+};
+
 var _getUserReviews = function(id) {
   return new Promise(function(resolve, reject) {
     $.ajax({
@@ -204,7 +228,7 @@ RentDispatcher.register(function (action) {
       .catch(function (err) {
         console.log('error', err);
       });
-  },
+  };
 
   actions[RentConstants.CITYSTATE] = function() {
     RentStore.emit(RentConstants.CITYSTATE, action.load);
@@ -214,6 +238,17 @@ RentDispatcher.register(function (action) {
     RentStore.emit(RentConstants.REMOVE_DETAILS, null);
   }
 
+  actions[RentConstants.CANCEL_BOOKING] = function() {
+    console.log('cancel booking');
+    _cancelBooking(action.load)
+      .then(function (data) {
+        console.log('deleted');
+        AppActions.fetchUser();
+      })
+      .catch(function (err) {
+        console.log('error', err);
+      });
+  };
 
   actions[action.type]();
 });

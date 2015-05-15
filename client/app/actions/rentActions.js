@@ -30,6 +30,13 @@ var RentActions = {
     });
   },
 
+  cancelBooking: function(data) {
+    RentDispatcher.dispatch({
+      type: RentConstants.CANCEL_BOOKING,
+      load: data
+    });
+  },
+
   filterChange: function (data) {
     RentDispatcher.dispatch({
       type: RentConstants.FILTER_CHANGE,
