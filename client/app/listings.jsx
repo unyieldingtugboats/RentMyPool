@@ -9,7 +9,8 @@ var ListContent = React.createClass({
     price : 'Price',
     date: "Date",
     poolType: [],
-    user_id: ""
+    user_id: "",
+    error: ""
     };
   },
 
@@ -61,20 +62,24 @@ var ListContent = React.createClass({
 
   handleSubmit: function (e) {
     var $form = $("#listingForm")[0];
-    //get the props off of the dropdown component 
 
-    this.setState({
-      name: $form.name.value,
-      address: $form.address.value,
-      price: $form.price.value,
-      date: $form.date.value,
-      // poolType: $form.poolType.value, //this is going to be an array of items selected from the dropdown
-      file: $form.userPhoto.files[0]
-    }, 
-      function () {
-        ListingsActions.listingSubmitted(this.state);
-      }.bind(this)
-    );
+    if ($form.name.value && $form.address.value && $form.price.value && $form.date.value && $form.userPhoto.files[0]) {
+      this.setState({
+        name: $form.name.value,
+        address: $form.address.value,
+        price: $form.price.value,
+        date: $form.date.value,
+        file: $form.userPhoto.files[0]
+      }, 
+        function () {
+          ListingsActions.listingSubmitted(this.state);
+        }.bind(this)
+      );
+    } else {
+      this.setState({
+        error: "Please enter values for required fields"
+      })
+    }
   },
 
   render: function () {
@@ -90,25 +95,29 @@ var ListContent = React.createClass({
           <input className="listingInput" name="poolType" placeholder="Select a pool type" value={this.state.poolType} type="text" />
           <br />
           <br />
-          <input className="listingInput" name="name" placeholder={this.state.name} type="text" />
+          <input className="listingInput" name="name" placeholder={this.state.name+'*'} type="text" />
           <br />
           <br />
-          <input className="listingInput" name="address" placeholder={this.state.address} type="text" />
+          <input className="listingInput" name="address" placeholder={this.state.address+'*'} type="text" />
           <br />
           <br />
-          <input className="listingInput" name="price" placeholder={this.state.price} type="text" />
+          <input className="listingInput" name="price" placeholder={this.state.price+'*'} type="text" />
           <br />
           <br />
-          <input className="listingInput" name="date" id="datepicker" placeholder={this.state.date} type="text" />
+          <input className="listingInput" name="date" id="datepicker" placeholder={this.state.date+'*'} type="text" />
           <br />
           <br />
-          <div className="listingInput">
+          <div className="listingInput">*
             <input type="file" id="userPhotoInput" name="userPhoto" />
           </div>
-          <br />
-          <br />
+          <div>
+            * required field
+          </div>
           <div className="listingInput">
             <a className="btn-link" onClick={this.handleSubmit}>List</a>
+          </div>
+          <div>
+            {this.state.error}
           </div>
         </form>
       </div>
