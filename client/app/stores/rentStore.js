@@ -38,7 +38,7 @@ var _cancelBooking = function(data) {
       url: "/deleteBooking",
       method: "POST",
       contentType: "application/json",
-      data: JSON.stringify({_id: data}),
+      data: JSON.stringify({booking: data}),
       statusCode: {
         201: function (data) {
           resolve({
@@ -256,7 +256,14 @@ RentDispatcher.register(function (action) {
 
   actions[RentConstants.CANCEL_BOOKING] = function() {
     console.log('cancel booking');
-    _cancelBooking(action.load);
+    _cancelBooking(action.load)
+      .then(function (data) {
+        console.log('deleted');
+        AppActions.fetchUser();
+      })
+      .catch(function (err) {
+        console.log('error', err);
+      });
   };
 
   actions[action.type]();
