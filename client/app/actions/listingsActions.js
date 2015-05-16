@@ -25,7 +25,7 @@ var ListingsActions = {
   },
 
   removeListing: function (load) {
-    Listings.Dispatcher.dispatch({
+    ListingsDispatcher.dispatch({
       type: ListingsConstants.REMOVE_LISTING,
       load: load
     });
