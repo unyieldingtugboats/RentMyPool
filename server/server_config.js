@@ -38,6 +38,8 @@ app.post('/deleteBooking', handlers.cancelBooking);
 
 app.post('/list', handlers.addItemToListings);
 
+app.post('/deleteListing', handlers.deleteListing);
+
 app.post('/review', handlers.newReview);
 
 app.post('/userReviews', handlers.getReviews);

@@ -32,6 +32,30 @@ var _postListing = function (load) {
 
 };
 
+var _removeListing = function (load) {
+  return new Promise(function (resolve, reject) {
+    $.ajax({
+      url: "/deleteListing",
+      method: "POST",
+      contentType: "application/json",
+      data: JSON.stringify({_id: load}),
+      statusCode: {
+        201: function (data) {
+          resolve({
+            statusCode: 201,
+            data: data
+          });
+        },
+        500: function (err) {
+          console.log("Error:", err)
+          reject(err);
+        }
+      }
+    });
+    
+  });
+};
+
 var ListingsStore = ObjectAssign({}, EventEmitter.prototype, {
 
   addListingSubmittedListener: function (callback) {
@@ -70,6 +94,15 @@ ListingsDispatcher.register(function (action) {
   actions[ListingsConstants.POOL_TYPE_REMOVE] = function () {
     ListingsStore.emit(ListingsConstants.POOL_TYPE_REMOVE, action.load);
   };
+
+  actions[ListingsConstants.REMOVE_LISTING] = function () {
+    console.log(action.load);
+    //remove the listing from the database
+    _removeListing(action.load)
+      .then(function (data) {
+        console.log('deleted');
+      });
+  }
 
   actions[action.type]();
 });

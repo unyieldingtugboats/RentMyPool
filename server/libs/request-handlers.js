@@ -77,6 +77,24 @@ exports.getReviews = function(req, res) {
   });
 };
 
+exports.deleteListing = function(req, res) {
+  console.log('deleteListing');
+  console.log(req.body);
+  Item.findOne({_id: req.body._id}, function(err, listing) {
+    if(err) {
+      console.log(err);
+      res.status(500).send();
+    }
+    listing.remove( function(err, listing) {
+      if(err) {
+        console.log(err);
+        res.status(500).send();
+      }
+      res.status(201).send();
+    });
+  });
+};
+
 exports.book = function(req, res) {
   var info = req.body;
   utils.checkUser(req, res, function() {
